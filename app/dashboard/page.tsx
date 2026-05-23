@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+import { useRouter } from 'next/navigation';
 
 interface Lead {
   _id: string;
@@ -16,9 +15,15 @@ interface Lead {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
 
   useEffect(() => {
     fetchLeads();
@@ -91,22 +96,40 @@ export default function Dashboard() {
           Leads
         </h1>
         
-        <button 
-          onClick={exportCSV}
-          style={{
-            background: '#1E8E5A',
-            color: 'white',
-            border: 'none',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '13px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          Export
-        </button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            onClick={exportCSV}
+            style={{
+              background: '#1E8E5A',
+              color: 'white',
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: '4px',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Export
+          </button>
+          <button 
+            onClick={handleLogout}
+            style={{
+              background: '#666',
+              color: 'white',
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: '4px',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       <div style={{ marginBottom: '12px' }}>
