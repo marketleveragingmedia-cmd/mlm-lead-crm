@@ -70,21 +70,21 @@ export default function Dashboard() {
       fontFamily: 'Inter, system-ui, sans-serif',
       maxWidth: '1400px',
       margin: '0 auto',
-      padding: '40px 20px'
+      padding: '20px'
     }}>
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        marginBottom: '32px'
+        marginBottom: '20px'
       }}>
         <h1 style={{ 
-          fontSize: '32px', 
-          fontWeight: '700',
+          fontSize: '20px', 
+          fontWeight: '600',
           color: '#1E8E5A',
           margin: 0
         }}>
-          MLM Lead CRM
+          Lead Dashboard
         </h1>
         
         <button 
@@ -93,10 +93,10 @@ export default function Dashboard() {
             background: '#1E8E5A',
             color: 'white',
             border: 'none',
-            padding: '12px 24px',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontWeight: '600',
+            padding: '8px 16px',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: '500',
             cursor: 'pointer'
           }}
         >
@@ -104,15 +104,15 @@ export default function Dashboard() {
         </button>
       </div>
 
-      <div style={{ marginBottom: '24px' }}>
+      <div style={{ marginBottom: '16px' }}>
         <select 
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           style={{
-            padding: '12px 16px',
-            fontSize: '16px',
-            borderRadius: '8px',
-            border: '2px solid #1E8E5A',
+            padding: '6px 12px',
+            fontSize: '14px',
+            borderRadius: '6px',
+            border: '1px solid #1E8E5A',
             background: 'white'
           }}
         >
@@ -130,15 +130,15 @@ export default function Dashboard() {
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '40px' }}>
-          <p style={{ fontSize: '18px', color: '#666' }}>Loading leads...</p>
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <p style={{ fontSize: '14px', color: '#666' }}>Loading...</p>
         </div>
       ) : (
         <>
           <div style={{ 
             background: 'white',
-            borderRadius: '12px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            borderRadius: '8px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
             overflow: 'hidden'
           }}>
             <table style={{ 
@@ -148,14 +148,15 @@ export default function Dashboard() {
               <thead>
                 <tr style={{ 
                   background: '#1E8E5A',
-                  color: 'white'
+                  color: 'white',
+                  fontSize: '13px'
                 }}>
-                  <th style={{ padding: '16px', textAlign: 'left' }}>Name</th>
-                  <th style={{ padding: '16px', textAlign: 'left' }}>Email</th>
-                  <th style={{ padding: '16px', textAlign: 'left' }}>Phone</th>
-                  <th style={{ padding: '16px', textAlign: 'left' }}>Source</th>
-                  <th style={{ padding: '16px', textAlign: 'left' }}>Date</th>
-                  <th style={{ padding: '16px', textAlign: 'center' }}>Synced</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Name</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Email</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Phone</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Source</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Date</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '500' }}>Synced</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,25 +165,26 @@ export default function Dashboard() {
                     key={lead._id}
                     style={{ 
                       borderBottom: '1px solid #eee',
-                      background: index % 2 === 0 ? 'white' : '#f9f9f9'
+                      background: index % 2 === 0 ? 'white' : '#f9f9f9',
+                      fontSize: '13px'
                     }}
                   >
-                    <td style={{ padding: '16px' }}>
+                    <td style={{ padding: '10px 12px' }}>
                       {lead.firstName} {lead.lastName}
                     </td>
-                    <td style={{ padding: '16px' }}>{lead.email}</td>
-                    <td style={{ padding: '16px' }}>{lead.phone || '—'}</td>
-                    <td style={{ padding: '16px', fontSize: '14px' }}>
-                      {lead.sourcePage}
+                    <td style={{ padding: '10px 12px' }}>{lead.email}</td>
+                    <td style={{ padding: '10px 12px' }}>{lead.phone || '—'}</td>
+                    <td style={{ padding: '10px 12px', fontSize: '12px', color: '#666' }}>
+                      {lead.sourcePage.replace('.html', '').replace(/-/g, ' ')}
                     </td>
-                    <td style={{ padding: '16px', fontSize: '14px' }}>
+                    <td style={{ padding: '10px 12px', fontSize: '12px', color: '#666' }}>
                       {new Date(lead.createdAt).toLocaleDateString()}
                     </td>
-                    <td style={{ padding: '16px', textAlign: 'center' }}>
+                    <td style={{ padding: '10px 12px', textAlign: 'center' }}>
                       <span style={{
                         display: 'inline-block',
-                        width: '12px',
-                        height: '12px',
+                        width: '8px',
+                        height: '8px',
                         borderRadius: '50%',
                         background: lead.syncedToGlobalControl ? '#1E8E5A' : '#ccc'
                       }} />
@@ -194,12 +196,12 @@ export default function Dashboard() {
           </div>
 
           <div style={{ 
-            marginTop: '24px',
+            marginTop: '16px',
             textAlign: 'center',
             color: '#666'
           }}>
-            <p style={{ fontSize: '16px', fontWeight: '600' }}>
-              Total Leads: {leads.length}
+            <p style={{ fontSize: '13px', fontWeight: '500', margin: 0 }}>
+              Total: {leads.length} leads
             </p>
           </div>
         </>
