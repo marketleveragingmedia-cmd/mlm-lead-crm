@@ -32,15 +32,17 @@ export default function Dashboard() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const url = filter === 'all' 
-        ? '/api/leads' 
-        : `/api/leads?sourcePage=${filter}`;
-      
-      const response = await fetch(url);
+      const response = await fetch('/api/leads');
       const data = await response.json();
       
       if (data.success) {
-        setLeads(data.leads);
+        let filtered = data.leads;
+        if (filter !== 'all') {
+          filtered = data.leads.filter((lead: Lead) => 
+            lead.sourcePage && lead.sourcePage.includes(filter)
+          );
+        }
+        setLeads(filtered);
       }
     } catch (error) {
       console.error('Error fetching leads:', error);
