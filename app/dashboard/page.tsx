@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
 interface Lead {
   _id: string;
   firstName: string;
@@ -67,24 +69,26 @@ export default function Dashboard() {
 
   return (
     <div style={{ 
-      fontFamily: 'Inter, system-ui, sans-serif',
-      maxWidth: '1400px',
-      margin: '0 auto',
-      padding: '20px'
+      fontFamily: '-apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+      maxWidth: '100%',
+      margin: 0,
+      padding: '12px',
+      fontSize: '14px'
     }}>
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        marginBottom: '20px'
+        marginBottom: '12px',
+        gap: '8px'
       }}>
         <h1 style={{ 
-          fontSize: '20px', 
+          fontSize: '16px', 
           fontWeight: '600',
           color: '#1E8E5A',
           margin: 0
         }}>
-          Lead Dashboard
+          Leads
         </h1>
         
         <button 
@@ -93,27 +97,30 @@ export default function Dashboard() {
             background: '#1E8E5A',
             color: 'white',
             border: 'none',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
+            padding: '6px 12px',
+            borderRadius: '4px',
+            fontSize: '13px',
             fontWeight: '500',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            whiteSpace: 'nowrap'
           }}
         >
-          Export CSV
+          Export
         </button>
       </div>
 
-      <div style={{ marginBottom: '16px' }}>
+      <div style={{ marginBottom: '12px' }}>
         <select 
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           style={{
-            padding: '6px 12px',
-            fontSize: '14px',
-            borderRadius: '6px',
-            border: '1px solid #1E8E5A',
-            background: 'white'
+            padding: '6px 10px',
+            fontSize: '13px',
+            borderRadius: '4px',
+            border: '1px solid #ddd',
+            background: 'white',
+            width: '100%',
+            maxWidth: '300px'
           }}
         >
           <option value="all">All Pages</option>
@@ -131,32 +138,33 @@ export default function Dashboard() {
 
       {loading ? (
         <div style={{ textAlign: 'center', padding: '20px' }}>
-          <p style={{ fontSize: '14px', color: '#666' }}>Loading...</p>
+          <p style={{ fontSize: '13px', color: '#666', margin: 0 }}>Loading...</p>
         </div>
       ) : (
         <>
           <div style={{ 
             background: 'white',
-            borderRadius: '8px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            overflow: 'hidden'
+            borderRadius: '6px',
+            border: '1px solid #e5e5e5',
+            overflow: 'auto'
           }}>
             <table style={{ 
               width: '100%',
-              borderCollapse: 'collapse'
+              borderCollapse: 'collapse',
+              fontSize: '12px'
             }}>
               <thead>
                 <tr style={{ 
                   background: '#1E8E5A',
                   color: 'white',
-                  fontSize: '13px'
+                  fontSize: '11px'
                 }}>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Name</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Email</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Phone</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Source</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'left', fontWeight: '500' }}>Date</th>
-                  <th style={{ padding: '10px 12px', textAlign: 'center', fontWeight: '500' }}>Synced</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'left', fontWeight: '500', whiteSpace: 'nowrap' }}>Name</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'left', fontWeight: '500', whiteSpace: 'nowrap' }}>Email</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'left', fontWeight: '500', whiteSpace: 'nowrap' }}>Phone</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'left', fontWeight: '500', whiteSpace: 'nowrap' }}>Source</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'left', fontWeight: '500', whiteSpace: 'nowrap' }}>Date</th>
+                  <th style={{ padding: '8px 6px', textAlign: 'center', fontWeight: '500' }}>✓</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,27 +172,26 @@ export default function Dashboard() {
                   <tr 
                     key={lead._id}
                     style={{ 
-                      borderBottom: '1px solid #eee',
-                      background: index % 2 === 0 ? 'white' : '#f9f9f9',
-                      fontSize: '13px'
+                      borderBottom: '1px solid #f0f0f0',
+                      fontSize: '11px'
                     }}
                   >
-                    <td style={{ padding: '10px 12px' }}>
+                    <td style={{ padding: '8px 6px', whiteSpace: 'nowrap' }}>
                       {lead.firstName} {lead.lastName}
                     </td>
-                    <td style={{ padding: '10px 12px' }}>{lead.email}</td>
-                    <td style={{ padding: '10px 12px' }}>{lead.phone || '—'}</td>
-                    <td style={{ padding: '10px 12px', fontSize: '12px', color: '#666' }}>
-                      {lead.sourcePage.replace('.html', '').replace(/-/g, ' ')}
+                    <td style={{ padding: '8px 6px', wordBreak: 'break-all' }}>{lead.email}</td>
+                    <td style={{ padding: '8px 6px', whiteSpace: 'nowrap' }}>{lead.phone || '—'}</td>
+                    <td style={{ padding: '8px 6px', fontSize: '10px', color: '#666' }}>
+                      {lead.sourcePage.replace('.html', '').replace(/-/g, ' ').substring(0, 20)}
                     </td>
-                    <td style={{ padding: '10px 12px', fontSize: '12px', color: '#666' }}>
-                      {new Date(lead.createdAt).toLocaleDateString()}
+                    <td style={{ padding: '8px 6px', fontSize: '10px', color: '#666', whiteSpace: 'nowrap' }}>
+                      {new Date(lead.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}
                     </td>
-                    <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                    <td style={{ padding: '8px 6px', textAlign: 'center' }}>
                       <span style={{
                         display: 'inline-block',
-                        width: '8px',
-                        height: '8px',
+                        width: '6px',
+                        height: '6px',
                         borderRadius: '50%',
                         background: lead.syncedToGlobalControl ? '#1E8E5A' : '#ccc'
                       }} />
@@ -196,12 +203,12 @@ export default function Dashboard() {
           </div>
 
           <div style={{ 
-            marginTop: '16px',
+            marginTop: '12px',
             textAlign: 'center',
-            color: '#666'
+            color: '#999'
           }}>
-            <p style={{ fontSize: '13px', fontWeight: '500', margin: 0 }}>
-              Total: {leads.length} leads
+            <p style={{ fontSize: '11px', margin: 0 }}>
+              {leads.length} total
             </p>
           </div>
         </>
