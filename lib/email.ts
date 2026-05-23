@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface EmailTemplate {
   subject: string;
   body: string;
@@ -251,6 +249,8 @@ export async function sendWelcomeEmail(
   sourcePage: string
 ): Promise<boolean> {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    
     const avatar = getAvatarFromSourcePage(sourcePage);
     const template = EMAIL_TEMPLATES[avatar] || EMAIL_TEMPLATES['default'];
 
@@ -261,7 +261,7 @@ export async function sendWelcomeEmail(
       to: [email],
       subject: template.subject,
       text: personalizedBody,
-      reply_to: 'marketleveragingmedia@agentmail.to'
+      replyTo: 'marketleveragingmedia@agentmail.to'
     });
 
     if (error) {
