@@ -4,6 +4,17 @@ import Lead from '@/models/Lead';
 import { syncToGlobalControl } from '@/lib/globalControl';
 import { sendWelcomeEmail } from '@/lib/email';
 
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -57,18 +68,34 @@ export async function POST(request: NextRequest) {
       lead.sourcePage
     );
 
-    return NextResponse.json({
-      success: true,
-      leadId: lead._id,
-      syncedToGlobalControl: lead.syncedToGlobalControl,
-      emailSent
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        leadId: lead._id,
+        syncedToGlobalControl: lead.syncedToGlobalControl,
+        emailSent
+      },
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      }
+    );
 
   } catch (error: any) {
     console.error('Error capturing lead:', error);
     return NextResponse.json(
       { success: false, error: error.message },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      }
     );
   }
 }
