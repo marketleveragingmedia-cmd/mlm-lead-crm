@@ -142,7 +142,7 @@ The system automatically:
 All emails:
 - Personalized with first name
 - Include SKOOL community link
-- Sent from: MzSamantha <hello@networkleveragingcashflow.com>
+- Sent from: MzSamantha <hello@m.networkleveragingcashflow.com>
 - Reply-to: marketleveragingmedia@agentmail.to
 
 ## Source Pages

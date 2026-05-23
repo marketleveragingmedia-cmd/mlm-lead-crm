@@ -257,7 +257,7 @@ export async function sendWelcomeEmail(
     const personalizedBody = template.body.replace('{firstName}', firstName);
 
     const { data, error } = await resend.emails.send({
-      from: 'MzSamantha <hello@networkleveragingcashflow.com>',
+      from: 'MzSamantha <hello@m.networkleveragingcashflow.com>',
       to: [email],
       subject: template.subject,
       text: personalizedBody,

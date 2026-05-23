@@ -87,9 +87,11 @@ Resend Dashboard shows:
 
 Current setup uses:
 ```
-From: MzSamantha <hello@networkleveragingcashflow.com>
+From: MzSamantha <hello@m.networkleveragingcashflow.com>
 Reply-To: marketleveragingmedia@agentmail.to
 ```
+
+✅ Domain `m.networkleveragingcashflow.com` is already verified in Resend.
 
 You can change this in `lib/email.ts` if you want a different address.
 
