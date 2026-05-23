@@ -18,13 +18,23 @@ export async function OPTIONS(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email, phone, sourcePage } = body;
+    const { firstName, lastName, email, phone, sourcePage, pageUrl } = body;
+    
+    // Accept either sourcePage or pageUrl
+    const source = sourcePage || pageUrl || 'unknown';
 
     // Validation
-    if (!firstName || !lastName || !email || !sourcePage) {
+    if (!firstName || !lastName || !email) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -36,7 +46,14 @@ export async function POST(request: NextRequest) {
     if (existingLead) {
       return NextResponse.json(
         { success: false, error: 'Email already exists' },
-        { status: 409 }
+        { 
+          status: 409,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+          },
+        }
       );
     }
 
@@ -46,7 +63,7 @@ export async function POST(request: NextRequest) {
       lastName,
       email,
       phone,
-      sourcePage,
+      sourcePage: source,
       createdAt: new Date(),
       syncedToGlobalControl: false
     });
