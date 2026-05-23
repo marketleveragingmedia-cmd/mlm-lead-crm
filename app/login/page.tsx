@@ -41,15 +41,16 @@ export default function Login() {
       justifyContent: 'center',
       minHeight: '100vh',
       background: '#f5f5f5',
-      fontFamily: '-apple-system, BlinkMacSystemFont, system-ui, sans-serif'
+      fontFamily: '-apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+      padding: '16px'
     }}>
       <div style={{
         background: 'white',
-        padding: '32px',
+        padding: '24px',
         borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
         width: '100%',
-        maxWidth: '400px'
+        maxWidth: '340px'
       }}>
         <h1 style={{
           fontSize: '20px',

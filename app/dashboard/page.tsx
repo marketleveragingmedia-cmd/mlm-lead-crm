@@ -77,8 +77,8 @@ export default function Dashboard() {
       fontFamily: '-apple-system, BlinkMacSystemFont, system-ui, sans-serif',
       maxWidth: '100%',
       margin: 0,
-      padding: '12px',
-      fontSize: '14px'
+      padding: '8px',
+      fontSize: '12px'
     }}>
       <div style={{ 
         display: 'flex', 
