@@ -206,24 +206,37 @@ MzSamantha
 Network Leveraging Cash Flow`
   },
   'cash-flow-visionary': {
-    subject: 'Welcome to the Cash Flow Visionaries Movement',
+    subject: 'Welcome - We Are Cash Flow Visionaries',
     body: `Hi {firstName},
 
 Welcome! You've just joined the Cash Flow Visionaries Movement.
 
-You're no longer just another marketer chasing launches. You're becoming a Cash Flow Visionary.
+We are Individuals who choose to see beyond Limitations and recognize Possibilities.
+
+You're becoming a Cash Flow Visionary.
 
 Here's what happens next:
 
 ✅ Join the FREE Community
-✅ Explore the framework for sustainable cash flow
-✅ Discover Premium access (step-by-step process + Private Network onboarding included)
-✅ Connect with Strategic Partners building cash flow worldwide
+✅ Discover Our Foundation: Connection. Activation. Duplication.
+✅ Explore Premium Access (Complete Activation Pathway + Private Network Onboarding INCLUDED)
+✅ Connect with Cash Flow Visionaries Worldwide
 
 Join the community here:
 https://www.skool.com/network-leveraging-cash-flow-4401
 
-Remember: Financial Freedom begins with the right system. You already know how to market. Now you're learning how to LEVERAGE.
+We Believe that:
+→ Awareness Matters
+→ Connections Matter
+→ Community Matters
+→ Participation Matters
+→ IMPACT Matters
+
+Through Connection, People discover Possibilities.
+Through Activation, People execute with Intention.
+Through Duplication, People create IMPACT that Compounds through Communities.
+
+One Cash Flow Visionary At A Time.
 
 See you inside!
 
