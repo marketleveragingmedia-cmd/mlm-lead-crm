@@ -205,6 +205,32 @@ Looking forward to seeing you inside!
 MzSamantha
 Network Leveraging Cash Flow`
   },
+  'cash-flow-visionary': {
+    subject: 'Welcome to the Cash Flow Visionaries Movement',
+    body: `Hi {firstName},
+
+Welcome! You've just joined the Cash Flow Visionaries Movement.
+
+You're no longer just another marketer chasing launches. You're becoming a Cash Flow Visionary.
+
+Here's what happens next:
+
+✅ Join the FREE Community
+✅ Explore the framework for sustainable cash flow
+✅ Discover Premium access (step-by-step process + Private Network onboarding included)
+✅ Connect with Strategic Partners building cash flow worldwide
+
+Join the community here:
+https://www.skool.com/network-leveraging-cash-flow-4401
+
+Remember: Financial Freedom begins with the right system. You already know how to market. Now you're learning how to LEVERAGE.
+
+See you inside!
+
+MzSamantha
+Founder, Network Leveraging Cash Flow
+Cash Flow Visionary`
+  },
   'default': {
     subject: 'Welcome to Network Leveraging Cash Flow',
     body: `Hi {firstName},
@@ -239,6 +265,7 @@ function getAvatarFromSourcePage(sourcePage: string): string {
   if (sourcePage.includes('social-security-trap')) return 'social-security-trap';
   if (sourcePage.includes('ubi-cbdc-warning')) return 'ubi-cbdc-warning';
   if (sourcePage.includes('why-mosca')) return 'why-mosca';
+  if (sourcePage.includes('cash-flow-visionar')) return 'cash-flow-visionary';
   return 'default';
 }
 

@@ -78,6 +78,7 @@ function getAvatarTag(sourcePage: string): string | null {
   if (sourcePage.includes('social-security-trap')) return AVATAR_TAGS['social-security-trap'];
   if (sourcePage.includes('ubi-cbdc-warning')) return AVATAR_TAGS['ubi-cbdc-warning'];
   if (sourcePage.includes('why-mosca')) return AVATAR_TAGS['why-mosca'];
+  if (sourcePage.includes('cash-flow-visionar')) return null; // Cash Flow Visionary - tag creation pending
   return null;
 }
 
