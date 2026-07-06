@@ -317,3 +317,76 @@ export async function sendWelcomeEmail(
     return false;
   }
 }
+
+export async function sendAdminNotification(
+  firstName: string,
+  lastName: string,
+  email: string,
+  phone: string,
+  sourcePage: string
+): Promise<boolean> {
+  try {
+    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
+    
+    if (!adminEmail) {
+      console.warn('ADMIN_NOTIFICATION_EMAIL not configured, skipping admin notification');
+      return false;
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const avatar = getAvatarFromSourcePage(sourcePage);
+    const timestamp = new Date().toLocaleString('en-US', { 
+      timeZone: 'America/New_York',
+      dateStyle: 'full',
+      timeStyle: 'long'
+    });
+
+    const subject = `🎯 New Lead: ${firstName} ${lastName} (${avatar})`;
+    
+    const body = `New lead captured from modal!
+
+📋 LEAD DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone || 'Not provided'}
+Source Page: ${sourcePage}
+Avatar: ${avatar}
+Timestamp: ${timestamp}
+
+🔗 QUICK ACTIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+View Dashboard: https://mlm-lead-crm.vercel.app/dashboard
+View in Database: Lead captured successfully
+
+💡 NEXT STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Welcome email sent to lead
+✅ Lead redirected to SKOOL community
+✅ Stored in MongoDB
+
+---
+MLM Lead CRM System
+Network Leveraging Cash Flow`;
+
+    const { data, error } = await resend.emails.send({
+      from: 'MLM Lead CRM <hello@m.networkleveragingcashflow.com>',
+      to: [adminEmail],
+      subject: subject,
+      text: body,
+      replyTo: email // Allow quick reply to the lead
+    });
+
+    if (error) {
+      console.error('Admin notification error:', error);
+      return false;
+    }
+
+    console.log('Admin notification sent:', data?.id);
+    return true;
+
+  } catch (error) {
+    console.error('Error sending admin notification:', error);
+    return false;
+  }
+}

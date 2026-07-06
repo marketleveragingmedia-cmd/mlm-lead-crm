@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Lead from '@/models/Lead';
 import { syncToGlobalControl } from '@/lib/globalControl';
-import { sendWelcomeEmail } from '@/lib/email';
+import { sendWelcomeEmail, sendAdminNotification } from '@/lib/email';
 
 export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, {
@@ -84,6 +84,15 @@ export async function POST(request: NextRequest) {
       lead.email,
       lead.sourcePage
     );
+
+    // Send admin notification (non-blocking)
+    sendAdminNotification(
+      lead.firstName,
+      lead.lastName,
+      lead.email,
+      lead.phone || '',
+      lead.sourcePage
+    ).catch(err => console.error('Admin notification failed:', err));
 
     return NextResponse.json(
       {
