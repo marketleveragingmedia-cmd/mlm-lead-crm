@@ -387,7 +387,16 @@ Network Leveraging Cash Flow`;
     if (error) {
       console.error('❌ Admin notification Resend error:', error);
       console.error('❌ Error type:', typeof error);
+      console.error('❌ Error name:', error?.name);
+      console.error('❌ Error message:', error?.message);
       console.error('❌ Error details:', JSON.stringify(error, null, 2));
+      
+      // Log specific Resend error info
+      if (error && typeof error === 'object') {
+        console.error('❌ Resend error keys:', Object.keys(error));
+        if ('statusCode' in error) console.error('❌ Status code:', error.statusCode);
+        if ('message' in error) console.error('❌ Message:', error.message);
+      }
       return false;
     }
 
