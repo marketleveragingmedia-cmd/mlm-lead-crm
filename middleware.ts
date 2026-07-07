@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
   // Allow public routes
   if (
     pathname.startsWith('/api/capture-lead') ||
+    pathname.startsWith('/api/test-env') ||
     pathname.startsWith('/api/auth/login') ||
     pathname === '/login' ||
     pathname.startsWith('/_next') ||
