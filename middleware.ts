@@ -8,6 +8,7 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/api/capture-lead') ||
     pathname.startsWith('/api/test-env') ||
+    pathname.startsWith('/api/debug-last-lead') ||
     pathname.startsWith('/api/auth/login') ||
     pathname === '/login' ||
     pathname.startsWith('/_next') ||
