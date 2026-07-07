@@ -86,13 +86,26 @@ export async function POST(request: NextRequest) {
     );
 
     // Send admin notification (non-blocking)
-    sendAdminNotification(
+    const adminNotificationPromise = sendAdminNotification(
       lead.firstName,
       lead.lastName,
       lead.email,
       lead.phone || '',
       lead.sourcePage
-    ).catch(err => console.error('Admin notification failed:', err));
+    );
+    
+    adminNotificationPromise
+      .then(result => {
+        if (result) {
+          console.log('✅ Admin notification sent successfully');
+        } else {
+          console.warn('⚠️ Admin notification returned false - check ADMIN_NOTIFICATION_EMAIL env var');
+        }
+      })
+      .catch(err => {
+        console.error('❌ Admin notification failed with error:', err);
+        console.error('Error details:', JSON.stringify(err, null, 2));
+      });
 
     return NextResponse.json(
       {

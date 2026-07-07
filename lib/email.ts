@@ -326,10 +326,14 @@ export async function sendAdminNotification(
   sourcePage: string
 ): Promise<boolean> {
   try {
+    console.log('📧 sendAdminNotification called for:', firstName, lastName);
     const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
     
+    console.log('🔍 ADMIN_NOTIFICATION_EMAIL exists:', !!adminEmail);
+    console.log('🔍 ADMIN_NOTIFICATION_EMAIL value:', adminEmail ? `${adminEmail.substring(0, 5)}...` : 'undefined');
+    
     if (!adminEmail) {
-      console.warn('ADMIN_NOTIFICATION_EMAIL not configured, skipping admin notification');
+      console.warn('⚠️ ADMIN_NOTIFICATION_EMAIL not configured, skipping admin notification');
       return false;
     }
 
@@ -369,6 +373,9 @@ View in Database: Lead captured successfully
 MLM Lead CRM System
 Network Leveraging Cash Flow`;
 
+    console.log('📤 Sending admin notification email to:', adminEmail);
+    console.log('📝 Subject:', subject);
+    
     const { data, error } = await resend.emails.send({
       from: 'MLM Lead CRM <hello@m.networkleveragingcashflow.com>',
       to: [adminEmail],
@@ -378,11 +385,13 @@ Network Leveraging Cash Flow`;
     });
 
     if (error) {
-      console.error('Admin notification error:', error);
+      console.error('❌ Admin notification Resend error:', error);
+      console.error('❌ Error type:', typeof error);
+      console.error('❌ Error details:', JSON.stringify(error, null, 2));
       return false;
     }
 
-    console.log('Admin notification sent:', data?.id);
+    console.log('✅ Admin notification sent successfully! Email ID:', data?.id);
     return true;
 
   } catch (error) {
