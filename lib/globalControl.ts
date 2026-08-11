@@ -42,7 +42,7 @@ export async function syncToGlobalControl(lead: any): Promise<string | null> {
     }
 
     const createData = await createResponse.json();
-    const contactId = createData.id || createData.contactId;
+    const contactId = createData.data?._id || createData.data?.id || createData.id || createData._id;
 
     if (!contactId) {
       console.error('No contact ID returned from Global Control:', createData);
