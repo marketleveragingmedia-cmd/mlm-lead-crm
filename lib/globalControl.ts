@@ -18,48 +18,33 @@ const STAGE_NEW_LEAD_TAG_ID = '6a08e006923e6123303baa61'; // stage-new-lead
 
 export async function syncToGlobalControl(lead: any): Promise<string | null> {
   try {
-    // Step 1: Create contact in Global Control
-    const createResponse = await fetch(`${GC_BASE_URL}/contacts`, {
-      method: 'POST',
-      headers: {
-        'X-API-KEY': GC_API_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: lead.email,
-        firstName: lead.firstName,
-        lastName: lead.lastName,
-        phone: lead.phone || '',
-        source: lead.sourcePage || 'website'
-      })
-    });
-
-    if (!createResponse.ok) {
-      const errorText = await createResponse.text();
-      console.error('Global Control create contact failed:', createResponse.status, errorText);
-      return null;
-    }
-
-    const createData = await createResponse.json();
-    const contactId = createData.data?._id || createData.data?.id || createData.id || createData._id;
-
-    if (!contactId) {
-      console.error('No contact ID returned from Global Control:', createData);
-      return null;
-    }
-
-    console.log('✅ Global Control contact created:', contactId);
-
-    // Step 2: Add avatar tag based on source page
+    // Step 1: Fire avatar tag (creates contact if missing)
     const avatarTagId = getAvatarTagId(lead.sourcePage);
     if (avatarTagId) {
-      await fireTagForContact(contactId, avatarTagId);
+      await fireTag(avatarTagId, lead.email, lead.firstName, lead.lastName, lead.phone);
     }
 
-    // Step 3: Add stage tag (new lead)
-    await fireTagForContact(contactId, STAGE_NEW_LEAD_TAG_ID);
+    // Step 2: Fire stage tag (new lead)
+    await fireTag(STAGE_NEW_LEAD_TAG_ID, lead.email, lead.firstName, lead.lastName, lead.phone);
 
-    return contactId;
+    // Step 3: Get contact to return ID
+    const contactsResponse = await fetch(`${GC_BASE_URL}/contacts?search=${encodeURIComponent(lead.email)}`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': GC_API_KEY
+      }
+    });
+
+    if (contactsResponse.ok) {
+      const contactsData = await contactsResponse.json();
+      const contact = contactsData.data?.find((c: any) => c.email === lead.email);
+      if (contact) {
+        console.log('✅ Global Control contact synced:', contact._id);
+        return contact._id;
+      }
+    }
+
+    return 'synced'; // Tag fired successfully even if we can't get contact ID
 
   } catch (error) {
     console.error('Error syncing to Global Control:', error);
@@ -85,21 +70,24 @@ function getAvatarTagId(sourcePage: string): string | null {
   return null;
 }
 
-async function fireTagForContact(contactId: string, tagId: string): Promise<void> {
+async function fireTag(tagId: string, email: string, firstName: string, lastName: string, phone?: string): Promise<void> {
   try {
-    const response = await fetch(`${GC_BASE_URL}/contacts/${contactId}/fire-tag`, {
+    const response = await fetch(`${GC_BASE_URL}/tags/fire-tag/${tagId}`, {
       method: 'POST',
       headers: {
         'X-API-KEY': GC_API_KEY,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        tagId: tagId
+        email,
+        firstName,
+        lastName,
+        phone: phone || ''
       })
     });
 
     if (response.ok) {
-      console.log(`✅ Tag fired for contact ${contactId}: ${tagId}`);
+      console.log(`✅ Tag fired: ${tagId} for ${email}`);
     } else {
       const errorText = await response.text();
       console.error(`Failed to fire tag ${tagId}:`, response.status, errorText);
