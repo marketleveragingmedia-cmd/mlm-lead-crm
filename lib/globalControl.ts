@@ -1,20 +1,20 @@
 const GC_API_KEY = process.env.GLOBAL_CONTROL_API_KEY!;
 const GC_BASE_URL = 'https://api.globalcontrol.io/api/ai';
 
-// Avatar tags for Cash Flow Visionaries and other landing pages
-const AVATAR_TAGS: Record<string, string> = {
-  'jv-affiliate': 'avatar-jv-affiliate',
-  'high-risk-trader': 'avatar-high-risk-trading',
-  'no-more-clients': 'avatar-no-more-clients',
-  'side-hustlers': 'avatar-side-hustler',
-  'builder-class': 'avatar-builder-class',
-  'artists-musicians': 'avatar-artist-musician',
-  'social-security-trap': 'avatar-social-security',
-  'ubi-cbdc-warning': 'avatar-ubi-cbdc',
-  'cash-flow-visionary': 'avatar-cash-flow-visionary' // Main CFV landing page
+// Tag IDs from Global Control (fetched August 11, 2026)
+const AVATAR_TAG_IDS: Record<string, string> = {
+  'jv-affiliate': '6a08e006923e6123303bac7e', // avatar-jv-affiliate
+  'high-risk-trader': '69ed61cc71e469e5362884d6', // avatar-high-risk-trading
+  'no-more-clients': '69ed61cc71e469e53628858a', // avatar-no-more-clients
+  'side-hustlers': '69ed61cc71e469e53628863e', // avatar-side-hustler
+  'builder-class': '69ed61cc71e469e5362886f2', // avatar-builder-class
+  'artists-musicians': '69ed61cd71e469e5362887a6', // avatar-artist-musician
+  'social-security-trap': '69ed61cd71e469e53628885a', // avatar-social-security
+  'ubi-cbdc-warning': '69ed61cd71e469e53628890e', // avatar-ubi-cbdc
+  'cash-flow-visionary': '6a7a8b02e5e54cbbe6f65b01' // avatar-cash-flow-visionary (CREATED Aug 11, 2026)
 };
 
-const STAGE_TAG = 'stage-new-lead'; // New lead entry point
+const STAGE_NEW_LEAD_TAG_ID = '6a08e006923e6123303baa61'; // stage-new-lead
 
 export async function syncToGlobalControl(lead: any): Promise<string | null> {
   try {
@@ -30,8 +30,7 @@ export async function syncToGlobalControl(lead: any): Promise<string | null> {
         firstName: lead.firstName,
         lastName: lead.lastName,
         phone: lead.phone || '',
-        source: lead.sourcePage || 'website',
-        tags: [] // Tags will be added via tag endpoints
+        source: lead.sourcePage || 'website'
       })
     });
 
@@ -52,13 +51,13 @@ export async function syncToGlobalControl(lead: any): Promise<string | null> {
     console.log('✅ Global Control contact created:', contactId);
 
     // Step 2: Add avatar tag based on source page
-    const avatarTag = getAvatarTag(lead.sourcePage);
-    if (avatarTag) {
-      await addTagToContact(contactId, avatarTag);
+    const avatarTagId = getAvatarTagId(lead.sourcePage);
+    if (avatarTagId) {
+      await fireTagForContact(contactId, avatarTagId);
     }
 
     // Step 3: Add stage tag (new lead)
-    await addTagToContact(contactId, STAGE_TAG);
+    await fireTagForContact(contactId, STAGE_NEW_LEAD_TAG_ID);
 
     return contactId;
 
@@ -68,25 +67,25 @@ export async function syncToGlobalControl(lead: any): Promise<string | null> {
   }
 }
 
-function getAvatarTag(sourcePage: string): string | null {
+function getAvatarTagId(sourcePage: string): string | null {
   if (!sourcePage) return null;
   
   const normalized = sourcePage.toLowerCase();
   
-  if (normalized.includes('jv-affiliate')) return AVATAR_TAGS['jv-affiliate'];
-  if (normalized.includes('high-risk-trading')) return AVATAR_TAGS['high-risk-trader'];
-  if (normalized.includes('no-more-clients')) return AVATAR_TAGS['no-more-clients'];
-  if (normalized.includes('side-hustler')) return AVATAR_TAGS['side-hustlers'];
-  if (normalized.includes('builder-class')) return AVATAR_TAGS['builder-class'];
-  if (normalized.includes('artist') || normalized.includes('musician')) return AVATAR_TAGS['artists-musicians'];
-  if (normalized.includes('social-security')) return AVATAR_TAGS['social-security-trap'];
-  if (normalized.includes('ubi') || normalized.includes('cbdc')) return AVATAR_TAGS['ubi-cbdc-warning'];
-  if (normalized.includes('cash-flow-visionar')) return AVATAR_TAGS['cash-flow-visionary'];
+  if (normalized.includes('jv-affiliate')) return AVATAR_TAG_IDS['jv-affiliate'];
+  if (normalized.includes('high-risk-trading')) return AVATAR_TAG_IDS['high-risk-trader'];
+  if (normalized.includes('no-more-clients')) return AVATAR_TAG_IDS['no-more-clients'];
+  if (normalized.includes('side-hustler')) return AVATAR_TAG_IDS['side-hustlers'];
+  if (normalized.includes('builder-class')) return AVATAR_TAG_IDS['builder-class'];
+  if (normalized.includes('artist') || normalized.includes('musician')) return AVATAR_TAG_IDS['artists-musicians'];
+  if (normalized.includes('social-security')) return AVATAR_TAG_IDS['social-security-trap'];
+  if (normalized.includes('ubi') || normalized.includes('cbdc')) return AVATAR_TAG_IDS['ubi-cbdc-warning'];
+  if (normalized.includes('cash-flow-visionar')) return AVATAR_TAG_IDS['cash-flow-visionary'];
   
   return null;
 }
 
-async function addTagToContact(contactId: string, tagName: string): Promise<void> {
+async function fireTagForContact(contactId: string, tagId: string): Promise<void> {
   try {
     const response = await fetch(`${GC_BASE_URL}/contacts/${contactId}/fire-tag`, {
       method: 'POST',
@@ -95,17 +94,17 @@ async function addTagToContact(contactId: string, tagName: string): Promise<void
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        tagName: tagName
+        tagId: tagId
       })
     });
 
     if (response.ok) {
-      console.log(`✅ Tag added to contact ${contactId}: ${tagName}`);
+      console.log(`✅ Tag fired for contact ${contactId}: ${tagId}`);
     } else {
       const errorText = await response.text();
-      console.error(`Failed to add tag ${tagName}:`, response.status, errorText);
+      console.error(`Failed to fire tag ${tagId}:`, response.status, errorText);
     }
   } catch (error) {
-    console.error(`Error adding tag ${tagName}:`, error);
+    console.error(`Error firing tag ${tagId}:`, error);
   }
 }
