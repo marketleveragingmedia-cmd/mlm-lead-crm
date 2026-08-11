@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Lead from '@/models/Lead';
+import prisma from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
-    await dbConnect();
-
     // Get the most recent lead
-    const lastLead = await Lead.findOne()
-      .sort({ createdAt: -1 })
-      .limit(1);
+    const lastLead = await prisma.lead.findFirst({
+      orderBy: { createdAt: 'desc' }
+    });
 
     if (!lastLead) {
       return NextResponse.json({ 

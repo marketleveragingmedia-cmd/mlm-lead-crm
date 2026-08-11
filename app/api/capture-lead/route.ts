@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Lead from '@/models/Lead';
+import prisma from '@/lib/db';
 import { syncToGlobalControl } from '@/lib/globalControl';
 import { sendWelcomeEmail, sendAdminNotification } from '@/lib/email';
 
@@ -38,11 +37,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Connect to database
-    await dbConnect();
-
     // Check if lead already exists
-    const existingLead = await Lead.findOne({ email });
+    const existingLead = await prisma.lead.findUnique({
+      where: { email }
+    });
+
     if (existingLead) {
       return NextResponse.json(
         { success: false, error: 'Email already exists' },
@@ -58,23 +57,34 @@ export async function POST(request: NextRequest) {
     }
 
     // Create lead
-    const lead = await Lead.create({
-      firstName,
-      lastName,
-      email,
-      phone,
-      sourcePage: source,
-      createdAt: new Date(),
-      syncedToGlobalControl: false
+    const lead = await prisma.lead.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phone: phone || null,
+        sourcePage: source,
+        syncedToGlobalControl: false
+      }
     });
 
     // Sync to Global Control
-    const contactId = await syncToGlobalControl(lead);
+    const contactId = await syncToGlobalControl({
+      firstName: lead.firstName,
+      lastName: lead.lastName,
+      email: lead.email,
+      phone: lead.phone,
+      sourcePage: lead.sourcePage
+    });
 
     if (contactId) {
-      lead.syncedToGlobalControl = true;
-      lead.globalControlContactId = contactId;
-      await lead.save();
+      await prisma.lead.update({
+        where: { id: lead.id },
+        data: {
+          syncedToGlobalControl: true,
+          globalControlContactId: contactId
+        }
+      });
     }
 
     // Send welcome email
@@ -110,7 +120,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        leadId: lead._id,
+        leadId: lead.id,
         syncedToGlobalControl: lead.syncedToGlobalControl,
         emailSent
       },

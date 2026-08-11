@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Lead from '@/models/Lead';
+import prisma from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
-    await dbConnect();
-
     const { searchParams } = new URL(request.url);
     const sourcePage = searchParams.get('sourcePage');
     const limit = parseInt(searchParams.get('limit') || '100');
 
-    const query = sourcePage ? { sourcePage } : {};
-    const leads = await Lead.find(query)
-      .sort({ createdAt: -1 })
-      .limit(limit);
+    const leads = await prisma.lead.findMany({
+      where: sourcePage ? { sourcePage } : undefined,
+      orderBy: { createdAt: 'desc' },
+      take: limit
+    });
 
     return NextResponse.json({
       success: true,

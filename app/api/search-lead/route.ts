@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Lead from '@/models/Lead';
+import prisma from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,9 +13,9 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    await dbConnect();
-
-    const lead = await Lead.findOne({ email: email });
+    const lead = await prisma.lead.findUnique({
+      where: { email }
+    });
 
     if (!lead) {
       return NextResponse.json({ 

@@ -1,47 +1,13 @@
-import mongoose from 'mongoose';
-
-interface MongooseCache {
-  conn: typeof mongoose | null;
-  promise: Promise<typeof mongoose> | null;
-}
+import { PrismaClient } from '@prisma/client';
 
 declare global {
-  var mongoose: MongooseCache | undefined;
+  var prisma: PrismaClient | undefined;
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+const prisma = global.prisma || new PrismaClient();
 
-if (!global.mongoose) {
-  global.mongoose = cached;
+if (process.env.NODE_ENV !== 'production') {
+  global.prisma = prisma;
 }
 
-async function dbConnect() {
-  const MONGODB_URI = process.env.MONGODB_URI;
-
-  if (!MONGODB_URI) {
-    throw new Error('Please define the MONGODB_URI environment variable');
-  }
-
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI, opts);
-  }
-
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
-
-  return cached.conn;
-}
-
-export default dbConnect;
+export default prisma;

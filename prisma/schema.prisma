@@ -1,0 +1,27 @@
+// MLM Lead CRM Database Schema
+// Converted to PostgreSQL: August 11, 2026
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id                     String   @id @default(cuid())
+  firstName              String
+  lastName               String
+  email                  String   @unique
+  phone                  String?
+  sourcePage             String
+  createdAt              DateTime @default(now())
+  syncedToGlobalControl  Boolean  @default(false)
+  globalControlContactId String?
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([sourcePage])
+}
