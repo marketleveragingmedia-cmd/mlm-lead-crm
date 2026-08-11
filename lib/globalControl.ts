@@ -88,14 +88,14 @@ function getAvatarTag(sourcePage: string): string | null {
 
 async function addTagToContact(contactId: string, tagName: string): Promise<void> {
   try {
-    const response = await fetch(`${GC_BASE_URL}/contacts/${contactId}/tags`, {
+    const response = await fetch(`${GC_BASE_URL}/contacts/${contactId}/fire-tag`, {
       method: 'POST',
       headers: {
         'X-API-KEY': GC_API_KEY,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        tag: tagName
+        tagName: tagName
       })
     });
 
