@@ -11,17 +11,137 @@ datasource db {
 }
 
 model Lead {
-  id                     String   @id @default(cuid())
+  id                     String            @id @default(cuid())
   firstName              String
   lastName               String
-  email                  String   @unique
+  email                  String            @unique
   phone                  String?
   sourcePage             String
-  createdAt              DateTime @default(now())
-  syncedToGlobalControl  Boolean  @default(false)
+  
+  // Resend Integration
+  resendContactId        String?           @unique
+  resendAudienceId       String?
+  resendTags             String[]          @default([])
+  
+  // Automation Tracking
+  automationEnrolled     Boolean           @default(false)
+  automationName         String?
+  automationStartedAt    DateTime?
+  automationCompletedAt  DateTime?
+  
+  // Engagement Tracking
+  emailsReceived         Int               @default(0)
+  emailsOpened           Int               @default(0)
+  emailsClicked          Int               @default(0)
+  lastEmailOpenedAt      DateTime?
+  lastEmailClickedAt     DateTime?
+  
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @default(now()) @updatedAt
+  syncedToGlobalControl  Boolean           @default(false)
   globalControlContactId String?
+  
+  simulatorResults       SimulatorResult[]
+  emailEvents            EmailEvent[]
 
   @@index([email])
   @@index([createdAt])
   @@index([sourcePage])
+  @@index([resendContactId])
+  @@index([resendAudienceId])
+}
+
+model SimulatorResult {
+  id                         String    @id @default(cuid())
+  leadId                     String
+  lead                       Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  selectedPurposes           String[]  // Array of up to 3 purposes
+  monthlyGoal                Float
+  enterpriseConnections      Int
+  enterpriseResidualCashFlow Float
+  communityCompoundingWeek   Float
+  simulatorStarted           Boolean   @default(true)
+  simulatorCompleted         Boolean   @default(false)
+  completedAt                DateTime?
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
+
+  @@index([leadId])
+  @@index([simulatorCompleted])
+  @@index([createdAt])
+}
+
+model ResendAudience {
+  id           String   @id @default(cuid())
+  resendId     String   @unique
+  name         String
+  description  String?
+  contactCount Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([resendId])
+}
+
+model ResendAutomation {
+  id             String   @id @default(cuid())
+  name           String   @unique
+  description    String?
+  triggerType    String   // "form_submit", "tag_added", "manual"
+  triggerValue   String?  // Form name, tag name, etc.
+  audienceId     String?
+  fromDomain     String   @default("m.networkleveragingcashflow.com")
+  fromName       String   @default("Network Leveraging Cash Flow")
+  fromEmail      String?
+  active         Boolean  @default(true)
+  emails         Json     // Array of email configs
+  enrolledCount  Int      @default(0)
+  completedCount Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([name])
+  @@index([active])
+}
+
+model ResendBroadcast {
+  id             String    @id @default(cuid())
+  name           String
+  subject        String
+  htmlContent    String    @db.Text
+  textContent    String?   @db.Text
+  audienceId     String?
+  tags           String[]  @default([])
+  fromDomain     String    @default("m.networkleveragingcashflow.com")
+  fromName       String    @default("Network Leveraging Cash Flow")
+  fromEmail      String?
+  scheduledFor   DateTime?
+  sentAt         DateTime?
+  status         String    @default("draft") // "draft", "scheduled", "sending", "sent"
+  recipientCount Int       @default(0)
+  openedCount    Int       @default(0)
+  clickedCount   Int       @default(0)
+  createdBy      String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status])
+  @@index([scheduledFor])
+  @@index([sentAt])
+}
+
+model EmailEvent {
+  id           String   @id @default(cuid())
+  leadId       String
+  lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  eventType    String   // "sent", "delivered", "opened", "clicked", "bounced", "complained"
+  emailId      String?
+  broadcastId  String?
+  automationId String?
+  metadata     Json?
+  occurredAt   DateTime @default(now())
+
+  @@index([leadId])
+  @@index([eventType])
+  @@index([occurredAt])
 }
