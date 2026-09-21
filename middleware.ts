@@ -2,35 +2,19 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // Allow public routes
-  if (
-    pathname.startsWith('/api/capture-lead') ||
-    pathname.startsWith('/api/crm/capture-lead') ||
-    pathname.startsWith('/api/webhooks/resend') ||
-    pathname.startsWith('/api/test-env') ||
-    pathname.startsWith('/api/debug-last-lead') ||
-    pathname.startsWith('/api/search-lead') ||
-    pathname.startsWith('/api/auth/login') ||
-    pathname === '/login' ||
-    pathname.startsWith('/crm') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon')
-  ) {
-    return NextResponse.next();
-  }
-
-  // Check authentication
-  const authCookie = request.cookies.get('mlm-crm-auth');
-
-  if (!authCookie || authCookie.value !== 'true') {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // Check if the request is for /crm routes (but not API routes)
+  if (request.nextUrl.pathname.startsWith('/crm') && !request.nextUrl.pathname.startsWith('/crm/api')) {
+    const authCookie = request.cookies.get('mlm-crm-auth');
+    
+    if (!authCookie || authCookie.value !== 'true') {
+      // Redirect to login page
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)']
+  matcher: '/crm/:path*',
 };

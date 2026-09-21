@@ -1,0 +1,1148 @@
+// Automation Templates Library
+// Pre-built email automation sequences with full content
+
+import { wrapEmailContent } from './email-templates';
+
+export interface AutomationEmail {
+  subject: string;
+  htmlContent: string;
+  textContent: string;
+  delayDays?: number;
+  delayHours?: number;
+}
+
+export interface AutomationTemplate {
+  id: string;
+  name: string;
+  description: string;
+  triggerType: 'form_submit' | 'tag_added' | 'manual';
+  audienceKey: string;
+  emails: AutomationEmail[];
+  defaultFromDomain: string;
+  defaultFromName: string;
+}
+
+export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
+  {
+    id: 'cfv-welcome-series',
+    name: 'Cash Flow Visionaries - Welcome Series',
+    description: '5-email nurture sequence for new CFV leads',
+    triggerType: 'form_submit',
+    audienceKey: 'cash-flow-visionaries',
+    defaultFromDomain: 'm.cashflowvisionaries.com',
+    defaultFromName: 'Cash Flow Visionaries',
+    emails: [
+      {
+        subject: 'Welcome to Cash Flow Visionaries 🎯',
+        delayDays: 0,
+        delayHours: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Welcome, Visionary! 🎯</h2>
+          <p>You've just joined an exclusive community of forward-thinking entrepreneurs who understand that <strong>leverage</strong> is the key to exponential growth.</p>
+          <p>Most business owners are stuck trading time for money. You're different. You're here because you want to build something that compounds.</p>
+          
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">What You Can Expect:</h3>
+            <ul style="line-height: 1.8; margin: 0;">
+              <li><strong>Weekly Insights</strong> - Strategies to build residual cash flow</li>
+              <li><strong>Exclusive Training</strong> - Network leverage fundamentals</li>
+              <li><strong>Community Access</strong> - Connect with other visionaries</li>
+            </ul>
+          </div>
+
+          <p>Over the next few days, I'll be sharing the exact framework we use to build leverage in our businesses.</p>
+          
+          <p style="margin-top: 32px;">To your exponential success,<br><strong>The CFV Team</strong></p>
+        `, 'Cash Flow Visionaries'),
+        textContent: `Welcome, Visionary!
+
+You've just joined an exclusive community of forward-thinking entrepreneurs who understand that leverage is the key to exponential growth.
+
+What You Can Expect:
+- Weekly Insights - Strategies to build residual cash flow
+- Exclusive Training - Network leverage fundamentals  
+- Community Access - Connect with other visionaries
+
+Over the next few days, I'll be sharing the exact framework we use to build leverage in our businesses.
+
+To your exponential success,
+The CFV Team`,
+      },
+      {
+        subject: 'The 3 Types of Leverage (Most Miss #3)',
+        delayDays: 2,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">The 3 Types of Leverage</h2>
+          <p>Let's talk about something most entrepreneurs get wrong...</p>
+          
+          <p>They think leverage = automation. They're missing 2/3rds of the picture.</p>
+
+          <div style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <h3 style="color: #C9A441; margin-top: 0;">Type 1: Time Leverage</h3>
+            <p style="margin: 0;">Systems and automation that work without you. This is where most people stop.</p>
+          </div>
+
+          <div style="background: #f0f8f4; padding: 20px; border-left: 4px solid #1E8E5A; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">Type 2: People Leverage</h3>
+            <p style="margin: 0;">Teams that scale your impact. Good, but still limited by your ability to manage.</p>
+          </div>
+
+          <div style="background: #e8f5e9; padding: 20px; border-left: 4px solid #166B44; margin: 24px 0;">
+            <h3 style="color: #166B44; margin-top: 0;">Type 3: Network Leverage 🎯</h3>
+            <p style="margin: 0;"><strong>This is where exponential growth happens.</strong> When your income compounds through connections, you've achieved true leverage.</p>
+          </div>
+
+          <p>Tomorrow, I'll show you exactly how to build Network Leverage in your business.</p>
+          
+          <p style="margin-top: 32px;">Building leverage with you,<br><strong>The CFV Team</strong></p>
+        `, 'Cash Flow Visionaries'),
+        textContent: `The 3 Types of Leverage
+
+Let's talk about something most entrepreneurs get wrong...
+
+They think leverage = automation. They're missing 2/3rds of the picture.
+
+Type 1: Time Leverage
+Systems and automation that work without you. This is where most people stop.
+
+Type 2: People Leverage
+Teams that scale your impact. Good, but still limited by your ability to manage.
+
+Type 3: Network Leverage
+This is where exponential growth happens. When your income compounds through connections, you've achieved true leverage.
+
+Tomorrow, I'll show you exactly how to build Network Leverage in your business.
+
+Building leverage with you,
+The CFV Team`,
+      },
+      {
+        subject: 'How Network Leverage Actually Works',
+        delayDays: 4,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">The Network Leverage Formula</h2>
+          <p>Here's the simple truth that changed everything for us...</p>
+          
+          <div style="background: linear-gradient(135deg, #f0f8f4 0%, #e8f5e9 100%); padding: 24px; border-radius: 12px; margin: 24px 0; text-align: center;">
+            <div style="font-size: 28px; font-weight: 700; color: #1E8E5A; margin-bottom: 12px;">
+              Connections × Value × Time = Exponential Cash Flow
+            </div>
+            <div style="font-size: 14px; color: #666;">
+              The more connections you build, the more value flows through the network
+            </div>
+          </div>
+
+          <h3 style="color: #1E8E5A;">Here's How It Compounds:</h3>
+          <ul style="line-height: 1.8;">
+            <li><strong>Month 1:</strong> You connect 10 people. Each generates $100/mo residual = $1,000/mo</li>
+            <li><strong>Month 3:</strong> Those 10 each connect 5 more. Now you have 60 connections = $6,000/mo</li>
+            <li><strong>Month 6:</strong> The network grows to 300+ connections = $30,000/mo</li>
+          </ul>
+
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">⚡ The key:</strong> You're not doing 300× the work. The network is doing the work.
+          </p>
+
+          <p>
+            <a href="https://cashflowvisionaries.com/calculator" class="button">Calculate Your Potential →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">This is how you build real wealth,<br><strong>The CFV Team</strong></p>
+        `, 'Cash Flow Visionaries'),
+        textContent: `The Network Leverage Formula
+
+Here's the simple truth that changed everything for us...
+
+Connections × Value × Time = Exponential Cash Flow
+
+The more connections you build, the more value flows through the network.
+
+Here's How It Compounds:
+- Month 1: You connect 10 people. Each generates $100/mo residual = $1,000/mo
+- Month 3: Those 10 each connect 5 more. Now you have 60 connections = $6,000/mo
+- Month 6: The network grows to 300+ connections = $30,000/mo
+
+The key: You're not doing 300× the work. The network is doing the work.
+
+Calculate your potential: https://cashflowvisionaries.com/calculator
+
+This is how you build real wealth,
+The CFV Team`,
+      },
+      {
+        subject: 'Your Invitation: Founders Beta Access',
+        delayDays: 6,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">You're Ready for This 🎖️</h2>
+          <p>If you've read this far, you get it. You understand leverage. You want freedom.</p>
+          
+          <p>We're opening Founders Beta access to a select group of visionaries who are ready to build network leverage in their businesses.</p>
+
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">Founders Beta Includes:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li><strong>Early Access</strong> - Be first to build in the network</li>
+              <li><strong>Founders Dashboard</strong> - Track your leverage metrics</li>
+              <li><strong>Strategy Session</strong> - Personal onboarding call</li>
+              <li><strong>Community Access</strong> - Connect with other founders</li>
+              <li><strong>Lifetime Pricing</strong> - Lock in founders rates forever</li>
+            </ul>
+          </div>
+
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">⏰ Limited to 100 founders.</strong> Once we hit capacity, we're closing access until Q1 2027.
+          </p>
+
+          <p>
+            <a href="https://citizenactivation.com/founders" class="button">Claim Your Founders Access →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">Ready when you are,<br><strong>The CFV Team</strong></p>
+        `, 'Cash Flow Visionaries'),
+        textContent: `You're Ready for This
+
+If you've read this far, you get it. You understand leverage. You want freedom.
+
+We're opening Founders Beta access to a select group of visionaries who are ready to build network leverage in their businesses.
+
+Founders Beta Includes:
+- Early Access - Be first to build in the network
+- Founders Dashboard - Track your leverage metrics
+- Strategy Session - Personal onboarding call
+- Community Access - Connect with other founders
+- Lifetime Pricing - Lock in founders rates forever
+
+Limited to 100 founders. Once we hit capacity, we're closing access until Q1 2027.
+
+Claim your access: https://citizenactivation.com/founders
+
+Ready when you are,
+The CFV Team`,
+      },
+      {
+        subject: 'Last Call: Founders Beta Closing Soon',
+        delayDays: 10,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">This is Your Moment</h2>
+          <p>I don't want you to miss this opportunity.</p>
+          
+          <p>We're down to the final spots for Founders Beta. After this, we're closing access until Q1 2027.</p>
+
+          <div style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <p style="margin: 0;"><strong style="color: #C9A441;">Here's what I know:</strong> A year from now, you'll either have built network leverage in your business, or you'll still be trading time for money. The choice is simple, but it's yours.</p>
+          </div>
+
+          <p>If you're ready to build exponential cash flow through network leverage, this is your invitation.</p>
+
+          <p>
+            <a href="https://citizenactivation.com/founders" class="button">Join Founders Beta Now →</a>
+          </p>
+
+          <p style="margin-top: 32px; font-size: 14px; color: #666;">
+            <em>P.S. - If you're not ready, that's okay too. Save this email. When you are ready, reach out. We'll make room for visionaries who are serious about building leverage.</em>
+          </p>
+          
+          <p style="margin-top: 32px;">See you on the inside,<br><strong>The CFV Team</strong></p>
+        `, 'Cash Flow Visionaries'),
+        textContent: `This is Your Moment
+
+I don't want you to miss this opportunity.
+
+We're down to the final spots for Founders Beta. After this, we're closing access until Q1 2027.
+
+Here's what I know: A year from now, you'll either have built network leverage in your business, or you'll still be trading time for money. The choice is simple, but it's yours.
+
+If you're ready to build exponential cash flow through network leverage, this is your invitation.
+
+Join now: https://citizenactivation.com/founders
+
+P.S. - If you're not ready, that's okay too. Save this email. When you are ready, reach out. We'll make room for visionaries who are serious about building leverage.
+
+See you on the inside,
+The CFV Team`,
+      },
+    ],
+  },
+  {
+    id: 'simulator-nurture',
+    name: 'Simulator Completion - Nurture Sequence',
+    description: '4-email follow-up after simulator completion',
+    triggerType: 'form_submit',
+    audienceKey: 'simulator',
+    defaultFromDomain: 'm.cashflowvisionary.com',
+    defaultFromName: 'Cash Flow Visionary',
+    emails: [
+      {
+        subject: 'Your Simulator Results - Here's What They Mean',
+        delayDays: 0,
+        delayHours: 1,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Understanding Your Numbers 📊</h2>
+          <p>Thanks for completing the Cash Flow Simulator. Let's break down what your results actually mean...</p>
+          
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <strong style="color: #1E8E5A; font-size: 18px; display: block; margin-bottom: 12px;">The Big Picture:</strong>
+            <p style="margin: 0;">Your results showed the difference between working <em>IN</em> your business versus building <em>leverage</em>. Most entrepreneurs are stuck in the first mode. You just saw what's possible when you shift to the second.</p>
+          </div>
+
+          <h3 style="color: #1E8E5A;">Three Key Insights:</h3>
+          <ul style="line-height: 1.8;">
+            <li><strong>Enterprise Connections</strong> - Each connection compounds monthly residual income</li>
+            <li><strong>Community Compounding</strong> - Weekly growth accelerates exponentially</li>
+            <li><strong>Time Freedom</strong> - Leverage means you're not trading hours for dollars</li>
+          </ul>
+
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">💡 Tomorrow:</strong> I'll show you the exact steps to start building this in your business.
+          </p>
+          
+          <p style="margin-top: 32px;">Ready to build this?<br><strong>Your CFV Team</strong></p>
+        `, 'Cash Flow Visionary'),
+        textContent: `Understanding Your Numbers
+
+Thanks for completing the Cash Flow Simulator. Let's break down what your results actually mean...
+
+The Big Picture:
+Your results showed the difference between working IN your business versus building leverage. Most entrepreneurs are stuck in the first mode. You just saw what's possible when you shift to the second.
+
+Three Key Insights:
+- Enterprise Connections - Each connection compounds monthly residual income
+- Community Compounding - Weekly growth accelerates exponentially
+- Time Freedom - Leverage means you're not trading hours for dollars
+
+Tomorrow: I'll show you the exact steps to start building this in your business.
+
+Ready to build this?
+Your CFV Team`,
+      },
+      {
+        subject: 'Step 1: The Foundation (Start Here)',
+        delayDays: 1,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Building Your Foundation</h2>
+          <p>You saw the numbers. Now let's make them real.</p>
+          
+          <p>The foundation of network leverage is simple: <strong>Value + Connections = Exponential Growth</strong></p>
+
+          <div style="background: linear-gradient(135deg, #f0f8f4 0%, #e8f5e9 100%); padding: 24px; border-radius: 12px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">Phase 1: Your First 10</h3>
+            <p>Focus on connecting your first 10 people. That's it. Not 100. Not 1,000. Just 10.</p>
+            <p style="margin-bottom: 0;"><strong>Why?</strong> Because 10 people who each connect 10 more becomes 110. Then 1,110. Then 11,110. That's how leverage compounds.</p>
+          </div>
+
+          <h3 style="color: #1E8E5A;">What You Need:</h3>
+          <ul style="line-height: 1.8;">
+            <li>A clear offer (what value are you providing?)</li>
+            <li>A simple system (how do people connect?)</li>
+            <li>A reason to share (why would they tell others?)</li>
+          </ul>
+
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">🎯 Tomorrow:</strong> I'll show you the exact offer framework that makes people <em>want</em> to connect others.
+          </p>
+          
+          <p style="margin-top: 32px;">Let's build this together,<br><strong>Your CFV Team</strong></p>
+        `, 'Cash Flow Visionary'),
+        textContent: `Building Your Foundation
+
+You saw the numbers. Now let's make them real.
+
+The foundation of network leverage is simple: Value + Connections = Exponential Growth
+
+Phase 1: Your First 10
+Focus on connecting your first 10 people. That's it. Not 100. Not 1,000. Just 10.
+
+Why? Because 10 people who each connect 10 more becomes 110. Then 1,110. Then 11,110. That's how leverage compounds.
+
+What You Need:
+- A clear offer (what value are you providing?)
+- A simple system (how do people connect?)
+- A reason to share (why would they tell others?)
+
+Tomorrow: I'll show you the exact offer framework that makes people want to connect others.
+
+Let's build this together,
+Your CFV Team`,
+      },
+      {
+        subject: 'The Offer That Sells Itself',
+        delayDays: 3,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">The Perfect Offer Formula</h2>
+          <p>Here's the secret: <strong>The best offers are so good, people feel guilty NOT sharing them.</strong></p>
+          
+          <div style="background: #f0f8f4; padding: 20px; border-left: 4px solid #1E8E5A; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">The Formula:</h3>
+            <p style="margin: 0; line-height: 1.8;">
+              <strong>Value × Simplicity × Shareability = Perfect Offer</strong><br><br>
+              • High value (solves a real problem)<br>
+              • Dead simple (anyone can explain it)<br>
+              • Built to share (people look good recommending it)
+            </p>
+          </div>
+
+          <h3 style="color: #1E8E5A;">Real Example:</h3>
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 16px 0;">
+            "Help 10 people build $1,000/mo residual income. They each help 10 more. Your network generates $100,000/mo. You keep 10%."
+          </p>
+          <p><strong>Why it works:</strong> Clear value, simple math, obvious reason to share.</p>
+
+          <p>
+            <a href="https://cashflowvisionary.com/offer-builder" class="button">Build Your Offer →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">Make it irresistible,<br><strong>Your CFV Team</strong></p>
+        `, 'Cash Flow Visionary'),
+        textContent: `The Perfect Offer Formula
+
+Here's the secret: The best offers are so good, people feel guilty NOT sharing them.
+
+The Formula:
+Value × Simplicity × Shareability = Perfect Offer
+
+• High value (solves a real problem)
+• Dead simple (anyone can explain it)
+• Built to share (people look good recommending it)
+
+Real Example:
+"Help 10 people build $1,000/mo residual income. They each help 10 more. Your network generates $100,000/mo. You keep 10%."
+
+Why it works: Clear value, simple math, obvious reason to share.
+
+Build your offer: https://cashflowvisionary.com/offer-builder
+
+Make it irresistible,
+Your CFV Team`,
+      },
+      {
+        subject: 'Ready to Start? Join Founders Beta',
+        delayDays: 6,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">You've Got the Framework. Now Build It. 🚀</h2>
+          <p>You've seen the simulator results. You understand the leverage formula. You know what a perfect offer looks like.</p>
+          
+          <p>Now it's time to build it.</p>
+
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">Founders Beta: Early Access</h3>
+            <p>We're opening limited spots for founders who are ready to build network leverage businesses.</p>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li><strong>Done-for-you offer framework</strong></li>
+              <li><strong>Network tracking dashboard</strong></li>
+              <li><strong>Weekly strategy calls</strong></li>
+              <li><strong>Founders-only community</strong></li>
+            </ul>
+          </div>
+
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Limited to 100 founders.</strong> When it's full, we're closing until 2027.
+          </p>
+
+          <p>
+            <a href="https://citizenactivation.com/founders" class="button">Join Founders Beta →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">Let's build leverage together,<br><strong>Your CFV Team</strong></p>
+        `, 'Cash Flow Visionary'),
+        textContent: `You've Got the Framework. Now Build It.
+
+You've seen the simulator results. You understand the leverage formula. You know what a perfect offer looks like.
+
+Now it's time to build it.
+
+Founders Beta: Early Access
+We're opening limited spots for founders who are ready to build network leverage businesses.
+
+- Done-for-you offer framework
+- Network tracking dashboard
+- Weekly strategy calls
+- Founders-only community
+
+Limited to 100 founders. When it's full, we're closing until 2027.
+
+Join now: https://citizenactivation.com/founders
+
+Let's build leverage together,
+Your CFV Team`,
+      },
+    ],
+  },
+  {
+    id: 'founders-beta-onboarding',
+    name: 'Founders Beta - Onboarding',
+    description: '3-email onboarding for Founders Beta members',
+    triggerType: 'manual',
+    audienceKey: 'founders-beta',
+    defaultFromDomain: 'm.citizenactivation.com',
+    defaultFromName: 'Citizen Activation',
+    emails: [
+      {
+        subject: '🎖️ Welcome to Founders Beta',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">🎖️ You're In - Welcome to Founders Beta</h2>
+          <p>Congratulations! You're part of an exclusive group building the future of network leverage.</p>
+          
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">Your Founders Access Includes:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li>✅ Founders Dashboard (track your network)</li>
+              <li>✅ Weekly Strategy Calls (live training)</li>
+              <li>✅ Private Community (connect with founders)</li>
+              <li>✅ Done-for-you Systems (offer, funnel, emails)</li>
+              <li>✅ Lifetime Pricing (never pay more)</li>
+            </ul>
+          </div>
+
+          <h3 style="color: #1E8E5A;">Your Next Steps:</h3>
+          <ol style="line-height: 1.8;">
+            <li><strong>Access Your Dashboard</strong> - Set up your tracking</li>
+            <li><strong>Join the Community</strong> - Introduce yourself</li>
+            <li><strong>Book Your Onboarding Call</strong> - Strategy session</li>
+          </ol>
+
+          <p>
+            <a href="https://citizenactivation.com/founders/dashboard" class="button">Access Dashboard →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">Welcome to the movement,<br><strong>The Citizen Activation Team</strong></p>
+        `, 'Citizen Activation'),
+        textContent: `Welcome to Founders Beta
+
+Congratulations! You're part of an exclusive group building the future of network leverage.
+
+Your Founders Access Includes:
+- Founders Dashboard (track your network)
+- Weekly Strategy Calls (live training)
+- Private Community (connect with founders)
+- Done-for-you Systems (offer, funnel, emails)
+- Lifetime Pricing (never pay more)
+
+Your Next Steps:
+1. Access Your Dashboard - Set up your tracking
+2. Join the Community - Introduce yourself
+3. Book Your Onboarding Call - Strategy session
+
+Access dashboard: https://citizenactivation.com/founders/dashboard
+
+Welcome to the movement,
+The Citizen Activation Team`,
+      },
+      {
+        subject: 'Week 1 Game Plan: Your First 10',
+        delayDays: 2,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Week 1: Focus on Your First 10</h2>
+          <p>Let's make this simple. Your only goal this week: <strong>Connect 10 people.</strong></p>
+          
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">Who to Connect:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li>People who understand leverage</li>
+              <li>People who want residual income</li>
+              <li>People who are action-takers</li>
+            </ul>
+          </div>
+
+          <p><strong>Not sure who to reach out to?</strong> Start with people who:</p>
+          <ul style="line-height: 1.8;">
+            <li>Have asked you about side income before</li>
+            <li>Are entrepreneurs or business owners</li>
+            <li>Have complained about trading time for money</li>
+          </ul>
+
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">🎯 Your Goal:</strong> 10 conversations this week. Quality over quantity.
+          </p>
+
+          <p>
+            <a href="https://citizenactivation.com/founders/outreach-scripts" class="button">Get Outreach Scripts →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">You've got this,<br><strong>The CA Team</strong></p>
+        `, 'Citizen Activation'),
+        textContent: `Week 1: Focus on Your First 10
+
+Let's make this simple. Your only goal this week: Connect 10 people.
+
+Who to Connect:
+- People who understand leverage
+- People who want residual income
+- People who are action-takers
+
+Not sure who to reach out to? Start with people who:
+- Have asked you about side income before
+- Are entrepreneurs or business owners
+- Have complained about trading time for money
+
+Your Goal: 10 conversations this week. Quality over quantity.
+
+Get scripts: https://citizenactivation.com/founders/outreach-scripts
+
+You've got this,
+The CA Team`,
+      },
+      {
+        subject: 'This Week's Training Call + Q&A',
+        delayDays: 5,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Join This Week's Strategy Call 📞</h2>
+          <p>Every Thursday, we host a live strategy call for Founders Beta members.</p>
+          
+          <div style="background: linear-gradient(135deg, #f0f8f4 0%, #e8f5e9 100%); padding: 24px; border-radius: 12px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">This Week's Topic:</h3>
+            <p style="font-size: 18px; margin-bottom: 16px;"><strong>"Overcoming the #1 Objection"</strong></p>
+            <p style="margin-bottom: 0;">Plus live Q&A - bring your questions!</p>
+          </div>
+
+          <p><strong>Thursday at 5pm PT / 8pm ET</strong></p>
+
+          <p>
+            <a href="https://citizenactivation.com/founders/weekly-call" class="button">Join the Call →</a>
+          </p>
+          
+          <p style="margin-top: 32px;">See you there,<br><strong>The CA Team</strong></p>
+        `, 'Citizen Activation'),
+        textContent: `Join This Week's Strategy Call
+
+Every Thursday, we host a live strategy call for Founders Beta members.
+
+This Week's Topic: "Overcoming the #1 Objection"
+Plus live Q&A - bring your questions!
+
+Thursday at 5pm PT / 8pm ET
+
+Join: https://citizenactivation.com/founders/weekly-call
+
+See you there,
+The CA Team`,
+      },
+    ],
+  },
+];
+
+// Helper functions
+export function getAutomationTemplateById(id: string): AutomationTemplate | undefined {
+  return AUTOMATION_TEMPLATES.find(t => t.id === id);
+}
+
+export function getAutomationTemplatesByAudience(audienceKey: string): AutomationTemplate[] {
+  return AUTOMATION_TEMPLATES.filter(t => t.audienceKey === audienceKey);
+}
+
+// Additional automation templates
+const ADDITIONAL_TEMPLATES: AutomationTemplate[] = [
+  {
+    id: 'strategic-partners-welcome',
+    name: 'Strategic Partners - Welcome & Alignment',
+    description: '3-email sequence for potential JV partners',
+    triggerType: 'tag_added',
+    audienceKey: 'strategic-partners',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Let's Explore a Partnership',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Thanks for Connecting</h2>
+          <p>I believe there's potential for us to create something powerful together.</p>
+          <p>I'm reaching out because I see alignment between what you're building and our network leverage model.</p>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">What We're Looking For:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li>Partners who understand leverage</li>
+              <li>Complementary audiences (not competing)</li>
+              <li>Win-win collaboration opportunities</li>
+            </ul>
+          </div>
+          <p>If this resonates, let's schedule a quick call to explore possibilities.</p>
+          <p><a href="https://calendly.com/nlcf/partner-exploration" class="button">Book a Call →</a></p>
+          <p style="margin-top: 32px;">To strategic collaboration,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Thanks for Connecting\n\nI believe there's potential for us to create something powerful together.\n\nWhat We're Looking For:\n- Partners who understand leverage\n- Complementary audiences\n- Win-win collaborations\n\nBook a call: https://calendly.com/nlcf/partner-exploration`,
+      },
+      {
+        subject: 'Partnership Framework Overview',
+        delayDays: 3,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">How Strategic Partnerships Work</h2>
+          <p>Here's our partnership model in a nutshell:</p>
+          <div style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <p style="margin: 0;"><strong style="color: #C9A441;">Shared Value Model:</strong> We create value together, split revenue fairly, and both networks benefit from the collaboration.</p>
+          </div>
+          <h3 style="color: #1E8E5A;">Typical Partnership Structures:</h3>
+          <ul style="line-height: 1.8;">
+            <li><strong>Revenue Share:</strong> 50/50 or 60/40 depending on contribution</li>
+            <li><strong>Audience Access:</strong> Cross-promotion to both communities</li>
+            <li><strong>Co-created Products:</strong> Joint programs or offers</li>
+          </ul>
+          <p><a href="https://nlcf.com/partnership-deck" class="button">View Partnership Deck →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `How Strategic Partnerships Work\n\nShared Value Model: We create value together, split revenue fairly, and both networks benefit.\n\nTypical Structures:\n- Revenue Share: 50/50 or 60/40\n- Audience Access: Cross-promotion\n- Co-created Products: Joint programs\n\nView deck: https://nlcf.com/partnership-deck`,
+      },
+      {
+        subject: 'Ready to Move Forward?',
+        delayDays: 7,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Let's Make This Real</h2>
+          <p>If you're interested in exploring a partnership, here are the next steps:</p>
+          <ol style="line-height: 1.8;">
+            <li>Book a 30-minute exploration call</li>
+            <li>Share partnership proposal (we'll draft it)</li>
+            <li>Run a small pilot together</li>
+            <li>Scale what works</li>
+          </ol>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Note:</strong> We only work with 5-10 strategic partners at a time. Quality over quantity.
+          </p>
+          <p><a href="https://calendly.com/nlcf/partner-exploration" class="button">Let's Talk →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Let's Make This Real\n\nNext Steps:\n1. Book exploration call\n2. Share proposal\n3. Run pilot\n4. Scale what works\n\nWe only work with 5-10 strategic partners at a time.\n\nBook call: https://calendly.com/nlcf/partner-exploration`,
+      },
+    ],
+  },
+  {
+    id: 'jv-affiliate-activation',
+    name: 'JV Affiliate - Activation Sequence',
+    description: '4-email sequence to activate JV affiliates',
+    triggerType: 'manual',
+    audienceKey: 'jv-affiliates',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Your JV Affiliate Link + Resources',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">🎖️ Welcome, Affiliate Partner!</h2>
+          <p>You're now set up as a JV affiliate. Here's everything you need to promote and earn.</p>
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">Your Affiliate Dashboard:</h3>
+            <p style="margin-bottom: 12px;"><strong>Unique Link:</strong> <code style="background: white; padding: 4px 8px; border-radius: 4px;">https://nlcf.com/ref/YOUR_CODE</code></p>
+            <p style="margin-bottom: 0;"><strong>Commission:</strong> 30% recurring on all referrals</p>
+          </div>
+          <h3 style="color: #1E8E5A;">Promo Resources:</h3>
+          <ul style="line-height: 1.8;">
+            <li>Email swipe copy (customize it)</li>
+            <li>Social media graphics</li>
+            <li>Landing page templates</li>
+            <li>Video scripts</li>
+          </ul>
+          <p><a href="https://nlcf.com/affiliate/resources" class="button">Get Your Resources →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Welcome, Affiliate Partner!\n\nYour Dashboard:\n- Unique Link: https://nlcf.com/ref/YOUR_CODE\n- Commission: 30% recurring\n\nPromo Resources Available:\n- Email swipe copy\n- Social graphics\n- Landing pages\n- Video scripts\n\nGet resources: https://nlcf.com/affiliate/resources`,
+      },
+      {
+        subject: 'Top-Performing Promo Strategies',
+        delayDays: 2,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">How Top Affiliates Promote</h2>
+          <p>Here's what's working best for our top-earning affiliates:</p>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">Strategy #1: Email Sequence</h3>
+            <p style="margin: 0;">3-5 email series to your list. We provide templates. Typical conversion: 2-5%.</p>
+          </div>
+          <div style="background: #fff7e6; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #C9A441; margin-top: 0;">Strategy #2: Webinar Partnership</h3>
+            <p style="margin: 0;">Co-host a webinar together. We handle delivery, you bring audience. Conversion: 10-15%.</p>
+          </div>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">Strategy #3: Content Integration</h3>
+            <p style="margin: 0;">Blog post, YouTube video, or podcast episode. Natural recommendation. Conversion: 5-8%.</p>
+          </div>
+          <p><a href="https://nlcf.com/affiliate/case-studies" class="button">See Case Studies →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `How Top Affiliates Promote\n\nStrategy #1: Email Sequence (2-5% conversion)\nStrategy #2: Webinar Partnership (10-15% conversion)\nStrategy #3: Content Integration (5-8% conversion)\n\nSee case studies: https://nlcf.com/affiliate/case-studies`,
+      },
+      {
+        subject: 'Your First Commission (How to Track)',
+        delayDays: 5,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Tracking Your Earnings</h2>
+          <p>Your affiliate dashboard shows real-time stats:</p>
+          <ul style="line-height: 1.8;">
+            <li><strong>Clicks:</strong> How many people used your link</li>
+            <li><strong>Conversions:</strong> How many signed up</li>
+            <li><strong>Recurring Revenue:</strong> Your monthly commissions</li>
+            <li><strong>Lifetime Value:</strong> Total earnings from your referrals</li>
+          </ul>
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">💰 Payout Schedule:</strong> Commissions paid on the 15th of each month via PayPal or direct deposit.
+          </p>
+          <p><a href="https://nlcf.com/affiliate/dashboard" class="button">Check Your Stats →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Tracking Your Earnings\n\nYour dashboard shows:\n- Clicks\n- Conversions\n- Recurring Revenue\n- Lifetime Value\n\nPayout: 15th of each month via PayPal or direct deposit.\n\nCheck stats: https://nlcf.com/affiliate/dashboard`,
+      },
+      {
+        subject: 'Bonus: Unlock 40% Commission Tier',
+        delayDays: 10,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">Level Up to 40% Commissions</h2>
+          <p>Our top affiliates earn 40% recurring (instead of 30%). Here's how to unlock it:</p>
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">40% Tier Requirements:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li><strong>25+ active referrals</strong> (paying customers)</li>
+              <li><strong>OR $5,000/mo</strong> in recurring commissions</li>
+              <li><strong>OR strategic partnership</strong> (co-created content/webinar)</li>
+            </ul>
+          </div>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Current tier affiliates earn:</strong> $10,000 - $50,000/mo in recurring commissions.
+          </p>
+          <p><a href="https://nlcf.com/affiliate/upgrade" class="button">View Upgrade Path →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Level Up to 40% Commissions\n\n40% Tier Requirements:\n- 25+ active referrals\n- OR $5,000/mo in recurring commissions\n- OR strategic partnership\n\nCurrent tier affiliates earn: $10K - $50K/mo recurring.\n\nView upgrade: https://nlcf.com/affiliate/upgrade`,
+      },
+    ],
+  },
+  {
+    id: 're-engagement-dormant',
+    name: 'Re-engagement - Dormant Leads',
+    description: '3-email re-engagement for inactive leads',
+    triggerType: 'manual',
+    audienceKey: 'main-list',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Are you still interested?',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Hey, We Haven't Heard from You...</h2>
+          <p>You signed up to learn about network leverage, but we haven't seen you engage lately.</p>
+          <p><strong>Quick question:</strong> Are you still interested in building residual income through leverage?</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;">
+            <a href="https://nlcf.com/re-engage/yes" style="background: #1E8E5A; color: white; padding: 16px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">Yes, I'm Still Interested</a>
+            <a href="https://nlcf.com/re-engage/no" style="background: #f5f5f5; color: #666; padding: 16px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">No, Unsubscribe Me</a>
+          </div>
+          <p style="font-size: 14px; color: #666; margin-top: 24px;">If we don't hear from you, we'll assume you're not interested and stop sending emails. No hard feelings!</p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Hey, We Haven't Heard from You...\n\nYou signed up to learn about network leverage, but we haven't seen you engage lately.\n\nQuick question: Are you still interested in building residual income through leverage?\n\nYes: https://nlcf.com/re-engage/yes\nNo: https://nlcf.com/re-engage/no\n\nIf we don't hear from you, we'll stop sending emails.`,
+      },
+      {
+        subject: 'What happened? (honest question)',
+        delayDays: 4,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">I'm Curious...</h2>
+          <p>You showed interest in building leverage. Then... crickets.</p>
+          <p>I'm genuinely curious what happened. Was it:</p>
+          <ul style="line-height: 1.8;">
+            <li>Timing wasn't right?</li>
+            <li>Didn't see the value?</li>
+            <li>Too busy to engage?</li>
+            <li>Something else?</li>
+          </ul>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Hit reply and let me know.</strong> I read every response, and your feedback helps us improve.
+          </p>
+          <p>If you're still interested but just needed a nudge, here's what's new:</p>
+          <ul style="line-height: 1.8;">
+            <li><strong>Updated Simulator:</strong> See your potential in 60 seconds</li>
+            <li><strong>New Case Studies:</strong> Real results from real people</li>
+            <li><strong>Founders Beta:</strong> Limited early access opportunity</li>
+          </ul>
+          <p><a href="https://nlcf.com/whats-new" class="button">See What's New →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `I'm Curious...\n\nYou showed interest in building leverage. Then... crickets.\n\nWhat happened? Was it timing, value, too busy, or something else?\n\nHit reply and let me know. Your feedback helps us improve.\n\nIf you're still interested, here's what's new:\n- Updated Simulator\n- New Case Studies\n- Founders Beta access\n\nSee updates: https://nlcf.com/whats-new`,
+      },
+      {
+        subject: 'Last email from me (promise)',
+        delayDays: 7,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">This is It</h2>
+          <p>I don't want to be that person who won't take a hint.</p>
+          <p>This is my last email unless you reach out.</p>
+          <p style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <strong style="color: #C9A441;">Here's the truth:</strong> Building leverage is hard. It requires commitment. If you're not ready, that's totally fine. Save this email. When you are ready, reach out. We'll be here.
+          </p>
+          <p>But if you <em>are</em> ready and just needed one more push, here it is:</p>
+          <p><a href="https://citizenactivation.com/founders" class="button">Join Founders Beta →</a></p>
+          <p style="margin-top: 32px; font-size: 14px; color: #666;">
+            <em>Take care, and I hope our paths cross again when the timing is right.</em>
+          </p>
+          <p style="margin-top: 24px;">All the best,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `This is It\n\nI don't want to be that person who won't take a hint.\n\nThis is my last email unless you reach out.\n\nHere's the truth: Building leverage is hard. It requires commitment. If you're not ready, that's fine. When you are, reach out.\n\nBut if you ARE ready:\nhttps://citizenactivation.com/founders\n\nTake care, and I hope our paths cross again when the timing is right.\n\nAll the best,\nThe NLCF Team`,
+      },
+    ],
+  },
+  {
+    id: 'side-hustler-welcome',
+    name: 'Side Hustlers - Welcome Sequence',
+    description: '4-email welcome for side hustle audience',
+    triggerType: 'form_submit',
+    audienceKey: 'side-hustlers',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Your Side Hustle Deserves Better',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Welcome, Side Hustler! 💼</h2>
+          <p>You're grinding on a side hustle. Respect. But let me ask you something...</p>
+          <p style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <strong style="color: #C9A441;">Are you building an asset, or just another job?</strong>
+          </p>
+          <p>Most side hustles are just trading time for money <em>after hours</em>. That's not freedom. That's a second job.</p>
+          <h3 style="color: #1E8E5A;">What if your side hustle could:</h3>
+          <ul style="line-height: 1.8;">
+            <li>Generate income while you sleep</li>
+            <li>Grow through network effects (not just your effort)</li>
+            <li>Eventually replace your 9-5</li>
+          </ul>
+          <p>That's what we're going to build together.</p>
+          <p style="margin-top: 32px;">Let's turn your hustle into an asset,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Welcome, Side Hustler!\n\nYou're grinding on a side hustle. Respect. But let me ask you something...\n\nAre you building an asset, or just another job?\n\nMost side hustles = trading time for money after hours. That's not freedom.\n\nWhat if your side hustle could:\n- Generate income while you sleep\n- Grow through network effects\n- Eventually replace your 9-5\n\nLet's turn your hustle into an asset.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'The Side Hustle Trap (and how to escape)',
+        delayDays: 2,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Why Most Side Hustles Fail</h2>
+          <p>Here's the pattern: You start a side hustle. You make some money. But you're exhausted because you're working 60-80 hours/week between your job and your hustle.</p>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">The Problem:</h3>
+            <p style="margin: 0;">Your side hustle is <strong>linear</strong>. More money = more hours. Eventually, you run out of hours.</p>
+          </div>
+          <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #166B44; margin-top: 0;">The Solution:</h3>
+            <p style="margin: 0;">Build <strong>leverage</strong>. Systems that scale. Networks that compound. Revenue that grows while you sleep.</p>
+          </div>
+          <p><strong>Tomorrow:</strong> I'll show you how to add leverage to your existing side hustle.</p>
+          <p style="margin-top: 32px;">Building smarter, not harder,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Why Most Side Hustles Fail\n\nThe pattern: You start, make money, but you're exhausted working 60-80 hours/week.\n\nThe Problem: Your side hustle is linear. More money = more hours. You run out of hours.\n\nThe Solution: Build leverage. Systems that scale. Networks that compound. Revenue that grows while you sleep.\n\nTomorrow: How to add leverage to your existing side hustle.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'Add Leverage to Your Current Hustle',
+        delayDays: 4,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">The Leverage Upgrade</h2>
+          <p>You don't have to abandon your current side hustle. Just add leverage to it.</p>
+          <h3 style="color: #1E8E5A;">3 Ways to Add Leverage:</h3>
+          <div style="background: #f0f8f4; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #1E8E5A; display: block; margin-bottom: 8px;">1. Productize Your Service</strong>
+            <p style="margin: 0; font-size: 14px;">Turn custom work into a repeatable system. Sell it multiple times.</p>
+          </div>
+          <div style="background: #fff7e6; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #C9A441; display: block; margin-bottom: 8px;">2. Add Recurring Revenue</strong>
+            <p style="margin: 0; font-size: 14px;">One-time sales → subscription model. Predictable monthly income.</p>
+          </div>
+          <div style="background: #e8f5e9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #166B44; display: block; margin-bottom: 8px;">3. Build a Network</strong>
+            <p style="margin: 0; font-size: 14px;">Stop being the only one doing the work. Let the network grow it.</p>
+          </div>
+          <p><a href="https://nlcf.com/leverage-audit" class="button">Get Your Leverage Audit →</a></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `The Leverage Upgrade\n\nYou don't have to abandon your current side hustle. Just add leverage.\n\n3 Ways to Add Leverage:\n\n1. Productize Your Service\nTurn custom work into a repeatable system.\n\n2. Add Recurring Revenue\nOne-time sales → subscription model.\n\n3. Build a Network\nLet the network grow it, not just you.\n\nGet your audit: https://nlcf.com/leverage-audit\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'Ready to Scale Your Side Hustle?',
+        delayDays: 7,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">From Side Hustle to Main Income</h2>
+          <p>Founders Beta is open. This is your chance to build real leverage.</p>
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">What You Get:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li><strong>Leverage Dashboard:</strong> Track your network growth</li>
+              <li><strong>Done-for-you Systems:</strong> Offers, funnels, emails</li>
+              <li><strong>Weekly Strategy Calls:</strong> Live training & Q&A</li>
+              <li><strong>Founders Community:</strong> Connect with other hustlers</li>
+            </ul>
+          </div>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Goal:</strong> Replace your 9-5 income within 12 months through network leverage.
+          </p>
+          <p><a href="https://citizenactivation.com/founders" class="button">Join Founders Beta →</a></p>
+          <p style="margin-top: 32px;">Turn your hustle into freedom,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `From Side Hustle to Main Income\n\nFounders Beta is open. Build real leverage.\n\nWhat You Get:\n- Leverage Dashboard\n- Done-for-you Systems\n- Weekly Strategy Calls\n- Founders Community\n\nGoal: Replace your 9-5 income within 12 months through network leverage.\n\nJoin: https://citizenactivation.com/founders\n\nThe NLCF Team`,
+      },
+    ],
+  },
+];
+
+// Merge all templates
+AUTOMATION_TEMPLATES.push(...ADDITIONAL_TEMPLATES);
+
+// Export count
+export const AUTOMATION_TEMPLATE_COUNT = AUTOMATION_TEMPLATES.length;
+
+// Add 2 more templates for artists/musicians and high-risk traders
+const FINAL_TEMPLATES: AutomationTemplate[] = [
+  {
+    id: 'artists-musicians-welcome',
+    name: 'Artists & Musicians - Creative Freedom',
+    description: '3-email sequence for creative professionals',
+    triggerType: 'form_submit',
+    audienceKey: 'artists-musicians',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Your Art Deserves Residual Income',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Hey Creative, Let's Talk Money 🎨</h2>
+          <p>You make art. Music. Creative work that matters. But the money is... inconsistent.</p>
+          <p style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <strong style="color: #C9A441;">The Artist's Dilemma:</strong> You need time to create, but you need money to survive. So you're stuck chasing gigs, commissions, and freelance work instead of making your best art.
+          </p>
+          <p><strong>What if you could build residual income that supports your art?</strong></p>
+          <p>Not "selling out." Not abandoning your craft. Just building leverage so you can focus on what you do best.</p>
+          <p style="margin-top: 32px;">Let's build freedom for your craft,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Hey Creative, Let's Talk Money\n\nYou make art. Music. Creative work. But the money is inconsistent.\n\nThe Artist's Dilemma: You need time to create, but you need money to survive. So you're stuck chasing gigs instead of making your best art.\n\nWhat if you could build residual income that supports your art?\n\nNot selling out. Just building leverage so you can focus on what you do best.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'The Residual Income Model for Creatives',
+        delayDays: 3,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">How Creatives Build Leverage</h2>
+          <p>Here's the simple truth: <strong>You need a revenue stream that doesn't require your creative energy.</strong></p>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">The Model:</h3>
+            <p style="margin: 0;">Build network leverage in a complementary business (not your art). That income supports your creative work. Your art stays pure.</p>
+          </div>
+          <p><strong>Real Example:</strong> A musician we work with built $3,000/mo residual through network leverage. Now she only takes gigs she actually wants. Her music got better.</p>
+          <p style="background: #fff7e6; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #C9A441;">Key:</strong> This isn't about monetizing your art differently. It's about building income that frees you to make better art.
+          </p>
+          <p style="margin-top: 32px;">Protect your creative time,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `How Creatives Build Leverage\n\nThe truth: You need a revenue stream that doesn't require your creative energy.\n\nThe Model: Build network leverage in a complementary business (not your art). That income supports your creative work. Your art stays pure.\n\nReal Example: A musician built $3K/mo residual through network leverage. Now she only takes gigs she wants. Her music got better.\n\nThis isn't about monetizing your art differently. It's about building income that frees you to make better art.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'Founders Beta: Build Your Creative Freedom',
+        delayDays: 7,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">Fund Your Art Through Leverage</h2>
+          <p>Founders Beta is specifically designed for people who need income but want to protect their creative energy.</p>
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">What You Get:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li>Done-for-you leverage system</li>
+              <li>Network that grows passively</li>
+              <li>Residual income within 90 days</li>
+              <li>Community of other creatives</li>
+            </ul>
+          </div>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Goal:</strong> $2,000-$5,000/mo residual so you can focus on your craft.
+          </p>
+          <p><a href="https://citizenactivation.com/founders" class="button">Join Founders Beta →</a></p>
+          <p style="margin-top: 32px;">Make art, not excuses for rent,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Fund Your Art Through Leverage\n\nFounders Beta for people who need income but want to protect creative energy.\n\nWhat You Get:\n- Done-for-you leverage system\n- Network that grows passively\n- Residual income within 90 days\n- Community of other creatives\n\nGoal: $2K-$5K/mo residual so you can focus on your craft.\n\nJoin: https://citizenactivation.com/founders\n\nMake art, not excuses for rent.\n\nThe NLCF Team`,
+      },
+    ],
+  },
+  {
+    id: 'high-risk-traders-welcome',
+    name: 'High-Risk Traders - Stable Income',
+    description: '4-email sequence for traders seeking stability',
+    triggerType: 'form_submit',
+    audienceKey: 'high-risk-traders',
+    defaultFromDomain: 'm.networkleveragingcashflow.com',
+    defaultFromName: 'Network Leveraging Cash Flow',
+    emails: [
+      {
+        subject: 'Trading is High-Risk. This Isn't.',
+        delayDays: 0,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">You Trade. You Know Risk. ⚠️</h2>
+          <p>You understand leverage. Compounding. Market dynamics. That's why you're a trader.</p>
+          <p style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+            <strong style="color: #C9A441;">But here's the problem:</strong> Trading income is volatile. Great months. Terrible months. You're one bad trade away from drawdown.
+          </p>
+          <p><strong>What if you could build <em>predictable</em> residual income to smooth out the volatility?</strong></p>
+          <div style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+            <p style="margin: 0;">Think of it as <strong>portfolio diversification</strong>, but for income streams. Trading = high risk/high reward. Network leverage = low risk/stable residual.</p>
+          </div>
+          <p>You wouldn't put 100% of your capital in one asset. Why put 100% of your income in one volatile stream?</p>
+          <p style="margin-top: 32px;">Hedge your income,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `You Trade. You Know Risk.\n\nYou understand leverage. Compounding. Market dynamics.\n\nBut trading income is volatile. Great months. Terrible months. One bad trade away from drawdown.\n\nWhat if you could build predictable residual income to smooth out volatility?\n\nThink: Portfolio diversification for income streams.\nTrading = high risk/high reward\nNetwork leverage = low risk/stable residual\n\nYou wouldn't put 100% of capital in one asset. Why put 100% of income in one volatile stream?\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'The Trader's Edge: You Already Understand This',
+        delayDays: 2,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">You're Already Fluent in Leverage</h2>
+          <p>Here's why network leverage is perfect for traders:</p>
+          <div style="background: #f0f8f4; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #1E8E5A; display: block; margin-bottom: 8px;">You understand compounding</strong>
+            <p style="margin: 0; font-size: 14px;">Network effects compound just like market gains. 10 connections → 100 → 1,000.</p>
+          </div>
+          <div style="background: #fff7e6; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #C9A441; display: block; margin-bottom: 8px;">You think in systems</strong>
+            <p style="margin: 0; font-size: 14px;">You don't wing trades. You follow a system. Same with network leverage.</p>
+          </div>
+          <div style="background: #e8f5e9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <strong style="color: #166B44; display: block; margin-bottom: 8px;">You manage risk</strong>
+            <p style="margin: 0; font-size: 14px;">Diversified income = lower risk profile. Traders get this intuitively.</p>
+          </div>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Bottom line:</strong> You're already equipped to build network leverage faster than most people.
+          </p>
+          <p style="margin-top: 32px;">Leverage what you know,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `You're Already Fluent in Leverage\n\nWhy network leverage is perfect for traders:\n\n✓ You understand compounding\nNetwork effects compound like market gains. 10 → 100 → 1,000.\n\n✓ You think in systems\nYou don't wing trades. Same with network leverage.\n\n✓ You manage risk\nDiversified income = lower risk profile.\n\nBottom line: You're equipped to build network leverage faster than most.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'Case Study: Trader → $8K/mo Residual',
+        delayDays: 4,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #1E8E5A; margin-top: 0;">Real Results from a Real Trader</h2>
+          <p><strong>Meet Alex:</strong> Day trader, 5 years experience, solid system. Some months = $20K. Other months = -$5K.</p>
+          <div style="background: linear-gradient(135deg, #f0f8f4 0%, #e8f5e9 100%); padding: 24px; border-radius: 12px; margin: 24px 0;">
+            <h3 style="color: #1E8E5A; margin-top: 0;">What He Built:</h3>
+            <p><strong>Month 1-3:</strong> Connected 15 people to the network<br>
+            <strong>Month 4-6:</strong> Network grew to 80+ connections<br>
+            <strong>Month 7+:</strong> $8,000/mo residual (stable, predictable)</p>
+            <p style="margin-bottom: 0; margin-top: 16px; padding-top: 16px; border-top: 1px solid #ddd;">
+              <strong style="color: #166B44;">"Now I trade with house money. If I have a bad month trading, my residual covers my bills. Game changer."</strong> - Alex, Founders Beta
+            </p>
+          </div>
+          <p>His trading didn't get worse. It got <em>better</em> because he wasn't trading from scarcity.</p>
+          <p style="margin-top: 32px;">Build your safety net,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Real Results from a Real Trader\n\nMeet Alex: Day trader, 5 years experience, solid system. Some months = $20K. Other months = -$5K.\n\nWhat He Built:\nMonth 1-3: Connected 15 people to the network\nMonth 4-6: Network grew to 80+ connections\nMonth 7+: $8,000/mo residual (stable, predictable)\n\n"Now I trade with house money. If I have a bad month trading, my residual covers my bills. Game changer." - Alex\n\nHis trading didn't get worse. It got better because he wasn't trading from scarcity.\n\nThe NLCF Team`,
+      },
+      {
+        subject: 'Hedge Your Income: Join Founders Beta',
+        delayDays: 7,
+        htmlContent: wrapEmailContent(`
+          <h2 style="color: #C9A441; margin-top: 0;">Smart Traders Diversify Income 📊</h2>
+          <p>You manage risk in your portfolio. Do the same with your income.</p>
+          <div style="background: linear-gradient(135deg, #fff7e6 0%, #fffbf0 100%); padding: 24px; border-radius: 12px; margin: 24px 0; border: 2px solid #C9A441;">
+            <h3 style="color: #C9A441; margin-top: 0;">Founders Beta for Traders:</h3>
+            <ul style="line-height: 1.8; margin-bottom: 0;">
+              <li><strong>Done-for-you system:</strong> Like a trading strategy, but for network leverage</li>
+              <li><strong>Predictable growth:</strong> Track metrics like you track P&L</li>
+              <li><strong>Low time commitment:</strong> 5-10 hours/week max</li>
+              <li><strong>Residual income:</strong> Stable cash flow to offset trading volatility</li>
+            </ul>
+          </div>
+          <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <strong style="color: #1E8E5A;">Target:</strong> $5K-$10K/mo residual within 6 months.
+          </p>
+          <p><a href="https://citizenactivation.com/founders" class="button">Join Founders Beta →</a></p>
+          <p style="margin-top: 32px;">Trade smart, diversify income,<br><strong>The NLCF Team</strong></p>
+        `, 'Network Leveraging Cash Flow'),
+        textContent: `Smart Traders Diversify Income\n\nYou manage risk in your portfolio. Do the same with income.\n\nFounders Beta for Traders:\n- Done-for-you system (like a trading strategy for network leverage)\n- Predictable growth (track metrics like P&L)\n- Low time commitment (5-10 hours/week)\n- Residual income (offset trading volatility)\n\nTarget: $5K-$10K/mo residual within 6 months.\n\nJoin: https://citizenactivation.com/founders\n\nTrade smart, diversify income.\n\nThe NLCF Team`,
+      },
+    ],
+  },
+];
+
+// Merge final templates
+AUTOMATION_TEMPLATES.push(...FINAL_TEMPLATES);
+
+// Update export count
+export const TOTAL_AUTOMATION_TEMPLATES = AUTOMATION_TEMPLATES.length;

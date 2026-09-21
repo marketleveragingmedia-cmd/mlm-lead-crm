@@ -1,0 +1,187 @@
+// Email Template Library
+// Reusable HTML email templates for the Resend CRM system
+
+export interface EmailTemplate {
+  id: string;
+  name: string;
+  description: string;
+  subject: string;
+  html: string;
+  category: 'welcome' | 'nurture' | 'engagement' | 'announcement';
+}
+
+// Base email wrapper with brand colors
+export function wrapEmailContent(content: string, fromName: string = 'Network Leveraging Cash Flow'): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f5f5f5; }
+    .container { max-width: 600px; margin: 0 auto; background: white; }
+    .header { background: linear-gradient(135deg, #1E8E5A 0%, #166B44 100%); padding: 32px 24px; text-align: center; }
+    .header h1 { color: white; margin: 0; font-size: 24px; font-weight: 700; }
+    .content { padding: 32px 24px; }
+    .button { display: inline-block; background: #1E8E5A; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 16px 0; }
+    .footer { background: #f9f9f9; padding: 24px; text-align: center; font-size: 13px; color: #666; border-top: 1px solid #e5e5e5; }
+    .gold { color: #C9A441; }
+    .green { color: #1E8E5A; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>${fromName}</h1>
+    </div>
+    <div class="content">
+      ${content}
+    </div>
+    <div class="footer">
+      <p>You're receiving this because you signed up for updates from ${fromName}.</p>
+      <p style="margin-top: 16px;">
+        <a href="{{unsubscribe_url}}" style="color: #666; text-decoration: underline;">Unsubscribe</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+  `.trim();
+}
+
+// Template library
+export const EMAIL_TEMPLATES: EmailTemplate[] = [
+  {
+    id: 'welcome-cfv',
+    name: 'Cash Flow Visionaries Welcome',
+    description: 'Welcome email for Cash Flow Visionaries audience',
+    subject: 'Welcome to Cash Flow Visionaries',
+    category: 'welcome',
+    html: wrapEmailContent(`
+      <h2 style="color: #1E8E5A; margin-top: 0;">Welcome, Visionary! 🎯</h2>
+      <p>You've just joined an exclusive community of forward-thinking entrepreneurs who understand that <strong>leverage</strong> is the key to exponential growth.</p>
+      <p>Here's what you can expect:</p>
+      <ul style="line-height: 1.8;">
+        <li><strong class="green">Weekly Insights</strong> - Strategies to build residual cash flow</li>
+        <li><strong class="green">Exclusive Training</strong> - Network leverage fundamentals</li>
+        <li><strong class="green">Community Access</strong> - Connect with other visionaries</li>
+      </ul>
+      <p>
+        <a href="https://cashflowvisionaries.com/getting-started" class="button">Get Started →</a>
+      </p>
+      <p style="margin-top: 24px;">To your exponential success,<br><strong>The CFV Team</strong></p>
+    `, 'Cash Flow Visionaries'),
+  },
+  {
+    id: 'welcome-founders-beta',
+    name: 'Founders Beta Welcome',
+    description: 'Welcome email for Founders Beta early access',
+    subject: 'Welcome to Founders Beta - You're Early',
+    category: 'welcome',
+    html: wrapEmailContent(`
+      <h2 style="color: #C9A441; margin-top: 0;">🎖️ You're In - Founders Beta</h2>
+      <p>Congratulations! You're part of the <strong>Founders Beta</strong> - an exclusive group getting early access to a revolutionary network leveraging system.</p>
+      <p style="background: #f9f9f9; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+        <strong>Why you're here:</strong> You recognize that traditional business models are broken. You want leverage. You want residual income. You want freedom.
+      </p>
+      <h3 style="color: #1E8E5A;">Your Next Steps:</h3>
+      <ol style="line-height: 1.8;">
+        <li>Access your Founders Dashboard</li>
+        <li>Complete the Simulator (see your potential)</li>
+        <li>Book your strategy call</li>
+      </ol>
+      <p>
+        <a href="https://citizenactivation.com/founders" class="button">Access Dashboard →</a>
+      </p>
+      <p style="margin-top: 24px;">Welcome to the movement,<br><strong>The Citizen Activation Team</strong></p>
+    `, 'Citizen Activation'),
+  },
+  {
+    id: 'simulator-nurture-1',
+    name: 'Simulator Follow-up Day 1',
+    description: 'First nurture email after simulator completion',
+    subject: 'Your Simulator Results - Here's What They Mean',
+    category: 'nurture',
+    html: wrapEmailContent(`
+      <h2 style="color: #1E8E5A; margin-top: 0;">Understanding Your Numbers 📊</h2>
+      <p>Thanks for completing the Cash Flow Simulator. Let's break down what your results actually mean...</p>
+      <p style="background: #f0f8f4; padding: 20px; border-radius: 8px; margin: 24px 0;">
+        <strong style="color: #1E8E5A; font-size: 18px;">The Big Picture:</strong><br>
+        Your results showed the difference between working <em>IN</em> your business versus building <em>leverage</em>.
+      </p>
+      <h3 style="color: #1E8E5A;">Three Key Insights:</h3>
+      <ul style="line-height: 1.8;">
+        <li><strong>Enterprise Connections</strong> - Each connection compounds monthly residual</li>
+        <li><strong>Community Compounding</strong> - Weekly growth accelerates exponentially</li>
+        <li><strong>Time Freedom</strong> - Leverage means you're not trading hours for dollars</li>
+      </ul>
+      <p>
+        <a href="https://cashflowvisionary.com/next-steps" class="button">See Next Steps →</a>
+      </p>
+      <p style="margin-top: 24px;">Ready to build this?<br><strong>Your CFV Team</strong></p>
+    `, 'Cash Flow Visionary'),
+  },
+  {
+    id: 'engagement-value-bomb',
+    name: 'Weekly Value: The Leverage Secret',
+    description: 'High-value content email for engagement',
+    subject: 'The One Thing Most Entrepreneurs Miss',
+    category: 'engagement',
+    html: wrapEmailContent(`
+      <h2 style="color: #1E8E5A; margin-top: 0;">The Leverage Secret Nobody Talks About</h2>
+      <p>Most entrepreneurs are stuck on a hamster wheel. They're working harder, not smarter. Here's why...</p>
+      <p style="background: #fff7e6; padding: 20px; border-left: 4px solid #C9A441; margin: 24px 0;">
+        <strong style="color: #C9A441;">💡 Key Insight:</strong> True leverage comes from <strong>network effects</strong>, not just systems or team. When your income compounds through connections, you've achieved exponential leverage.
+      </p>
+      <h3 style="color: #1E8E5A;">Three Types of Leverage:</h3>
+      <ul style="line-height: 1.8;">
+        <li><strong>Time Leverage</strong> - Systems that work without you</li>
+        <li><strong>People Leverage</strong> - Teams that scale your impact</li>
+        <li><strong>Network Leverage</strong> - Connections that compound revenue</li>
+      </ul>
+      <p style="background: #f0f8f4; padding: 16px; border-radius: 6px; margin: 24px 0;">
+        <em>"The best businesses create value that multiplies through network effects. That's where freedom lives."</em>
+      </p>
+      <p>
+        <a href="https://networkleveragingcashflow.com/leverage-guide" class="button">Get the Full Guide →</a>
+      </p>
+      <p style="margin-top: 24px;">Building leverage with you,<br><strong>The NLCF Team</strong></p>
+    `, 'Network Leveraging Cash Flow'),
+  },
+  {
+    id: 'announcement-new-feature',
+    name: 'Product Announcement',
+    description: 'Template for announcing new features or updates',
+    subject: '🚀 New Feature: [Feature Name]',
+    category: 'announcement',
+    html: wrapEmailContent(`
+      <h2 style="color: #C9A441; margin-top: 0;">🚀 Exciting Update Inside</h2>
+      <p>We've been working on something special, and it's finally ready...</p>
+      <p style="background: linear-gradient(135deg, #f0f8f4 0%, #fff7e6 100%); padding: 24px; border-radius: 12px; margin: 24px 0; text-align: center;">
+        <strong style="font-size: 22px; color: #1E8E5A; display: block; margin-bottom: 8px;">Introducing: [Feature Name]</strong>
+        <span style="color: #666; font-size: 16px;">[Brief one-liner description]</span>
+      </p>
+      <h3 style="color: #1E8E5A;">What This Means for You:</h3>
+      <ul style="line-height: 1.8;">
+        <li><strong>Benefit 1</strong> - Description of first benefit</li>
+        <li><strong>Benefit 2</strong> - Description of second benefit</li>
+        <li><strong>Benefit 3</strong> - Description of third benefit</li>
+      </ul>
+      <p>
+        <a href="https://yoursite.com/feature" class="button">Try It Now →</a>
+      </p>
+      <p style="margin-top: 24px;">Always innovating,<br><strong>Your Team</strong></p>
+    `, 'Network Leveraging Cash Flow'),
+  },
+];
+
+// Helper function to get template by ID
+export function getTemplateById(id: string): EmailTemplate | undefined {
+  return EMAIL_TEMPLATES.find(t => t.id === id);
+}
+
+// Helper function to get templates by category
+export function getTemplatesByCategory(category: EmailTemplate['category']): EmailTemplate[] {
+  return EMAIL_TEMPLATES.filter(t => t.category === category);
+}
