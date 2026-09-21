@@ -225,9 +225,16 @@ export default function LeadsPage() {
             </button>
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
+            <Link href="/crm/leads/new" style={{ textDecoration: 'none' }}>
+              <button
+                style={{ padding: '8px 16px', background: '#1E8E5A', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
+              >
+                + Add Contact
+              </button>
+            </Link>
             <button
               onClick={exportToCSV}
-              style={{ padding: '8px 16px', background: '#1E8E5A', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
+              style={{ padding: '8px 16px', background: '#F6FAF7', color: '#063B25', border: '1px solid #DCECE2', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
             >
               Export CSV
             </button>
