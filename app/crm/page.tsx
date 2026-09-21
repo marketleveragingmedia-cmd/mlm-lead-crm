@@ -313,18 +313,19 @@ function ActionCard({ href, title, description, icon }: {
 }
 
 async function RecentLeadsList() {
-  const recentLeads = await prisma.lead.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 10,
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      sourcePage: true,
-      createdAt: true,
-    }
-  });
+  try {
+    const recentLeads = await prisma.lead.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        sourcePage: true,
+        createdAt: true,
+      }
+    });
 
   if (recentLeads.length === 0) {
     return (
@@ -393,6 +394,22 @@ async function RecentLeadsList() {
       </table>
     </div>
   );
+  } catch (error) {
+    console.error('Error loading recent leads:', error);
+    return (
+      <div style={{
+        background: 'white',
+        borderRadius: '16px',
+        padding: '24px',
+        textAlign: 'center',
+        border: '1px solid var(--line)',
+      }}>
+        <div style={{ fontSize: '16px', color: 'var(--muted)' }}>
+          Unable to load recent leads. Please refresh the page.
+        </div>
+      </div>
+    );
+  }
 }
 
 const tableHeaderStyle: React.CSSProperties = {
