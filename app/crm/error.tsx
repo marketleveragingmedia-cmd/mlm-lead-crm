@@ -20,7 +20,7 @@ export default function Error({
         background: 'white',
         padding: '48px',
         borderRadius: '16px',
-        maxWidth: '600px',
+        maxWidth: '800px',
         textAlign: 'center',
         border: '1px solid var(--line)',
       }}>
@@ -31,7 +31,7 @@ export default function Error({
           color: 'var(--green-deep)',
           marginBottom: '16px',
         }}>
-          Database Connection Error
+          Page Error
         </h1>
         <p style={{
           fontSize: '16px',
@@ -39,8 +39,33 @@ export default function Error({
           marginBottom: '24px',
           lineHeight: '1.6',
         }}>
-          Unable to connect to the database. This is usually a temporary issue.
+          Something went wrong loading this page.
         </p>
+        
+        <div style={{
+          background: '#ffebee',
+          padding: '20px',
+          borderRadius: '8px',
+          marginBottom: '24px',
+          textAlign: 'left',
+        }}>
+          <strong style={{ color: '#c62828' }}>Error Details:</strong>
+          <pre style={{
+            marginTop: '10px',
+            fontSize: '13px',
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            color: '#333',
+          }}>
+            {error.message}
+          </pre>
+          {error.digest && (
+            <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+              Digest: {error.digest}
+            </div>
+          )}
+        </div>
+
         <button
           onClick={reset}
           style={{
@@ -56,13 +81,6 @@ export default function Error({
         >
           Try Again
         </button>
-        <p style={{
-          fontSize: '13px',
-          color: 'var(--muted)',
-          marginTop: '24px',
-        }}>
-          If this persists, contact support.
-        </p>
       </div>
     </div>
   );
