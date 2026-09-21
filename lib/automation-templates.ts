@@ -44,7 +44,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
         htmlContent: makeEmail('Welcome', `
           <h2 style="color: #1E8E5A;">Welcome, Visionary!</h2>
           <p>You've just joined a community of entrepreneurs building leveraged, recurring income through network systems.</p>
-          <p>Cash Flow Visionaries isn't about trading time for money - it's about building systems that generate cash flow whether you're working or not.</p>
+          <p>Cash Flow Visionaries isn't about trading time for money - it is about building systems that generate cash flow whether you are working or not.</p>
           <h3 style="color: #C9A441;">What to Expect</h3>
           <ul>
             <li>Weekly insights on automated income systems</li>
@@ -211,7 +211,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
             <li>Live Q&A</li>
             <li>Network intros with fellow founders</li>
           </ul>
-          <p>Founders who show up consistently build the biggest networks - not because it's mandatory, but because relationships form here.</p>
+          <p>Founders who show up consistently build the biggest networks - not because it is mandatory, but because relationships form here.</p>
           <p>📅 Thursday 2:00pm PT / 5:00pm ET</p>
         `),
         textContent: '',
@@ -311,7 +311,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
         htmlContent: makeEmail('CTA', `
           <h2 style="color: #1E8E5A;">Your Next Step</h2>
           <p>You've seen the numbers. You've seen the proof. You understand the system.</p>
-          <p>Now it's decision time: Keep thinking about it, or start building it.</p>
+          <p>Now it is decision time: Keep thinking about it, or start building it.</p>
           <h3 style="color: #C9A441;">When You Activate:</h3>
           <ul>
             <li>Get your automated funnel</li>
@@ -341,7 +341,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
         delayDays: 0,
         htmlContent: makeEmail('Partnership', `
           <h2 style="color: #1E8E5A;">Partnership Activated</h2>
-          <p>Strategic partnerships are different - you're building something bigger than a single business.</p>
+          <p>Strategic partnerships are different - you are building something bigger than a single business.</p>
           <p>Our partnership model creates recurring value for both parties through network leverage and shared systems.</p>
         `),
         textContent: '',
@@ -446,7 +446,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
     defaultFromName: 'Network Leveraging Cash Flow',
     emails: [
       { subject: 'Turn Your Side Hustle Into Recurring Income', delayDays: 0, htmlContent: makeEmail('Intro', '<h2 style="color: #1E8E5A;">Side Hustle → Recurring Income</h2><p>Build leveraged income alongside your current work. Start with 10 hours/week.</p>'), textContent: '' },
-      { subject: 'The Part-Time Path to Freedom', delayDays: 2, htmlContent: makeEmail('Path', '<h2 style="color: #1E8E5A;">Part-Time Success</h2><p>You don't need to quit your job. Build this systematically, part-time.</p>'), textContent: '' },
+      { subject: 'The Part-Time Path to Freedom', delayDays: 2, htmlContent: makeEmail('Path', '<h2 style="color: #1E8E5A;">Part-Time Success</h2><p>You do not need to quit your job. Build this systematically, part-time.</p>'), textContent: '' },
       { subject: 'Case Study: 10 Hours/Week to $8K/Month', delayDays: 5, htmlContent: makeEmail('Success', '<h2 style="color: #1E8E5A;">Part-Time Results</h2><p>Real story: $8K/month built working evenings and weekends.</p>'), textContent: '' },
       { subject: 'Your 90-Day Roadmap', delayDays: 7, htmlContent: makeEmail('Plan', '<h2 style="color: #1E8E5A;">90-Day Blueprint</h2><p>Month 1: Setup. Month 2: First connections. Month 3: Scale.</p>'), textContent: '' },
       { subject: 'Join the Side Hustler Community', delayDays: 10, htmlContent: makeEmail('Community', '<h2 style="color: #1E8E5A;">Community Access</h2><p>Connect with other part-time builders crushing it.</p>'), textContent: '' },
@@ -481,7 +481,7 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
       { subject: 'Escape the Client Hamster Wheel', delayDays: 0, htmlContent: makeEmail('Problem', '<h2 style="color: #1E8E5A;">Client Fatigue</h2><p>Tired of trading hours for dollars? Build leveraged income.</p>'), textContent: '' },
       { subject: 'Client Work → Leveraged Income', delayDays: 2, htmlContent: makeEmail('Solution', '<h2 style="color: #1E8E5A;">The Shift</h2><p>Keep your best clients, add recurring cash flow.</p>'), textContent: '' },
       { subject: 'Agency Owner Adds $15K/Month', delayDays: 5, htmlContent: makeEmail('Case', '<h2 style="color: #1E8E5A;">Real Results</h2><p>How one agency owner added $15K/month without new clients.</p>'), textContent: '' },
-      { subject: 'Keep Clients, Add Leverage', delayDays: 7, htmlContent: makeEmail('Hybrid', '<h2 style="color: #1E8E5A;">Hybrid Model</h2><p>You don't have to choose. Do both.</p>'), textContent: '' },
+      { subject: 'Keep Clients, Add Leverage', delayDays: 7, htmlContent: makeEmail('Hybrid', '<h2 style="color: #1E8E5A;">Hybrid Model</h2><p>You do not have to choose. Do both.</p>'), textContent: '' },
       { subject: 'Your First 30 Days', delayDays: 10, htmlContent: makeEmail('Start', '<h2 style="color: #1E8E5A;">Getting Started</h2><p>Month 1 blueprint for service providers.</p>'), textContent: '' },
     ],
   },

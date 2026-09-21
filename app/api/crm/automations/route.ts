@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { AUTOMATION_TEMPLATES, getAutomationTemplateById } from '@/lib/automation-templates-simple';
+import { AUTOMATION_TEMPLATES, getAutomationTemplateById } from '@/lib/automation-templates';
 
 export const dynamic = 'force-dynamic';
 

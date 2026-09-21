@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { AUTOMATION_TEMPLATES } from '@/lib/automation-templates-simple';
+import { AUTOMATION_TEMPLATES } from '@/lib/automation-templates';
 
 export const dynamic = 'force-dynamic';
 
