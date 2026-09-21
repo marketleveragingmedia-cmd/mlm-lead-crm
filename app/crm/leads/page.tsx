@@ -174,9 +174,18 @@ export default function LeadsPage() {
               style={{ padding: '8px 12px', border: '1px solid #DCECE2', borderRadius: '6px', fontSize: '14px' }}
             >
               <option value="all">All Sources</option>
-              <option value="cash-flow-visionaries">CFV</option>
+              <option value="cash-flow-visionaries">Cash Flow Visionaries</option>
+              <option value="cashflowvisionaries">CFV (alt)</option>
               <option value="simulator">Simulator</option>
               <option value="founders-beta">Founders Beta</option>
+              <option value="strategic-partner">Strategic Partners</option>
+              <option value="jv-affiliate">JV Affiliates</option>
+              <option value="side-hustler">Side Hustlers</option>
+              <option value="high-risk">High-Risk Traders</option>
+              <option value="no-more-clients">No More Clients</option>
+              <option value="builder">Builder Class</option>
+              <option value="artist">Artists & Musicians</option>
+              <option value="unknown">Unknown</option>
             </select>
             <select
               value={sortBy}
@@ -246,7 +255,7 @@ export default function LeadsPage() {
                   <td style={{ padding: '12px 16px', fontSize: '14px' }}>{lead.phone || '—'}</td>
                   <td style={{ padding: '12px 16px', fontSize: '14px' }}>
                     <span style={{ background: '#F6FAF7', padding: '3px 10px', borderRadius: '4px', fontSize: '12px', fontWeight: '600', color: '#0A5D39' }}>
-                      {lead.sourcePage.split('/').pop()?.replace(/-/g, ' ') || 'Unknown'}
+                      {formatSourceLabel(lead.sourcePage)}
                     </span>
                   </td>
                   <td style={{ padding: '12px 16px', fontSize: '14px' }}>
@@ -268,4 +277,24 @@ export default function LeadsPage() {
       </div>
     </div>
   );
+}
+
+function formatSourceLabel(source: string): string {
+  const lower = source.toLowerCase();
+  
+  if (lower.includes('cashflowvisionaries') || lower.includes('cash-flow-visionaries')) return 'Cash Flow Visionaries';
+  if (lower.includes('simulator')) return 'Simulator';
+  if (lower.includes('founders-beta') || lower.includes('founders')) return 'Founders Beta';
+  if (lower.includes('strategic-partner')) return 'Strategic Partners';
+  if (lower.includes('jv-affiliate')) return 'JV Affiliates';
+  if (lower.includes('side-hustler')) return 'Side Hustlers';
+  if (lower.includes('high-risk')) return 'High-Risk Traders';
+  if (lower.includes('no-more-clients')) return 'No More Clients';
+  if (lower.includes('builder')) return 'Builder Class';
+  if (lower.includes('artist') || lower.includes('musician')) return 'Artists & Musicians';
+  
+  // Fallback: format the path nicely
+  const parts = source.split('/').filter(p => p);
+  if (parts.length === 0) return 'Unknown';
+  return parts[parts.length - 1].replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 }
