@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import prisma from '@/lib/db';
+import LogoutButton from '@/components/LogoutButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,23 +62,16 @@ export default async function CRMDashboard() {
               Network Leveraging Cash Flow
             </p>
           </div>
-          <form action="/api/auth/logout" method="POST">
-            <button
-              type="submit"
-              style={{
-                padding: '10px 20px',
-                background: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: 'pointer',
-              }}
-            >
-              Logout
-            </button>
-          </form>
+          <LogoutButton style={{
+            padding: '10px 20px',
+            background: 'rgba(255,255,255,0.2)',
+            color: 'white',
+            border: '1px solid rgba(255,255,255,0.3)',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: '600',
+            cursor: 'pointer',
+          }} />
         </div>
       </header>
 

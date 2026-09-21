@@ -40,36 +40,57 @@ export default function Login() {
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      background: '#f5f5f5',
+      background: 'linear-gradient(135deg, #063B25 0%, #0A5D39 50%, #1E8E5A 100%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-      padding: '16px'
+      padding: '20px'
     }}>
       <div style={{
         background: 'white',
-        padding: '24px',
-        borderRadius: '8px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        padding: '40px',
+        borderRadius: '16px',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
         width: '100%',
-        maxWidth: '340px'
+        maxWidth: '420px'
       }}>
-        <h1 style={{
-          fontSize: '20px',
-          fontWeight: '600',
-          color: '#1E8E5A',
-          marginBottom: '24px',
-          textAlign: 'center'
-        }}>
-          MLM Lead CRM
-        </h1>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            background: 'linear-gradient(135deg, #1E8E5A 0%, #C9A441 100%)',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 16px',
+            fontSize: '28px'
+          }}>
+            🔐
+          </div>
+          <h1 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#063B25',
+            marginBottom: '8px'
+          }}>
+            Resend CRM
+          </h1>
+          <p style={{
+            fontSize: '14px',
+            color: '#5B6E64',
+            margin: 0
+          }}>
+            Network Leveraging Cash Flow
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
               fontSize: '14px',
-              fontWeight: '500',
+              fontWeight: '600',
               marginBottom: '8px',
-              color: '#333'
+              color: '#063B25'
             }}>
               Password
             </label>
@@ -79,26 +100,31 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               style={{
                 width: '100%',
-                padding: '10px 12px',
-                fontSize: '14px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                boxSizing: 'border-box'
+                padding: '12px 16px',
+                fontSize: '15px',
+                border: '2px solid #DCECE2',
+                borderRadius: '8px',
+                boxSizing: 'border-box',
+                transition: 'border-color 0.2s',
+                outline: 'none'
               }}
-              placeholder="Enter password"
+              placeholder="Enter your password"
               required
               autoFocus
+              onFocus={(e) => e.target.style.borderColor = '#1E8E5A'}
+              onBlur={(e) => e.target.style.borderColor = '#DCECE2'}
             />
           </div>
 
           {error && (
             <div style={{
-              padding: '10px',
-              background: '#fee',
-              color: '#c33',
-              fontSize: '13px',
-              borderRadius: '4px',
-              marginBottom: '16px'
+              padding: '12px 16px',
+              background: '#ffebee',
+              color: '#c62828',
+              fontSize: '14px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              border: '1px solid #ffcdd2'
             }}>
               {error}
             </div>
@@ -109,20 +135,35 @@ export default function Login() {
             disabled={loading}
             style={{
               width: '100%',
-              padding: '12px',
-              background: '#1E8E5A',
+              padding: '14px',
+              background: loading ? '#5B6E64' : 'linear-gradient(135deg, #1E8E5A 0%, #0A5D39 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
+              borderRadius: '8px',
+              fontSize: '15px',
               fontWeight: '600',
               cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.6 : 1
+              transition: 'transform 0.1s',
+              boxShadow: '0 4px 12px rgba(30, 142, 90, 0.3)'
             }}
+            onMouseEnter={(e) => !loading && (e.currentTarget.style.transform = 'translateY(-1px)')}
+            onMouseLeave={(e) => !loading && (e.currentTarget.style.transform = 'translateY(0)')}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Logging in...' : 'Login to CRM'}
           </button>
         </form>
+
+        <div style={{
+          marginTop: '24px',
+          paddingTop: '24px',
+          borderTop: '1px solid #DCECE2',
+          textAlign: 'center',
+          fontSize: '13px',
+          color: '#5B6E64'
+        }}>
+          <div style={{ marginBottom: '8px' }}>🔒 Secure Access</div>
+          <div>Password required for all CRM functions</div>
+        </div>
       </div>
     </div>
   );
