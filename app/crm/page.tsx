@@ -148,6 +148,12 @@ export default async function CRMDashboard() {
               description="Track engagement and performance"
               icon="📊"
             />
+            <ActionCard
+              href="/crm/skool-events"
+              title="Skool Events"
+              description="Webhook events & membership tracking"
+              icon="🎓"
+            />
           </div>
         </div>
 

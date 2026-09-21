@@ -37,6 +37,13 @@ model Lead {
   lastEmailOpenedAt      DateTime?
   lastEmailClickedAt     DateTime?
   
+  // Skooly Integration
+  skoolMemberId          String?           @unique
+  skoolPlan              String?           // "Standard" or "Premium"
+  skoolMembershipStartedAt DateTime?
+  fullSimulatorResultsUnlocked Boolean      @default(false)
+  officialCashFlowVisionary Boolean         @default(false)
+  
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @default(now()) @updatedAt
   syncedToGlobalControl  Boolean           @default(false)
@@ -44,6 +51,7 @@ model Lead {
   
   simulatorResults       SimulatorResult[]
   emailEvents            EmailEvent[]
+  skoolEvents            SkoolEvent[]
 
   @@index([email])
   @@index([createdAt])
@@ -145,4 +153,34 @@ model EmailEvent {
   @@index([leadId])
   @@index([eventType])
   @@index([occurredAt])
+}
+
+// Skooly Webhook Event History
+model SkoolEvent {
+  id               String   @id @default(cuid())
+  leadId           String?
+  lead             Lead?    @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  
+  // Raw webhook data
+  eventType        String   // e.g., "member.created", "membership.upgraded", etc.
+  skoolMemberId    String?
+  skoolEmail       String?
+  rawPayload       Json     // Complete webhook payload for documentation
+  
+  // Parsed data (will be filled once we know the structure)
+  membershipPlan   String?  // "Standard", "Premium"
+  membershipStatus String?  // "active", "cancelled", etc.
+  
+  // Metadata
+  processed        Boolean  @default(false)
+  processedAt      DateTime?
+  errorMessage     String?
+  
+  createdAt        DateTime @default(now())
+  
+  @@index([leadId])
+  @@index([eventType])
+  @@index([skoolMemberId])
+  @@index([skoolEmail])
+  @@index([createdAt])
 }
