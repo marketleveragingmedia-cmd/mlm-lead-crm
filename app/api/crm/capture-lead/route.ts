@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     // Sync to Global Control (passive backup)
     let globalControlSynced = false;
     try {
-      await syncToGlobalControl(lead.id, firstName, lastName, email, source);
+      await syncToGlobalControl(lead);
       globalControlSynced = true;
       
       await prisma.lead.update({
