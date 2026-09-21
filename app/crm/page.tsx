@@ -51,7 +51,7 @@ export default async function CRMDashboard() {
               fontWeight: '700',
               letterSpacing: '-0.5px',
             }}>
-              Resend CRM Dashboard
+              NLC Lead CRM Dashboard
             </h1>
             <p style={{
               margin: 0,

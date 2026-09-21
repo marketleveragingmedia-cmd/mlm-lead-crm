@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'MLM Lead CRM',
+  title: 'NLC Lead CRM',
   description: 'Lead management system for MLM Command Center',
 }
 

@@ -72,7 +72,7 @@ export default function Login() {
             color: '#063B25',
             marginBottom: '8px'
           }}>
-            Resend CRM
+            NLC Lead CRM
           </h1>
           <p style={{
             fontSize: '14px',

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Resend CRM - Network Leveraging Cash Flow',
+  title: 'NLC Lead CRM - Network Leveraging Cash Flow',
   description: 'Professional CRM system powered by Resend',
 };
 
