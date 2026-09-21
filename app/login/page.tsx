@@ -24,7 +24,7 @@ export default function Login() {
       const data = await response.json();
 
       if (data.success) {
-        router.push('/dashboard');
+        router.push('/crm');
       } else {
         setError('Invalid password');
       }

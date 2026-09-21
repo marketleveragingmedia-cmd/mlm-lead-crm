@@ -148,12 +148,31 @@ export default function LeadsPage() {
     <div style={{ minHeight: '100vh', background: '#F6FAF7' }}>
       {/* Header */}
       <header style={{ background: 'white', borderBottom: '1px solid #DCECE2', padding: '16px 20px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/crm" style={{ color: '#1E8E5A', textDecoration: 'none', fontSize: '20px' }}>←</Link>
-          <div>
-            <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>All Leads</h1>
-            <p style={{ margin: '2px 0 0 0', fontSize: '13px', color: '#5B6E64' }}>{filteredLeads.length} leads</p>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Link href="/crm" style={{ color: '#1E8E5A', textDecoration: 'none', fontSize: '20px' }}>←</Link>
+            <div>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>All Leads</h1>
+              <p style={{ margin: '2px 0 0 0', fontSize: '13px', color: '#5B6E64' }}>{filteredLeads.length} leads</p>
+            </div>
           </div>
+          <form action="/api/auth/logout" method="POST">
+            <button
+              type="submit"
+              style={{
+                padding: '8px 16px',
+                background: '#f5f5f5',
+                color: '#063B25',
+                border: '1px solid #DCECE2',
+                borderRadius: '6px',
+                fontSize: '13px',
+                fontWeight: '600',
+                cursor: 'pointer',
+              }}
+            >
+              Logout
+            </button>
+          </form>
         </div>
       </header>
 

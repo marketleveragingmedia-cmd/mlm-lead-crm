@@ -42,23 +42,42 @@ export default async function CRMDashboard() {
         padding: '24px',
         boxShadow: '0 4px 12px rgba(6, 59, 37, 0.1)',
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <h1 style={{
-            margin: '0 0 8px 0',
-            fontSize: '32px',
-            fontWeight: '700',
-            letterSpacing: '-0.5px',
-          }}>
-            Resend CRM Dashboard
-          </h1>
-          <p style={{
-            margin: 0,
-            fontSize: '16px',
-            opacity: 0.9,
-            fontWeight: '500',
-          }}>
-            Network Leveraging Cash Flow
-          </p>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{
+              margin: '0 0 8px 0',
+              fontSize: '32px',
+              fontWeight: '700',
+              letterSpacing: '-0.5px',
+            }}>
+              Resend CRM Dashboard
+            </h1>
+            <p style={{
+              margin: 0,
+              fontSize: '16px',
+              opacity: 0.9,
+              fontWeight: '500',
+            }}>
+              Network Leveraging Cash Flow
+            </p>
+          </div>
+          <form action="/api/auth/logout" method="POST">
+            <button
+              type="submit"
+              style={{
+                padding: '10px 20px',
+                background: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+              }}
+            >
+              Logout
+            </button>
+          </form>
         </div>
       </header>
 
