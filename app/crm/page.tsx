@@ -4,14 +4,15 @@ import prisma from '@/lib/db';
 export const dynamic = 'force-dynamic';
 
 async function getDashboardStats() {
-  const [
-    totalLeads,
-    leadsThisWeek,
-    leadsToday,
-    simulatorCompletions,
-    totalEmails,
-    openRate,
-  ] = await Promise.all([
+  try {
+    const [
+      totalLeads,
+      leadsThisWeek,
+      leadsToday,
+      simulatorCompletions,
+      totalEmails,
+      openRate,
+    ] = await Promise.all([
     prisma.lead.count(),
     prisma.lead.count({
       where: {
@@ -36,16 +37,27 @@ async function getDashboardStats() {
       }
     }),
     calculateOpenRate(),
-  ]);
+    ]);
 
-  return {
-    totalLeads,
-    leadsThisWeek,
-    leadsToday,
-    simulatorCompletions,
-    totalEmails: totalEmails._sum.emailsReceived || 0,
-    openRate,
-  };
+    return {
+      totalLeads,
+      leadsThisWeek,
+      leadsToday,
+      simulatorCompletions,
+      totalEmails: totalEmails._sum.emailsReceived || 0,
+      openRate,
+    };
+  } catch (error) {
+    console.error('Database error:', error);
+    return {
+      totalLeads: 0,
+      leadsThisWeek: 0,
+      leadsToday: 0,
+      simulatorCompletions: 0,
+      totalEmails: 0,
+      openRate: 0,
+    };
+  }
 }
 
 async function calculateOpenRate() {
