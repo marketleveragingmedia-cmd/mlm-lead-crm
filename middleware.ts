@@ -7,11 +7,14 @@ export function middleware(request: NextRequest) {
   // Allow public routes
   if (
     pathname.startsWith('/api/capture-lead') ||
+    pathname.startsWith('/api/crm/capture-lead') ||
+    pathname.startsWith('/api/webhooks/resend') ||
     pathname.startsWith('/api/test-env') ||
     pathname.startsWith('/api/debug-last-lead') ||
     pathname.startsWith('/api/search-lead') ||
     pathname.startsWith('/api/auth/login') ||
     pathname === '/login' ||
+    pathname.startsWith('/crm') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon')
   ) {
