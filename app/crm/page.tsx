@@ -61,18 +61,23 @@ async function getDashboardStats() {
 }
 
 async function calculateOpenRate() {
-  const leads = await prisma.lead.findMany({
-    select: {
-      emailsReceived: true,
-      emailsOpened: true,
-    }
-  });
+  try {
+    const leads = await prisma.lead.findMany({
+      select: {
+        emailsReceived: true,
+        emailsOpened: true,
+      }
+    });
 
-  const totalReceived = leads.reduce((sum, lead) => sum + lead.emailsReceived, 0);
-  const totalOpened = leads.reduce((sum, lead) => sum + lead.emailsOpened, 0);
+    const totalReceived = leads.reduce((sum, lead) => sum + lead.emailsReceived, 0);
+    const totalOpened = leads.reduce((sum, lead) => sum + lead.emailsOpened, 0);
 
-  if (totalReceived === 0) return 0;
-  return Math.round((totalOpened / totalReceived) * 100);
+    if (totalReceived === 0) return 0;
+    return Math.round((totalOpened / totalReceived) * 100);
+  } catch (error) {
+    console.error('Error calculating open rate:', error);
+    return 0;
+  }
 }
 
 export default async function CRMDashboard() {
