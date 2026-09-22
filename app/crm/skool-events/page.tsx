@@ -38,7 +38,7 @@ export default async function SkoolEventsPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Link href="/crm" style={{ color: '#1E8E5A', textDecoration: 'none', fontSize: '20px' }}>←</Link>
             <div>
-              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>Skooly VIP 7-Day Trial - Webhook Documentation Mode</h1>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>Skooly VIP - Webhook Documentation Mode</h1>
               <p style={{ margin: '2px 0 0 0', fontSize: '13px', color: '#5B6E64' }}>
                 {events.length} events captured • Documentation Mode
               </p>
@@ -68,7 +68,7 @@ export default async function SkoolEventsPage() {
           marginBottom: '24px'
         }}>
           <h2 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '700' }}>
-            🎓 Skooly VIP 7-Day Trial - Webhook Documentation Mode
+            🎓 Skooly VIP - Webhook Documentation Mode
           </h2>
           <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5', opacity: 0.95 }}>
             All webhook events are captured here with complete payloads. Use this page to verify actual event names and data structure before implementing automation logic.
