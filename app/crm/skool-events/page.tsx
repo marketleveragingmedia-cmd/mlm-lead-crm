@@ -38,7 +38,7 @@ export default async function SkoolEventsPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Link href="/crm" style={{ color: '#1E8E5A', textDecoration: 'none', fontSize: '20px' }}>←</Link>
             <div>
-              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>Skool Webhook Events</h1>
+              <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#063B25' }}>Skooly VIP 7-Day Trial - Webhook Documentation Mode</h1>
               <p style={{ margin: '2px 0 0 0', fontSize: '13px', color: '#5B6E64' }}>
                 {events.length} events captured • Documentation Mode
               </p>
