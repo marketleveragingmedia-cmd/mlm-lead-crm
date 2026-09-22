@@ -1,0 +1,17 @@
+# Add these environment variables to Vercel:
+# https://vercel.com/marketleveragingmedia-cmds-projects/mlm-lead-crm/settings/environment-variables
+
+SKOOLY_SECRET_NEW_MEMBER=f98c9d15ed93fb51d896c1d42613e803321b5385e9f37300f010f22607e1348f
+SKOOLY_SECRET_IN_CANCELLATION=2e552015102a196418daa208094d4671c7eafcce3c33a5c5d71a62e1825da8b3
+SKOOLY_SECRET_CARD_DECLINED=d6064d25f807a2075fb60bab09b22c66f155aef3fce219baea8604c917da53c0
+SKOOLY_SECRET_FULLY_CHURNED=4fcfc4652d966c7dc99f7f027f9d78c4bdfbbcf860439d255373d87e3fca80b5
+SKOOLY_SECRET_RESUBSCRIBED=3665563274a853024345215eeb82dd5f1a357efbf20d9719158dc4086e8886d1
+SKOOLY_SECRET_TIER_CHANGE=b0b21023862aedc064afaf5e721b8255c7703c7d6985f4d19080c5608108fbf4
+SKOOLY_SECRET_LTV_CHANGE=219872399fd41471abc25e6b0604dc40f994d8cca640b0cabb43cf025a8d2ad7
+SKOOLY_SECRET_JOIN_QUESTIONS_ANSWERED=8e458faaeb8436755511bcbe798ad265e1994d0a00ba15a2daf5638b939d21cc
+
+# For each variable:
+# - Select all three environments (Production, Preview, Development)
+# - Click Save
+# 
+# After adding all variables, trigger a new deployment
