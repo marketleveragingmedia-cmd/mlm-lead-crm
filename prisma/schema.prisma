@@ -17,7 +17,8 @@ model Lead {
   lastName               String
   email                  String            @unique
   phone                  String?
-  sourcePage             String
+  source                 String            @default("Unknown")
+  sourcePage             String?
   
   // Resend Integration
   resendContactId        String?           @unique
