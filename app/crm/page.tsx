@@ -373,7 +373,8 @@ const tableCellStyle = {
   color: '#18362A',
 };
 
-function formatSource(source: string): string {
+function formatSource(source: string | null): string {
+  if (!source) return 'Unknown';
   if (source.includes('cash-flow-visionaries')) return 'Cash Flow Visionaries';
   if (source.includes('simulator')) return 'Simulator';
   if (source.includes('founders-beta')) return 'Founders Beta';

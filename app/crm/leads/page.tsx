@@ -306,7 +306,8 @@ export default function LeadsPage() {
   );
 }
 
-function formatSourceLabel(source: string): string {
+function formatSourceLabel(source: string | null): string {
+  if (!source) return 'Unknown';
   const lower = source.toLowerCase();
   
   if (lower.includes('cashflowvisionaries') || lower.includes('cash-flow-visionaries')) return 'Cash Flow Visionaries';

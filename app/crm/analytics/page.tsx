@@ -137,8 +137,9 @@ async function getAnalytics() {
   // Source breakdown
   const sourceMap = new Map<string, number>();
   leads.forEach(lead => {
-    const count = sourceMap.get(lead.sourcePage) || 0;
-    sourceMap.set(lead.sourcePage, count + 1);
+    const page = lead.sourcePage || 'Unknown';
+    const count = sourceMap.get(page) || 0;
+    sourceMap.set(page, count + 1);
   });
 
   const sourceBreakdown = Array.from(sourceMap.entries())
@@ -289,7 +290,8 @@ async function RecentEvents() {
   );
 }
 
-function formatSource(source: string): string {
+function formatSource(source: string | null): string {
+  if (!source) return 'Unknown';
   if (source.includes('cash-flow-visionaries')) return 'Cash Flow Visionaries';
   if (source.includes('simulator')) return 'Simulator';
   if (source.includes('founders-beta')) return 'Founders Beta';

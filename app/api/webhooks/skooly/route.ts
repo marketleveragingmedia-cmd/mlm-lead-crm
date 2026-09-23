@@ -81,11 +81,13 @@ export async function POST(request: NextRequest) {
       where: { email: normalizedEmail }
     });
     
+    let leadId: string;
+    
     if (lead) {
       console.log('✅ Found existing lead:', lead.id);
       
       // Update existing lead with Skool data
-      lead = await updateLeadWithSkoolData(
+      const updatedLead = await updateLeadWithSkoolData(
         lead.id,
         skoolMemberId,
         pricingTier,
@@ -93,8 +95,10 @@ export async function POST(request: NextRequest) {
         lastName
       );
       
+      leadId = updatedLead.id;
+      
       // Store event
-      await storeSkoolEvent(lead.id, payload, eventType, skoolMemberId, normalizedEmail, pricingTier);
+      await storeSkoolEvent(leadId, payload, eventType, skoolMemberId, normalizedEmail, pricingTier);
       
       console.log('✅ Updated existing lead');
       
@@ -102,7 +106,7 @@ export async function POST(request: NextRequest) {
       console.log('🆕 Creating new lead (Direct Skool Signup)');
       
       // Auto-create lead for Skool member
-      lead = await createLeadFromSkoolMember(
+      const newLead = await createLeadFromSkoolMember(
         firstName,
         lastName,
         normalizedEmail,
@@ -110,28 +114,30 @@ export async function POST(request: NextRequest) {
         pricingTier
       );
       
-      // Store event
-      await storeSkoolEvent(lead.id, payload, eventType, skoolMemberId, normalizedEmail, pricingTier);
+      leadId = newLead.id;
       
-      console.log('✅ Created new lead:', lead.id);
+      // Store event
+      await storeSkoolEvent(leadId, payload, eventType, skoolMemberId, normalizedEmail, pricingTier);
+      
+      console.log('✅ Created new lead:', leadId);
       
       // Send welcome email to direct Skool signups
-      await sendWelcomeEmail(lead, pricingTier);
+      await sendWelcomeEmail(newLead, pricingTier);
     }
     
     // Sync to Global Control (async, don't block webhook response)
-    syncToGlobalControl(lead.id, pricingTier).catch(err => {
+    syncToGlobalControl(leadId, pricingTier).catch(err => {
       console.error('⚠️  Global Control sync failed (non-blocking):', err.message);
     });
     
     // Sync to Resend (async, don't block webhook response)
-    syncToResend(lead.id, normalizedEmail, firstName, lastName, pricingTier).catch(err => {
+    syncToResend(leadId, normalizedEmail, firstName, lastName, pricingTier).catch(err => {
       console.error('⚠️  Resend sync failed (non-blocking):', err.message);
     });
     
     return NextResponse.json({ 
       ok: true, 
-      leadId: lead.id,
+      leadId: leadId,
       message: 'Webhook processed successfully'
     });
     
