@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       lastName: lead.lastName,
       email: lead.email,
       phone: lead.phone,
-      sourcePage: lead.sourcePage
+      sourcePage: lead.sourcePage || ''
     });
 
     if (contactId) {
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
       lead.firstName,
       lead.lastName,
       lead.email,
-      lead.sourcePage
+      lead.sourcePage || ''
     );
 
     // Send admin notification (non-blocking)
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
       lead.lastName,
       lead.email,
       lead.phone || '',
-      lead.sourcePage
+      lead.sourcePage || ''
     );
     
     adminNotificationPromise
