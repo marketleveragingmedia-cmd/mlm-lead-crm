@@ -91,21 +91,40 @@ export default function AutomationsPage() {
               </p>
             </div>
           </div>
-          <button
-            onClick={() => setShowTemplates(true)}
-            style={{
-              background: '#1E8E5A',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '10px 20px',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: 'pointer',
-            }}
-          >
-            + New Automation
-          </button>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <Link
+              href="/crm/automations/custom"
+              style={{
+                background: 'white',
+                color: '#1E8E5A',
+                border: '2px solid #1E8E5A',
+                borderRadius: '6px',
+                padding: '10px 20px',
+                fontSize: '13px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                display: 'inline-block',
+              }}
+            >
+              ✏️ From Scratch
+            </Link>
+            <button
+              onClick={() => setShowTemplates(true)}
+              style={{
+                background: '#1E8E5A',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '10px 20px',
+                fontSize: '13px',
+                fontWeight: '600',
+                cursor: 'pointer',
+              }}
+            >
+              📋 From Template
+            </button>
+          </div>
         </div>
       </header>
 
