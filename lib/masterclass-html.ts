@@ -881,6 +881,104 @@ html,body{max-width:100%;overflow-x:hidden}
   .form-actions .btn{width:100%}
 }
 
+/* =========================================================
+   V16 REGISTRATION FORM WIDTH FIX
+   Surgical fix only - prevents form width cut-off
+   ========================================================= */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.hero-grid > * {
+  min-width: 0;
+}
+
+.registration-card,
+#register,
+.registration-form,
+form#masterclass-registration-form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.field-grid {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.field-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.field,
+.field-grid input,
+.field-grid select,
+.field-grid textarea,
+.field-grid label {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.form-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.form-actions .btn,
+.form-actions button,
+.form-actions a {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure button text is visible */
+button.btn,
+.form-actions button.btn {
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+
+button.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Stack sooner so real browser inputs never force the narrow
+   right-hand hero column wider than the viewport. */
+@media (max-width: 1100px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full,
+  .member-email-note {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .form-actions .btn,
+  .form-actions button,
+  .form-actions a {
+    width: 100%;
+  }
+}
+
 </style>
 `;
 
