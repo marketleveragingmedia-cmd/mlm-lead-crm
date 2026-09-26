@@ -1184,6 +1184,8 @@ body:before{
   font-size: 0.96rem;
   color: var(--green-deep);
   transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 .field-grid input.field:focus {
   outline: none;
@@ -1195,6 +1197,13 @@ body:before{
 }
 .field-grid input.field.full {
   grid-column: 1 / -1;
+}
+
+/* Ensure field-grid container has full width */
+.field-grid,
+form.field-grid {
+  width: 100% !important;
+  max-width: none !important;
 }
 .error-message {
   grid-column: 1 / -1;
