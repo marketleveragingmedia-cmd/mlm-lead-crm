@@ -824,6 +824,22 @@ body:before{
   height: auto !important;
   padding: 32px !important;
   overflow: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure all text content inside card wraps properly */
+.registration-card * {
+  max-width: 100% !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Ensure member note doesn't get cut off */
+.member-email-note {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* Fix: Ensure form actions are visible */
