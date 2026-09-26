@@ -866,11 +866,11 @@ body:before{
       <h3 class="serif">Cash Flow Injection Strategy Masterclass</h3>
       <p>See What Has Changed, Why Cash Flow Matters Now And How Strategy, Community, Technology And Participation Can Be Leveraged To Create Sustainable Residual Cash Flow.</p>
       <form id="masterclass-form" class="field-grid">
-        <input type="text" name="firstName" class="field" placeholder="First Name" required autocomplete="given-name">
-        <input type="text" name="lastName" class="field" placeholder="Last Name" required autocomplete="family-name">
-        <input type="email" name="email" class="field full" placeholder="Email Address" required autocomplete="email">
+        <input type="text" name="firstName" placeholder="First Name" required autocomplete="given-name">
+        <input type="text" name="lastName" placeholder="Last Name" required autocomplete="family-name">
+        <input type="email" name="email" class="full" placeholder="Email Address" required autocomplete="email">
         <div class="member-email-note">Already A Member? Use The Email Address Associated With Your SKOOL Membership.</div>
-        <input type="tel" name="phone" class="field full" placeholder="Mobile Number (Optional)" autocomplete="tel">
+        <input type="tel" name="phone" class="full" placeholder="Mobile Number (Optional)" autocomplete="tel">
       </form>
       <div id="error-message" class="error-message" style="display:none; color:#c53030; margin:12px 0; font-size:0.95rem;"></div>
       <div class="form-actions">
@@ -1158,7 +1158,7 @@ body:before{
 
 <style>
 /* Form Input Styling - Match V15 field div styling EXACTLY */
-.field-grid input.field {
+form.field-grid input {
   background: #fff;
   border: 1px solid rgba(15,107,72,.13);
   border-radius: 14px;
@@ -1170,7 +1170,7 @@ body:before{
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.field-grid input.field:focus {
+form.field-grid input:focus {
   outline: none;
   border-color: var(--green);
   box-shadow: 0 0 0 3px rgba(15,107,72,.1);
@@ -1178,7 +1178,7 @@ body:before{
 .field-grid input.field::placeholder {
   color: rgba(27,59,49,.45);
 }
-.field-grid input.field.full {
+form.field-grid input.full {
   grid-column: 1 / -1;
 }
 
