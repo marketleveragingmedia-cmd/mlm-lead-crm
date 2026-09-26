@@ -131,6 +131,9 @@ export async function POST(
     if (isPremium) {
       console.log(`  🎯 Already Premium - qualifying and registering`);
 
+      // Track if this was already registered before this request
+      const wasAlreadyRegistered = registration.registrationStatus === 'registered';
+
       // Mark as qualified
       if (!registration.webinarEligible) {
         registration = await prisma.webinarRegistration.update({
@@ -145,7 +148,7 @@ export async function POST(
       }
 
       // Register with WebinarJam (idempotent)
-      if (registration.registrationStatus !== 'registered') {
+      if (!wasAlreadyRegistered) {
         await registerWithWebinarJam(lead, {
           ...registration,
           webinarEvent,
@@ -162,10 +165,15 @@ export async function POST(
       return NextResponse.json({
         success: true,
         alreadyPremium: true,
+        alreadyRegistered: wasAlreadyRegistered,
         registrationStatus: registration.registrationStatus,
         liveRoomUrl: registration.webinarJamLiveRoomUrl,
         replayRoomUrl: registration.webinarJamReplayRoomUrl,
-        message: 'You are already a Premium member. Your webinar registration is confirmed!'
+        webinarDate: webinarEvent.startDateTime.toISOString(),
+        webinarTitle: webinarEvent.name,
+        message: wasAlreadyRegistered 
+          ? 'You are already registered for this webinar.'
+          : 'You are already a Premium member. Your webinar registration is confirmed!'
       });
 
     } 
