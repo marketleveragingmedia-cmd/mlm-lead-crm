@@ -940,23 +940,41 @@ form#masterclass-registration-form {
   box-sizing: border-box;
 }
 
-/* Ensure button has proper green gradient background and white text */
-#masterclass-registration-form ~ .form-actions button.btn,
-.registration-card .form-actions button.btn,
-button.btn[type="submit"],
-.form-actions button {
+/* Fix ALL buttons - green gradient background and white text */
+.btn,
+a.btn,
+button.btn,
+.nav .btn,
+.form-actions .btn,
+.form-actions button,
+button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 50px !important;
+  padding: 0 24px !important;
+  border-radius: 999px !important;
   background: linear-gradient(135deg, #0f6b48, #17845c) !important;
   color: #ffffff !important;
+  text-decoration: none !important;
   font-weight: 800 !important;
   border: 1px solid rgba(255,255,255,.25) !important;
   box-shadow: 0 10px 24px rgba(15,107,72,.18) !important;
-  text-decoration: none !important;
 }
 
-#masterclass-registration-form ~ .form-actions button.btn:hover,
-.registration-card .form-actions button.btn:hover,
-button.btn[type="submit"]:hover {
-  transform: translateY(-1px);
+.btn:hover,
+a.btn:hover,
+button.btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+.btn.secondary,
+a.btn.secondary {
+  background: transparent !important;
+  color: #073d2c !important;
+  border: 1px solid rgba(15,107,72,.24) !important;
+  box-shadow: none !important;
 }
 
 button.btn:disabled {
