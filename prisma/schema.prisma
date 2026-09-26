@@ -12,47 +12,49 @@ datasource db {
 }
 
 model Lead {
-  id                     String            @id @default(cuid())
-  firstName              String
-  lastName               String
-  email                  String            @unique
-  phone                  String?
-  source                 String            @default("Unknown")
-  sourcePage             String?
-  
+  id         String  @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String  @unique
+  phone      String?
+  source     String  @default("Unknown")
+  sourcePage String?
+
   // Resend Integration
-  resendContactId        String?           @unique
-  resendAudienceId       String?
-  resendTags             String[]          @default([])
-  
+  resendContactId  String?  @unique
+  resendAudienceId String?
+  resendTags       String[] @default([])
+
   // Automation Tracking
-  automationEnrolled     Boolean           @default(false)
-  automationName         String?
-  automationStartedAt    DateTime?
-  automationCompletedAt  DateTime?
-  
+  automationEnrolled    Boolean   @default(false)
+  automationName        String?
+  automationStartedAt   DateTime?
+  automationCompletedAt DateTime?
+
   // Engagement Tracking
-  emailsReceived         Int               @default(0)
-  emailsOpened           Int               @default(0)
-  emailsClicked          Int               @default(0)
-  lastEmailOpenedAt      DateTime?
-  lastEmailClickedAt     DateTime?
-  
+  emailsReceived     Int       @default(0)
+  emailsOpened       Int       @default(0)
+  emailsClicked      Int       @default(0)
+  lastEmailOpenedAt  DateTime?
+  lastEmailClickedAt DateTime?
+
   // Skooly Integration
-  skoolMemberId          String?           @unique
-  skoolPlan              String?           // "Standard" or "Premium"
-  skoolMembershipStartedAt DateTime?
-  fullSimulatorResultsUnlocked Boolean      @default(false)
-  officialCashFlowVisionary Boolean         @default(false)
-  
-  createdAt              DateTime          @default(now())
-  updatedAt              DateTime          @default(now()) @updatedAt
-  syncedToGlobalControl  Boolean           @default(false)
+  skoolMemberId                String?   @unique
+  skoolPlan                    String? // "Standard" or "Premium"
+  skoolMembershipStartedAt     DateTime?
+  fullSimulatorResultsUnlocked Boolean   @default(false)
+  officialCashFlowVisionary    Boolean   @default(false)
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @default(now()) @updatedAt
+  syncedToGlobalControl  Boolean  @default(false)
   globalControlContactId String?
-  
-  simulatorResults       SimulatorResult[]
-  emailEvents            EmailEvent[]
-  skoolEvents            SkoolEvent[]
+
+  simulatorResults     SimulatorResult[]
+  emailEvents          EmailEvent[]
+  skoolEvents          SkoolEvent[]
+  webinarRegistrations WebinarRegistration[]
+  webinarJamEvents     WebinarJamEvent[]
 
   @@index([email])
   @@index([createdAt])
@@ -65,7 +67,7 @@ model SimulatorResult {
   id                         String    @id @default(cuid())
   leadId                     String
   lead                       Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  selectedPurposes           String[]  // Array of up to 3 purposes
+  selectedPurposes           String[] // Array of up to 3 purposes
   monthlyGoal                Float
   enterpriseConnections      Int
   enterpriseResidualCashFlow Float
@@ -97,14 +99,14 @@ model ResendAutomation {
   id             String   @id @default(cuid())
   name           String   @unique
   description    String?
-  triggerType    String   // "form_submit", "tag_added", "manual"
-  triggerValue   String?  // Form name, tag name, etc.
+  triggerType    String // "form_submit", "tag_added", "manual"
+  triggerValue   String? // Form name, tag name, etc.
   audienceId     String?
   fromDomain     String   @default("m.networkleveragingcashflow.com")
   fromName       String   @default("Network Leveraging Cash Flow")
   fromEmail      String?
   active         Boolean  @default(true)
-  emails         Json     // Array of email configs
+  emails         Json // Array of email configs
   enrolledCount  Int      @default(0)
   completedCount Int      @default(0)
   createdAt      DateTime @default(now())
@@ -144,7 +146,7 @@ model EmailEvent {
   id           String   @id @default(cuid())
   leadId       String
   lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  eventType    String   // "sent", "delivered", "opened", "clicked", "bounced", "complained"
+  eventType    String // "sent", "delivered", "opened", "clicked", "bounced", "complained"
   emailId      String?
   broadcastId  String?
   automationId String?
@@ -158,30 +160,179 @@ model EmailEvent {
 
 // Skooly Webhook Event History
 model SkoolEvent {
-  id               String   @id @default(cuid())
-  leadId           String?
-  lead             Lead?    @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  
+  id     String  @id @default(cuid())
+  leadId String?
+  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
   // Raw webhook data
-  eventType        String   // e.g., "member.created", "membership.upgraded", etc.
-  skoolMemberId    String?
-  skoolEmail       String?
-  rawPayload       Json     // Complete webhook payload for documentation
-  
+  eventType     String // e.g., "member.created", "membership.upgraded", etc.
+  skoolMemberId String?
+  skoolEmail    String?
+  rawPayload    Json // Complete webhook payload for documentation
+
   // Parsed data (will be filled once we know the structure)
-  membershipPlan   String?  // "Standard", "Premium"
-  membershipStatus String?  // "active", "cancelled", etc.
-  
+  membershipPlan   String? // "Standard", "Premium"
+  membershipStatus String? // "active", "cancelled", etc.
+
   // Metadata
-  processed        Boolean  @default(false)
-  processedAt      DateTime?
-  errorMessage     String?
-  
-  createdAt        DateTime @default(now())
-  
+  processed    Boolean   @default(false)
+  processedAt  DateTime?
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+
   @@index([leadId])
   @@index([eventType])
   @@index([skoolMemberId])
   @@index([skoolEmail])
   @@index([createdAt])
+}
+
+// ============================================================
+// WEBINAR INFRASTRUCTURE (Added: September 26, 2026)
+// ============================================================
+
+// Reusable Webinar Event Configuration
+model WebinarEvent {
+  id String @id @default(cuid())
+
+  // Webinar Identity
+  webinarId   String  @unique // e.g., "CFI-2026-10-08"
+  name        String
+  description String? @db.Text
+
+  // Schedule
+  startDateTime   DateTime
+  timezone        String   @default("America/New_York")
+  durationMinutes Int      @default(60)
+
+  // WebinarJam Configuration
+  webinarJamWebinarId  Int // WebinarJam webinar_id
+  webinarJamScheduleId Int // WebinarJam schedule_id
+  webinarJamHash       String // WebinarJam hash
+
+  // Qualification
+  qualificationMethod String // "skool_premium", "free", "paid", etc.
+  requiredSkoolPlan   String? // "Premium", "Standard", etc.
+
+  // URLs
+  skoolPlansUrl       String?
+  registrationPageUrl String?
+
+  // Status
+  active Boolean @default(true)
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  registrations WebinarRegistration[]
+
+  @@index([webinarId])
+  @@index([active])
+  @@index([startDateTime])
+}
+
+// Individual Webinar Registration Records
+model WebinarRegistration {
+  id String @id @default(cuid())
+
+  // Relationships
+  leadId         String
+  lead           Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  webinarEventId String
+  webinarEvent   WebinarEvent @relation(fields: [webinarEventId], references: [id], onDelete: Cascade)
+
+  // Registration State
+  source         String // "masterclass-registration-page", etc.
+  campaign       String?
+  leadCapturedAt DateTime @default(now())
+
+  // Qualification
+  qualificationMethod  String // "skool_premium"
+  qualifiedAt          DateTime?
+  webinarEligible      Boolean   @default(false)
+  webinarEligibleSince DateTime?
+
+  // WebinarJam Registration
+  webinarJamRegistrantId  String?
+  webinarJamLiveRoomUrl   String?
+  webinarJamReplayRoomUrl String?
+  registeredAt            DateTime?
+  registrationStatus      String    @default("pending") // pending, registered, failed
+  registrationError       String?   @db.Text
+  registrationAttempts    Int       @default(0)
+  lastAttemptAt           DateTime?
+
+  // Attendance
+  attended           Boolean   @default(false)
+  attendedAt         DateTime?
+  attendanceDuration Int? // seconds
+  leftEarly          Boolean   @default(false)
+  replayViewed       Boolean   @default(false)
+  replayViewedAt     DateTime?
+
+  // Status Progression
+  status String @default("lead_captured")
+  // lead_captured → premium_pending → qualified → registered → attended/no_show
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([leadId, webinarEventId])
+  @@index([leadId])
+  @@index([webinarEventId])
+  @@index([status])
+  @@index([webinarEligible])
+  @@index([attended])
+}
+
+// WebinarJam Webhook Event History
+model WebinarJamEvent {
+  id String @id @default(cuid())
+
+  // Relationships
+  leadId String?
+  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  // Event Identification (for idempotency)
+  compositeKey String? @unique // email + trigger + timestamp window
+
+  // WebinarJam Data
+  trigger               String // "register", "attend", "miss", "leave_early"
+  webinarJamWebinarId   Int?
+  webinarJamWebinarName String?
+  email                 String
+  firstName             String?
+  lastName              String?
+  phoneCountryCode      String?
+  phoneNumber           String?
+
+  // Links from webhook
+  liveRoomUrl    String?
+  replayRoomUrl  String?
+  unsubscribeUrl String?
+
+  // Attendance Data (for "attend" events)
+  attendanceDuration Int?
+
+  // Raw Payload
+  rawPayload Json
+
+  // Processing State
+  processed    Boolean   @default(false)
+  processedAt  DateTime?
+  errorMessage String?   @db.Text
+
+  // Metadata
+  receivedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([leadId])
+  @@index([trigger])
+  @@index([email])
+  @@index([processed])
+  @@index([receivedAt])
 }
