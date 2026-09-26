@@ -940,11 +940,19 @@ form#masterclass-registration-form {
   box-sizing: border-box;
 }
 
-/* Ensure button text is visible */
+/* Ensure button has proper green gradient background and white text */
 button.btn,
 .form-actions button.btn {
+  background: linear-gradient(135deg, var(--green), var(--green2)) !important;
   color: #fff !important;
   font-weight: 800 !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+  box-shadow: 0 10px 24px rgba(15,107,72,.18) !important;
+}
+
+button.btn:hover,
+.form-actions button.btn:hover {
+  transform: translateY(-1px);
 }
 
 button.btn:disabled {
