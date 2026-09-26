@@ -2,7 +2,7 @@
 // Handles programmatic registration via WebinarJam API
 
 import { prisma } from './prisma';
-import { fireWebinarTag } from './global-control-webinar';
+import { enqueueTag } from './global-control-outbox';
 import { getWebinarSlug } from './webinar-config';
 
 const WEBINARJAM_API_KEY = process.env.WEBINARJAM_API_KEY;
@@ -83,9 +83,9 @@ export async function registerWithWebinarJam(
         }
       });
 
-      // Fire Global Control tag
+      // Enqueue Global Control tag (durable delivery)
       const webinarSlug = getWebinarSlug(registration.webinarEvent.webinarId);
-      await fireWebinarTag(
+      await enqueueTag(
         `webinar-${webinarSlug}-registered`,
         lead.email,
         lead.firstName,

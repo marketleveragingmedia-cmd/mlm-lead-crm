@@ -336,3 +336,29 @@ model WebinarJamEvent {
   @@index([processed])
   @@index([receivedAt])
 }
+
+// Global Control Outbox - Durable Tag Delivery
+model GlobalControlOutbox {
+  id String @id @default(cuid())
+
+  // Tag Details
+  tagName   String
+  email     String
+  firstName String?
+  lastName  String?
+  phone     String?
+
+  // Delivery State
+  status        String    @default("pending") // pending, retrying, delivered, failed
+  attempts      Int       @default(0)
+  lastAttemptAt DateTime?
+  lastError     String?   @db.Text
+  deliveredAt   DateTime?
+
+  // Metadata
+  createdAt DateTime @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email, tagName])
+}

@@ -5,7 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { registerWithWebinarJam } from '@/lib/webinarjam-registration';
-import { fireWebinarTag } from '@/lib/global-control-webinar';
+import { enqueueTag } from '@/lib/global-control-outbox';
 import { getWebinarSlug } from '@/lib/webinar-config';
 
 export async function POST(
@@ -109,16 +109,16 @@ export async function POST(
         }
       });
 
-      // Fire lead tag
+      // Enqueue lead tag (durable delivery)
       const webinarSlug = getWebinarSlug(webinarEvent.webinarId);
-      await fireWebinarTag(
+      await enqueueTag(
         `webinar-${webinarSlug}-lead`,
         lead.email,
         lead.firstName,
         lead.lastName,
         lead.phone
       ).catch(err => {
-        console.error('  ⚠️ Global Control tag failed (non-blocking):', err);
+        console.error('  ⚠️ Tag enqueue failed (non-blocking):', err);
       });
     }
 
@@ -182,16 +182,16 @@ export async function POST(
           }
         });
 
-        // Fire premium-pending tag if needed
+        // Enqueue premium-pending tag if needed
         const webinarSlug = getWebinarSlug(webinarEvent.webinarId);
-        await fireWebinarTag(
+        await enqueueTag(
           `webinar-${webinarSlug}-premium-pending`,
           lead.email,
           lead.firstName,
           lead.lastName,
           lead.phone
         ).catch(err => {
-          console.error('  ⚠️ Global Control tag failed (non-blocking):', err);
+          console.error('  ⚠️ Tag enqueue failed (non-blocking):', err);
         });
       }
 

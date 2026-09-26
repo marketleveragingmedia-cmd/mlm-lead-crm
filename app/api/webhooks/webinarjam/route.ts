@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { fireWebinarTag } from '@/lib/global-control-webinar';
+import { enqueueTag } from '@/lib/global-control-outbox';
 
 const WEBHOOK_SECRET = process.env.WEBINARJAM_WEBHOOK_SECRET;
 
@@ -37,8 +37,11 @@ export async function POST(req: NextRequest) {
 
     // 3. Check idempotency (prevent duplicate processing)
     const email = lead.email.toLowerCase().trim();
-    const now = new Date();
-    const compositeKey = `${email}:${trigger}:${Math.floor(now.getTime() / (60 * 60 * 1000))}`; // 1-hour window
+    const webinarId = webinar?.id || null;
+    
+    // Deterministic event identity: provider + webinarId + email + trigger
+    // No time component - register/attend/miss are one-time semantic events
+    const compositeKey = `webinarjam|${webinarId}|${email}|${trigger}`;
     
     const existingEvent = await prisma.webinarJamEvent.findUnique({
       where: { compositeKey }
@@ -191,9 +194,9 @@ async function handleRegistration(lead: any, payload: any, eventId: string) {
 
   console.log(`✅ Registration processed for ${lead.email}`);
 
-  // Fire Global Control tag
+  // Enqueue Global Control tag (durable delivery)
   const webinarSlug = 'cfi-oct-2026'; // TODO: Derive from webinarId
-  await fireWebinarTag(
+  await enqueueTag(
     `webinar-${webinarSlug}-registered`,
     lead.email,
     lead.firstName,
@@ -229,9 +232,9 @@ async function handleAttendance(lead: any, payload: any, eventId: string) {
 
   console.log(`✅ Attendance recorded for ${lead.email}`);
 
-  // Fire Global Control tag
+  // Enqueue Global Control tag (durable delivery)
   const webinarSlug = 'cfi-oct-2026';
-  await fireWebinarTag(
+  await enqueueTag(
     `webinar-${webinarSlug}-attended`,
     lead.email,
     lead.firstName,
@@ -266,9 +269,9 @@ async function handleNoShow(lead: any, payload: any, eventId: string) {
 
   console.log(`✅ No-show recorded for ${lead.email}`);
 
-  // Fire Global Control tag
+  // Enqueue Global Control tag (durable delivery)
   const webinarSlug = 'cfi-oct-2026';
-  await fireWebinarTag(
+  await enqueueTag(
     `webinar-${webinarSlug}-no-show`,
     lead.email,
     lead.firstName,
