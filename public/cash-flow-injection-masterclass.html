@@ -812,7 +812,12 @@ body:before{
   padding: 120px 0 100px !important;
 }
 
-/* Fix: Ensure registration card has enough height and doesn't cut off */
+/* Fix: Ensure registration card has enough width and doesn't cut off */
+.hero-grid {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 48px !important;
+}
+
 .registration-card {
   min-height: 580px !important;
   height: auto !important;
