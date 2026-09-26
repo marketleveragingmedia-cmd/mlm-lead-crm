@@ -43,12 +43,12 @@ export default function MasterclassRegistrationForm() {
   };
 
   return (
-    <div className="registration-card" id="register">
+    <div className="registration-card" id="register" style={{ minWidth: '480px', width: '100%', maxWidth: '100%' }}>
       <div className="kicker">Reserve Your Seat</div>
       <h3 className="serif">Cash Flow Injection Strategy Masterclass</h3>
       <p>See What Has Changed, Why Cash Flow Matters Now And How Strategy, Community, Technology And Participation Can Be Leveraged To Create Sustainable Residual Cash Flow.</p>
       
-      <form onSubmit={handleSubmit} className="field-grid">
+      <form onSubmit={handleSubmit} className="field-grid" style={{ width: '100%' }}>
         <input
           type="text"
           name="firstName"
@@ -57,6 +57,7 @@ export default function MasterclassRegistrationForm() {
           placeholder="First Name"
           required
           autoComplete="given-name"
+          style={{ width: '100%', boxSizing: 'border-box' }}
         />
         <input
           type="text"
@@ -66,6 +67,7 @@ export default function MasterclassRegistrationForm() {
           placeholder="Last Name"
           required
           autoComplete="family-name"
+          style={{ width: '100%', boxSizing: 'border-box' }}
         />
         <input
           type="email"
@@ -76,6 +78,7 @@ export default function MasterclassRegistrationForm() {
           placeholder="Email Address"
           required
           autoComplete="email"
+          style={{ width: '100%', boxSizing: 'border-box' }}
         />
         <div className="member-email-note">Already A Member? Use The Email Address Associated With Your SKOOL Membership.</div>
         <input
@@ -86,6 +89,7 @@ export default function MasterclassRegistrationForm() {
           onChange={(e) => setFormData({...formData, phone: e.target.value})}
           placeholder="Mobile Number (Optional)"
           autoComplete="tel"
+          style={{ width: '100%', boxSizing: 'border-box' }}
         />
       </form>
 
