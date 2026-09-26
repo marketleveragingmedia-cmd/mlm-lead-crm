@@ -807,64 +807,32 @@ body:before{
 }
 
 /* Visual Fixes - September 26, 2026 */
-/* Fix: Increase hero padding to prevent tight spacing */
+/* Minimal overrides - let V15 CSS do its job */
 .hero {
-  padding: 120px 0 100px !important;
+  padding: 120px 0 100px;
 }
 
-/* Fix: Ensure registration card has enough width and doesn't cut off */
-/* Make registration column MUCH WIDER - 35% left, 65% right */
-.hero-grid {
-  grid-template-columns: 0.7fr 1.3fr !important;
-  gap: 40px !important;
-}
-
-.registration-card {
-  min-height: 580px !important;
-  height: auto !important;
-  padding: 32px !important;
-  overflow: visible !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-/* Ensure all text content inside card wraps properly */
-.registration-card * {
-  max-width: 100% !important;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-/* Ensure member note doesn't get cut off */
-.member-email-note {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* Fix: Ensure form actions are visible */
-.form-actions {
-  margin-top: 20px !important;
-}
-
-/* Fix: Add space for error messages */
+/* Error message spacing */
 #error-message {
-  margin: 12px 0 !important;
+  margin: 12px 0;
+  grid-column: 1 / -1;
 }
 
-/* Responsive: Adjust hero padding on smaller screens */
+/* Success message spacing */
+#success-message {
+  margin: 12px 0;
+  grid-column: 1 / -1;
+}
+
 @media (max-width: 1024px) {
   .hero {
-    padding: 100px 0 80px !important;
+    padding: 100px 0 80px;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 80px 0 60px !important;
-  }
-  .registration-card {
-    min-height: auto !important;
+    padding: 80px 0 60px;
   }
 }
 </style>
@@ -1189,19 +1157,18 @@ body:before{
 </footer>
 
 <style>
-/* Form Input Styling - Preserves V15 Visual Design */
+/* Form Input Styling - Match V15 field div styling EXACTLY */
 .field-grid input.field {
-  height: 52px;
-  padding: 0 16px;
-  border: 1px solid rgba(201,155,55,.32);
-  border-radius: 12px;
-  background: rgba(255,255,255,.85);
+  background: #fff;
+  border: 1px solid rgba(15,107,72,.13);
+  border-radius: 14px;
+  padding: 14px;
+  color: #8a9691;
+  font-size: .93rem;
+  width: 100%;
+  box-sizing: border-box;
   font-family: inherit;
-  font-size: 0.96rem;
-  color: var(--green-deep);
   transition: border-color 0.2s, box-shadow 0.2s;
-  width: 100% !important;
-  box-sizing: border-box !important;
 }
 .field-grid input.field:focus {
   outline: none;
@@ -1215,12 +1182,7 @@ body:before{
   grid-column: 1 / -1;
 }
 
-/* Ensure field-grid container has full width */
-.field-grid,
-form.field-grid {
-  width: 100% !important;
-  max-width: none !important;
-}
+/* field-grid inherits width naturally from V15 CSS */
 .error-message {
   grid-column: 1 / -1;
 }
