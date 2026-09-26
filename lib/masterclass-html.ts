@@ -1345,5 +1345,82 @@ export const masterclassBody = `
   </div>
 </footer>
 
+<script>
+(function() {
+  const form = document.getElementById('masterclass-registration-form');
+  if (!form) return;
+
+  let submitting = false;
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (submitting) return;
+    submitting = true;
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+    }
+
+    // Get form data
+    const formData = {
+      firstName: form.querySelector('#firstName').value.trim(),
+      lastName: form.querySelector('#lastName').value.trim(),
+      email: form.querySelector('#email').value.trim(),
+      phone: form.querySelector('#phone').value.trim() || undefined,
+      source: 'Masterclass Registration Page',
+      sourcePage: window.location.href
+    };
+
+    try {
+      const response = await fetch('/api/webinar/register/CFI-2026-10-08', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || 'Registration failed');
+      }
+
+      // SUCCESS BRANCH
+      if (data.success) {
+        
+        // A. ALREADY PREMIUM - registered
+        if (data.alreadyPremium) {
+          alert('Success! You are already a Premium member. Your Masterclass registration is confirmed. Check your email for webinar details.');
+          form.reset();
+        }
+        // C. PREMIUM PENDING - redirect to SKOOL
+        else if (data.requiresPremium && data.skoolPlansUrl) {
+          alert('Your registration has been saved. The Masterclass is included with Premium SKOOL Membership ($50/year). Redirecting to SKOOL Plans...');
+          window.location.href = data.skoolPlansUrl;
+        }
+        else {
+          alert('Registration successful! Check your email for next steps.');
+          form.reset();
+        }
+      }
+      
+    } catch (error) {
+      // D. ERROR - show retry message, keep form data
+      console.error('Registration error:', error);
+      alert('Registration failed. Please check your information and try again. If the problem persists, please contact support.');
+    } finally {
+      submitting = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    }
+  });
+})();
+</script>
+
 
 `;
