@@ -805,6 +805,44 @@ body:before{
 @media (max-width:600px){
   .member-email-note{grid-column:auto;font-size:.74rem;margin-top:-2px}
 }
+
+/* Visual Fixes - September 26, 2026 */
+/* Fix: Increase hero padding to prevent tight spacing */
+.hero {
+  padding: 120px 0 100px !important;
+}
+
+/* Fix: Ensure registration card has enough height and doesn't cut off */
+.registration-card {
+  min-height: 580px !important;
+  padding: 32px !important;
+}
+
+/* Fix: Ensure form actions are visible */
+.form-actions {
+  margin-top: 20px !important;
+}
+
+/* Fix: Add space for error messages */
+#error-message {
+  margin: 12px 0 !important;
+}
+
+/* Responsive: Adjust hero padding on smaller screens */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 100px 0 80px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0 60px !important;
+  }
+  .registration-card {
+    min-height: auto !important;
+  }
+}
 </style>
 </head>
 <body>
