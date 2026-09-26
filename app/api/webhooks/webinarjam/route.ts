@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
         unsubscribeUrl: links?.unsubscribe || null,
         rawPayload: payload,
         processed: false,
-        receivedAt: now
+        receivedAt: new Date()
       }
     });
 
