@@ -14,7 +14,7 @@ export const v15HeroText = {
   kicker: 'Cash Flow Injection Strategy Masterclass',
   h1: 'Nobody Teaches This.',
   h2: 'How Connections, Community And Duplication Can Create Sustainable Residual Cash Flow.',
-  lead: 'A Live Masterclass Designed To Introduce A Different Way Of Seeing Cash Flow, Community And What Is Possible In Today's Economy.',
+  lead: 'A Live Masterclass Designed To Introduce A Different Way Of Seeing Cash Flow, Community And What Is Possible In Today\'s Economy.',
   pills: [
     'Thursday, October 8, 2026',
     '11:00 AM Eastern Time',
