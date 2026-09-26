@@ -1,5 +1,5 @@
-// Generated from Cash_Flow_Injection_Masterclass_Official_Draft_V16.html
-// V16 surgical width fix applied
+// Generated from public/cash-flow-injection-masterclass.html
+// This file is auto-generated - do not edit manually
 
 export const masterclassStyles = `
 <style>
@@ -804,83 +804,124 @@ body:before{
   .member-email-note{grid-column:auto;font-size:.74rem;margin-top:-2px}
 }
 
-
-/* =========================================================
-   V16 REGISTRATION FORM WIDTH + RESPONSIVE FIX
-   Prevent intrinsic input width from forcing the registration
-   card beyond its grid column or viewport.
-   ========================================================= */
-html,body{max-width:100%;overflow-x:hidden}
-.hero-grid>*{min-width:0}
-.registration-card{width:100%;max-width:100%;min-width:0}
-.registration-form{width:100%;max-width:100%;min-width:0;margin:0}
-.field-grid{
-  width:100%;
-  max-width:100%;
-  min-width:0;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-}
-.field-grid>*{min-width:0;max-width:100%}
-.field{
-  display:block;
-  width:100%;
-  min-width:0;
-  max-width:100%;
-  padding:0;
-  overflow:hidden;
-}
-.field input{
-  display:block;
-  width:100%;
-  min-width:0;
-  max-width:100%;
-  margin:0;
-  padding:14px;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:var(--green-deep);
-  font:inherit;
-  line-height:1.35;
-  box-sizing:border-box;
-}
-.field input::placeholder{color:#8a9691;opacity:1}
-.field:focus-within{
-  border-color:rgba(15,107,72,.42);
-  box-shadow:0 0 0 3px rgba(15,107,72,.08);
-}
-.form-actions{min-width:0;max-width:100%}
-.form-actions .btn{max-width:100%}
-.form-actions button.btn{
-  border:0;
-  cursor:pointer;
-  font:inherit;
-}
-.sr-only{
-  position:absolute!important;
-  width:1px!important;
-  height:1px!important;
-  padding:0!important;
-  margin:-1px!important;
-  overflow:hidden!important;
-  clip:rect(0,0,0,0)!important;
-  white-space:nowrap!important;
-  border:0!important;
+/* Visual Fixes - September 26, 2026 */
+/* Minimal overrides - let V15 CSS do its job */
+.hero {
+  padding: 120px 0 100px;
 }
 
-/* Stack form fields sooner than the old draft so the narrow
-   right-hand hero column can never clip the second field. */
-@media (max-width:1100px){
-  .field-grid{grid-template-columns:1fr}
-  .field.full,.member-email-note{grid-column:auto}
+/* Error message spacing */
+#error-message {
+  margin: 12px 0;
+  grid-column: 1 / -1;
 }
 
-@media (max-width:820px){
-  .registration-card{width:100%;max-width:100%}
-  .form-actions{display:grid;grid-template-columns:1fr;gap:10px}
-  .form-actions .btn{width:100%}
+/* Success message spacing */
+#success-message {
+  margin: 12px 0;
+  grid-column: 1 / -1;
 }
 
+@media (max-width: 1024px) {
+  .hero {
+    padding: 100px 0 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0 60px;
+  }
+}
+</style>
+<style>
+/* Form Input Styling - Match V15 field div styling EXACTLY */
+form.field-grid input {
+  background: #fff;
+  border: 1px solid rgba(15,107,72,.13);
+  border-radius: 14px;
+  padding: 14px;
+  color: #8a9691;
+  font-size: .93rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+form.field-grid input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(15,107,72,.1);
+}
+.field-grid input.field::placeholder {
+  color: rgba(27,59,49,.45);
+}
+form.field-grid input.full {
+  grid-column: 1 / -1;
+}
+
+/* field-grid inherits width naturally from V15 CSS */
+.error-message {
+  grid-column: 1 / -1;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* Success/Pending State Cards */
+.state-card {
+  background: linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,249,236,.92));
+  border: 1px solid rgba(201,155,55,.32);
+  border-radius: 30px;
+  padding: 40px 30px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  max-width: 640px;
+  margin: 60px auto;
+}
+.state-card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 7px;
+  background: linear-gradient(90deg,var(--green),var(--gold),var(--green2));
+}
+.state-card h1 {
+  font-size: 2.8rem;
+  color: var(--green-deep);
+  margin: 0 0 12px;
+}
+.state-card h2 {
+  font-size: 1.5rem;
+  color: #1b3b31;
+  margin: 0 0 20px;
+}
+.state-card .success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,var(--green),var(--green2));
+  color: white;
+  font-size: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.state-card ul {
+  text-align: left;
+  max-width: 480px;
+  margin: 20px auto;
+  line-height: 1.8;
+}
+.state-card .pending-timing {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 16px;
+}
 </style>
 `;
 
@@ -913,31 +954,18 @@ export const masterclassBody = `
       <div class="kicker">Reserve Your Seat</div>
       <h3 class="serif">Cash Flow Injection Strategy Masterclass</h3>
       <p>See What Has Changed, Why Cash Flow Matters Now And How Strategy, Community, Technology And Participation Can Be Leveraged To Create Sustainable Residual Cash Flow.</p>
-      <form id="masterclass-registration-form" class="registration-form" action="#" method="post" novalidate>
-        <div class="field-grid">
-          <label class="field">
-            <span class="sr-only">First Name</span>
-            <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First Name" required>
-          </label>
-          <label class="field">
-            <span class="sr-only">Last Name</span>
-            <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last Name" required>
-          </label>
-          <label class="field full">
-            <span class="sr-only">Email Address</span>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="Email Address" required>
-          </label>
-          <div class="member-email-note">Already A Member? Use The Email Address Associated With Your SKOOL Membership.</div>
-          <label class="field full">
-            <span class="sr-only">Mobile Number (Optional)</span>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Mobile Number (Optional)">
-          </label>
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit">Continue To Registration</button>
-          <a class="btn secondary" href="#discover">See What You Will Discover</a>
-        </div>
+      <form id="masterclass-form" class="field-grid">
+        <input type="text" name="firstName" placeholder="First Name" required autocomplete="given-name">
+        <input type="text" name="lastName" placeholder="Last Name" required autocomplete="family-name">
+        <input type="email" name="email" class="full" placeholder="Email Address" required autocomplete="email">
+        <div class="member-email-note">Already A Member? Use The Email Address Associated With Your SKOOL Membership.</div>
+        <input type="tel" name="phone" class="full" placeholder="Mobile Number (Optional)" autocomplete="tel">
       </form>
+      <div id="error-message" class="error-message" style="display:none; color:#c53030; margin:12px 0; font-size:0.95rem;"></div>
+      <div class="form-actions">
+        <button type="submit" form="masterclass-form" class="btn" id="submit-btn">Continue To Registration</button>
+        <a class="btn secondary" href="#discover">See What You Will Discover</a>
+      </div>
     </div>
   </div>
 </header>
@@ -1216,6 +1244,224 @@ export const masterclassBody = `
     <div class="footer-small">Educational Content. No Earnings Guarantee. Participation Requires Informed Decision-Making.</div>
   </div>
 </footer>
+
+<style>
+/* Form Input Styling - Match V15 field div styling EXACTLY */
+form.field-grid input {
+  background: #fff;
+  border: 1px solid rgba(15,107,72,.13);
+  border-radius: 14px;
+  padding: 14px;
+  color: #8a9691;
+  font-size: .93rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+form.field-grid input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(15,107,72,.1);
+}
+.field-grid input.field::placeholder {
+  color: rgba(27,59,49,.45);
+}
+form.field-grid input.full {
+  grid-column: 1 / -1;
+}
+
+/* field-grid inherits width naturally from V15 CSS */
+.error-message {
+  grid-column: 1 / -1;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* Success/Pending State Cards */
+.state-card {
+  background: linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,249,236,.92));
+  border: 1px solid rgba(201,155,55,.32);
+  border-radius: 30px;
+  padding: 40px 30px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  max-width: 640px;
+  margin: 60px auto;
+}
+.state-card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 7px;
+  background: linear-gradient(90deg,var(--green),var(--gold),var(--green2));
+}
+.state-card h1 {
+  font-size: 2.8rem;
+  color: var(--green-deep);
+  margin: 0 0 12px;
+}
+.state-card h2 {
+  font-size: 1.5rem;
+  color: #1b3b31;
+  margin: 0 0 20px;
+}
+.state-card .success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,var(--green),var(--green2));
+  color: white;
+  font-size: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.state-card ul {
+  text-align: left;
+  max-width: 480px;
+  margin: 20px auto;
+  line-height: 1.8;
+}
+.state-card .pending-timing {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 16px;
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  const form = document.getElementById('masterclass-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorMsg = document.getElementById('error-message');
+  const registrationCard = document.getElementById('register');
+  
+  if (!form) return;
+  
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(form);
+    const data = {
+      firstName: formData.get('firstName')?.toString().trim() || '',
+      lastName: formData.get('lastName')?.toString().trim() || '',
+      email: formData.get('email')?.toString().toLowerCase().trim() || '',
+      phone: formData.get('phone')?.toString().trim() || undefined,
+      source: 'Masterclass Registration Page',
+      sourcePage: '/cash-flow-injection-masterclass'
+    };
+    
+    // Validate
+    if (!data.firstName || !data.lastName || !data.email) {
+      showError('Please fill in all required fields.');
+      return;
+    }
+    
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      showError('Please enter a valid email address.');
+      return;
+    }
+    
+    // Submit
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+    errorMsg.style.display = 'none';
+    
+    try {
+      const response = await fetch('/api/webinar/register/CFI-2026-10-08', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        if (result.alreadyPremium) {
+          showSuccessState();
+        } else if (result.requiresPremium) {
+          showPendingState(result.skoolPlansUrl || 'https://www.skool.com/network-leveraging-cash-flow-4401/plans');
+        }
+      } else if (response.status === 409) {
+        showAlreadyRegisteredState();
+      } else {
+        showError(result.message || 'We couldn\'t complete that step yet. Please review your information and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue To Registration';
+      }
+    } catch (error) {
+      showError('We couldn\'t complete that step yet. Please review your information and try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Continue To Registration';
+    }
+  });
+  
+  function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+  }
+  
+  function showSuccessState() {
+    registrationCard.innerHTML = \`
+      <div class="state-card">
+        <div class="success-icon">✓</div>
+        <h1 class="serif">You're Registered.</h1>
+        <h2>Cash Flow Injection Strategy Masterclass</h2>
+        <div class="meta-row" style="justify-content:center;">
+          <span class="pill">Thursday, October 8, 2026</span>
+          <span class="pill">11:00 AM Eastern Time</span>
+        </div>
+        <p style="margin:24px 0 12px;">Your Masterclass Registration Has Been Completed.</p>
+        <p style="color:var(--muted);margin:0;">Watch Your Email For Your WebinarJam Confirmation And Event Access Information.</p>
+      </div>
+    \`;
+  }
+  
+  function showAlreadyRegisteredState() {
+    registrationCard.innerHTML = \`
+      <div class="state-card">
+        <h1 class="serif">You're Already Registered.</h1>
+        <h2>Cash Flow Injection Strategy Masterclass</h2>
+        <div class="meta-row" style="justify-content:center;">
+          <span class="pill">Thursday, October 8, 2026</span>
+          <span class="pill">11:00 AM Eastern Time</span>
+        </div>
+        <p style="color:var(--muted);margin:24px 0 0;">Watch your email for your WebinarJam confirmation and event access information.</p>
+      </div>
+    \`;
+  }
+  
+  function showPendingState(skoolUrl) {
+    registrationCard.innerHTML = \`
+      <div class="state-card">
+        <h1 class="serif">One More Step</h1>
+        <p style="font-size:1.08rem;margin:0 0 24px;">Your Masterclass Seat Is Included With Premium SKOOL Membership.</p>
+        <div style="margin:24px 0;">
+          <h3 class="serif" style="font-size:1.9rem;margin:0 0 16px;">Premium SKOOL Membership:<br/>$50 Per Year</h3>
+          <p style="margin:0 0 12px;"><strong>Includes:</strong></p>
+          <ul>
+            <li>The Live Cash Flow Injection Strategy Masterclass</li>
+            <li>One Year Of Premium SKOOL Access</li>
+            <li>Official Cash Flow Visionary Status</li>
+          </ul>
+        </div>
+        <a href="\${skoolUrl}" class="btn" style="display:inline-flex;margin:20px 0;">Continue To Premium Membership</a>
+        <p style="margin:20px 0 8px;font-size:0.96rem;">After Your Premium Membership Is Confirmed, Your Masterclass Registration Will Be Completed Automatically.</p>
+        <p class="pending-timing">Membership Verification May Take Up To Approximately Two Hours To Sync.</p>
+      </div>
+    \`;
+  }
+})();
+</script>
 
 
 `;
