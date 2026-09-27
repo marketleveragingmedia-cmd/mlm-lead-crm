@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import crypto from 'crypto';
 import { getSkoolySecret } from '@/lib/skooly-secrets';
+import { qualifyPendingWebinarRegistrations } from '@/lib/webinar-qualification';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -102,6 +103,10 @@ export async function POST(request: NextRequest) {
       
       console.log('✅ Updated existing lead');
       
+      // Check if Premium qualification enables pending webinar registrations
+      const isPremium = pricingTier.toLowerCase().includes('premium');
+      await qualifyPendingWebinarRegistrations(leadId, isPremium);
+      
     } else {
       console.log('🆕 Creating new lead (Direct Skool Signup)');
       
@@ -123,6 +128,10 @@ export async function POST(request: NextRequest) {
       
       // Send welcome email to direct Skool signups
       await sendWelcomeEmail(newLead, pricingTier);
+      
+      // Check if Premium qualification enables pending webinar registrations
+      const isPremium = pricingTier.toLowerCase().includes('premium');
+      await qualifyPendingWebinarRegistrations(leadId, isPremium);
     }
     
     // Sync to Global Control (async, don't block webhook response)
