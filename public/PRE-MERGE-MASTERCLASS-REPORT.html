@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Merge Masterclass Report</title>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+  background: #f9fafb;
+}
+h1 {
+  color: #0f6b48;
+  border-bottom: 4px solid #c99b37;
+  padding-bottom: 15px;
+}
+.section {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 25px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.ready {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.blocker {
+  color: #dc3545;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.deferred {
+  color: #6c757d;
+  font-weight: bold;
+}
+.passive {
+  color: #17a2b8;
+  font-weight: bold;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+th {
+  background: #0f6b48;
+  color: white;
+}
+.status-box {
+  padding: 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+  background: #d4edda;
+  border: 3px solid #28a745;
+  color: #155724;
+}
+</style>
+</head>
+<body>
+
+<h1>Cash Flow Injection Masterclass<br>Pre-Merge Report</h1>
+
+<div class="status-box">
+  ✅ READY FOR SAMANTHA'S MERGE APPROVAL
+</div>
+
+<div class="section">
+  <h2>1. Core Masterclass Registration Code</h2>
+  <p><span class="ready">✅ READY</span></p>
+  <ul>
+    <li>Registration form: Working</li>
+    <li>Standard → Premium Pending: Working</li>
+    <li>Existing Premium → WebinarJam: Working</li>
+    <li>Already Registered/idempotency: Working</li>
+    <li>Four in-page states: Working</li>
+    <li>Page approved: No modifications</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>2. Production NLC Environment</h2>
+  <p><span class="ready">✅ READY</span></p>
+  
+  <table>
+    <tr>
+      <th>Variable</th>
+      <th>Production Status</th>
+    </tr>
+    <tr>
+      <td>DATABASE_URL</td>
+      <td>✅ PRESENT</td>
+    </tr>
+    <tr>
+      <td>WEBINARJAM_API_KEY</td>
+      <td>✅ PRESENT (rotated, secured)</td>
+    </tr>
+    <tr>
+      <td>WEBINARJAM_WEBHOOK_SECRET</td>
+      <td>✅ PRESENT (secured)</td>
+    </tr>
+    <tr>
+      <td>SKOOLY_WEBHOOK_SECRET</td>
+      <td>✅ PRESENT (secured)</td>
+    </tr>
+  </table>
+  
+  <p><strong>Security:</strong> All credentials server-side only. No client exposure.</p>
+</div>
+
+<div class="section">
+  <h2>3. Skooly Endpoint</h2>
+  <p><span class="ready">✅ READY</span></p>
+  
+  <p><strong>Correct Endpoint:</strong> <code>/api/webhooks/skooly</code></p>
+  <p><strong>Production URL:</strong></p>
+  <pre>https://mlm-lead-crm.vercel.app/api/webhooks/skooly</pre>
+  
+  <p><strong>Route File:</strong> <code>app/api/webhooks/skooly/route.ts</code></p>
+  <p><strong>Verified:</strong> Endpoint exists and responds correctly</p>
+  <p><strong>Incorrect Route:</strong> <code>/api/skooly/webhook</code> (404 - does not exist)</p>
+</div>
+
+<div class="section">
+  <h2>4. WebinarJam Outbound Registration API</h2>
+  <p><span class="ready">✅ READY</span></p>
+  
+  <p><strong>Implementation:</strong> <code>lib/webinarjam-registration.ts</code></p>
+  <p><strong>Verified:</strong></p>
+  <ul>
+    <li>API call working (live test passed)</li>
+    <li>Live/replay URLs returned and stored</li>
+    <li>Error handling implemented</li>
+    <li>Credentials secured (server-side only)</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>5. WebinarJam Inbound Webhooks</h2>
+  <p><span class="deferred">SHOULD BE CONFIGURED AFTER MERGE</span></p>
+  
+  <p><strong>Handler Ready:</strong> <code>app/api/webhooks/webinarjam/route.ts</code></p>
+  
+  <p><strong>Production Webhook URL:</strong></p>
+  <pre>https://mlm-lead-crm.vercel.app/api/webhooks/webinarjam</pre>
+  
+  <p><strong>Events to Configure (WebinarJam Dashboard):</strong></p>
+  <ul>
+    <li><code>register</code> - Participant registered</li>
+    <li><code>attend</code> - Participant attended live</li>
+    <li><code>miss</code> - Participant missed live</li>
+  </ul>
+  
+  <p><strong>Authentication:</strong> Bearer token (WEBINARJAM_WEBHOOK_SECRET)</p>
+  
+  <p><strong>Purpose:</strong> NLC event tracking (not participant registration - that uses outbound API)</p>
+  
+  <p><strong>Timing:</strong> Can be configured immediately after merge or when event tracking is desired</p>
+</div>
+
+<div class="section">
+  <h2>6. Test Admin Endpoints</h2>
+  <p><span class="ready">✅ REMOVED</span></p>
+  
+  <p><strong>Security Fix:</strong> Two unauthenticated endpoints that could modify customer data were removed:</p>
+  <ul>
+    <li><code>app/api/admin/set-premium/route.ts</code> - DELETED</li>
+    <li><code>app/api/admin/test-leads/route.ts</code> - DELETED</li>
+  </ul>
+  
+  <p><strong>Commit:</strong> <code>dbb4b61</code></p>
+  <p><strong>Impact:</strong> No testing backdoors in production</p>
+</div>
+
+<div class="section">
+  <h2>7. Live SKOOL → Skooly tier_change</h2>
+  <p><span class="deferred">DEFERRED UNTIL FIRST NATURAL PREMIUM UPGRADE</span></p>
+  
+  <p><strong>Reason:</strong> No legitimate no-cost test method exists</p>
+  
+  <p><strong>Verified Components:</strong></p>
+  <ul>
+    <li>Standard → Premium Pending flow</li>
+    <li>Skooly webhook handler architecture</li>
+    <li>HMAC authentication</li>
+    <li>Tier change Premium handling logic</li>
+    <li>Pending WebinarRegistration lookup</li>
+    <li>WebinarJam automatic registration logic</li>
+    <li>Existing-Premium WebinarJam registration (live tested)</li>
+  </ul>
+  
+  <p><strong>First Natural Upgrade:</strong> Will serve as live verification</p>
+  <p><strong>Known Sync Delay:</strong> ~2 hours for Skooly tier changes</p>
+</div>
+
+<div class="section">
+  <h2>8. Global Control</h2>
+  <p><span class="passive">PASSIVE / NOT A MASTERCLASS DEPENDENCY</span></p>
+  
+  <p><strong>Current Role:</strong></p>
+  <ul>
+    <li>Passive/secondary storage</li>
+    <li>Contact synchronization</li>
+    <li>Retained for possible future use</li>
+  </ul>
+  
+  <p><strong>NOT Responsible For:</strong></p>
+  <ul>
+    <li>Premium qualification</li>
+    <li>Masterclass eligibility</li>
+    <li>Webinar registration</li>
+    <li>WebinarJam delivery</li>
+    <li>Participant access</li>
+    <li>SKOOL/Skooly processing</li>
+  </ul>
+  
+  <p><strong>Source of Truth:</strong> NLC Lead CRM</p>
+  
+  <p><strong>No Work Required:</strong> Existing passive synchronization preserved, not expanded</p>
+</div>
+
+<div class="section">
+  <h2>9. Remaining Actual Masterclass Blockers</h2>
+  <p><span class="ready">✅ NONE</span></p>
+  
+  <p>All required code is complete, tested, and secure. External configurations (WebinarJam inbound webhooks) can be completed post-merge at any time.</p>
+</div>
+
+<div class="section">
+  <h2>10. Merge Recommendation</h2>
+  
+  <div class="status-box">
+    ✅ READY FOR SAMANTHA'S MERGE APPROVAL
+  </div>
+  
+  <p><strong>Summary:</strong></p>
+  <ul>
+    <li>All Masterclass registration flows working</li>
+    <li>Security hardened (admin endpoints removed, credentials secured)</li>
+    <li>Production environment configured</li>
+    <li>Skooly endpoint verified</li>
+    <li>WebinarJam registration API working</li>
+    <li>WebinarJam inbound webhooks ready (can be configured post-merge)</li>
+    <li>Global Control appropriately scoped (passive, not a dependency)</li>
+    <li>No actual blockers remain</li>
+  </ul>
+  
+  <p><strong>Operational Masterclass Path:</strong></p>
+  <pre>Masterclass Registration Form
+→ NLC Lead CRM
+→ SKOOL Premium Qualification
+→ Skooly
+→ NLC Lead CRM
+→ WebinarJam</pre>
+
+  <p><strong>Post-Merge Actions (Optional, Can Be Done Anytime):</strong></p>
+  <ol>
+    <li>Configure WebinarJam inbound webhook URL in dashboard</li>
+    <li>Monitor first natural Premium upgrade for live Skooly verification</li>
+  </ol>
+</div>
+
+<div style="text-align:center; margin:40px 0; color:#666;">
+  <strong>Branch:</strong> feature/masterclass-registration-page<br>
+  <strong>Latest Commit:</strong> 0e4156f<br>
+  <strong>Report Generated:</strong> September 27, 2026
+</div>
+
+</body>
+</html>
