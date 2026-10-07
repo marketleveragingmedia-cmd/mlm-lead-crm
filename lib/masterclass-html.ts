@@ -1030,8 +1030,8 @@ export const masterclassBody = `
       <h2>How Connections, Community And Duplication Can Create Sustainable Residual Cash Flow.</h2>
       <p class="lead">A Live Masterclass Designed To Introduce A Different Way Of Seeing Cash Flow, Community And What Is Possible In Today&apos;s Economy.</p>
       <div class="meta-row">
-        <span class="pill">Thursday, October 8, 2026</span>
-        <span class="pill">11:00 AM Eastern Time</span>
+        <span class="pill">Thursday, October 29, 2026</span>
+        <span class="pill">6:00 AM Eastern Time (11:00 AM BST)</span>
         <span class="pill">Premium SKOOL Membership: $50 Per Year</span>
       </div>
       <p class="hero-note">The $50 Annual Premium Membership Includes The Live Masterclass, One Year Of Premium SKOOL Access And Official Cash Flow Visionary Status.</p>
@@ -1277,7 +1277,7 @@ export const masterclassBody = `
 <section class="cta-section" id="final">
   <div class="shell cta-card">
     <div>
-      <div class="eyebrow">Thursday, October 8, 2026 | 11:00 AM Eastern Time</div>
+      <div class="eyebrow">Thursday, October 29, 2026 | 6:00 AM Eastern Time (11:00 AM BST)</div>
       <h2 class="serif">Nobody Teaches This.</h2>
       <p style="font-size:1.08rem;max-width:720px">The world has changed. Technology has changed. What is possible has changed. Now you have an opportunity to understand the strategy.</p>
       <div class="cta-meta">
