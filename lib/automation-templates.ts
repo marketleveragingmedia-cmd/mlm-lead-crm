@@ -28,11 +28,11 @@ function makeEmail(subject: string, content: string): string {
 }
 
 export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
-  // 1. CASH FLOW VISIONARIES WELCOME (5 emails, 10 days)
+  // 1. CASH FLOW VISIONARIES WELCOME (5 emails, 7 days) - MANIFESTO ALIGNED
   {
     id: 'cash-flow-visionaries-welcome',
     name: 'Cash Flow Visionaries Welcome',
-    description: '5-email welcome sequence over 10 days for visionary entrepreneurs',
+    description: '5-email Manifesto-aligned sequence for Cash Flow Visionaries',
     triggerType: 'form_submit',
     audienceKey: 'cash-flow-visionaries',
     defaultFromDomain: 'm.cashflowvisionaries.com',
@@ -42,83 +42,153 @@ export const AUTOMATION_TEMPLATES: AutomationTemplate[] = [
         subject: 'Welcome to Cash Flow Visionaries',
         delayDays: 0,
         htmlContent: makeEmail('Welcome', `
-          <h2 style="color: #1E8E5A;">Welcome, Visionary!</h2>
-          <p>You've just joined a community of entrepreneurs building leveraged, recurring income through network systems.</p>
-          <p>Cash Flow Visionaries isn't about trading time for money - it is about building systems that generate cash flow whether you are working or not.</p>
-          <h3 style="color: #C9A441;">What to Expect</h3>
+          <h2 style="color: #1E8E5A;">Welcome, Visionary.</h2>
+          <p>You just joined a community of <strong>Lifelong Learners, Connectors, Activators, Participants, Innovators, and Early Adopters</strong> who believe that:</p>
           <ul>
-            <li>Weekly insights on automated income systems</li>
-            <li>Real case studies from $5K-$50K/month earners</li>
-            <li>Tools and templates to accelerate your journey</li>
-            <li>Community access for networking and support</li>
+            <li><strong>Connection creates Possibility</strong></li>
+            <li><strong>Activation creates Momentum</strong></li>
+            <li><strong>Duplication expands IMPACT</strong></li>
           </ul>
-          <p>Reply and share: What would $10K/month in passive income mean for you?</p>
+          <p>This isn't about selling. It's about <strong>turning Influence into IMPACT</strong>.</p>
+          <h3 style="color: #C9A441;">Your SKOOL Community Access:</h3>
+          <p>You've been added to our private SKOOL community where Cash Flow Visionaries connect, learn, and activate together.</p>
+          <p><a href="https://www.skool.com/network-leveraging-cash-flow-4401" style="display: inline-block; background: #1E8E5A; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">Access the SKOOL Community →</a></p>
+          <h3 style="color: #C9A441;">Inside you'll find:</h3>
+          <ul>
+            <li>Weekly strategy sessions</li>
+            <li>Resources for building sustainable IMPACT</li>
+            <li>Fellow visionaries collaborating on real projects</li>
+            <li>Tools for activating your community</li>
+          </ul>
+          <p><strong>Next Step:</strong> Introduce yourself in the community. Share your vision and what IMPACT matters to you.</p>
+          <p style="font-weight: 600;">Connect. Activate. Duplicate.</p>
         `),
         textContent: '',
       },
       {
-        subject: 'How This Actually Works',
+        subject: 'We Believe That Everyone Matters',
         delayDays: 2,
-        htmlContent: makeEmail('System', `
-          <h2 style="color: #1E8E5A;">The System Behind Cash Flow</h2>
-          <h3 style="color: #C9A441;">Three Pillars:</h3>
-          <p><strong>1. Network Leverage</strong> - Enterprise connections that multiply your income potential</p>
-          <p><strong>2. Automated Systems</strong> - Platform handles lead gen, nurture, and onboarding</p>
-          <p><strong>3. Community Compounding</strong> - Success is collaborative, not competitive</p>
-          <h3 style="color: #C9A441;">Real Numbers:</h3>
-          <p>Average member: 12 connections in 90 days = $3K-$10K/month<br>
-          Top 20%: $15K-$45K/month within 6 months</p>
-          <p>This isn't hype. It's math + leverage + systems.</p>
+        htmlContent: makeEmail('Beliefs', `
+          <h2 style="color: #1E8E5A;">What Unites Every Cash Flow Visionary</h2>
+          <h3 style="color: #C9A441;">We Believe:</h3>
+          <ul>
+            <li>Awareness Matters</li>
+            <li>Learning Matters</li>
+            <li>Connections Matter</li>
+            <li>Community Matters</li>
+            <li>Participation Matters</li>
+            <li>IMPACT Matters</li>
+            <li>Purpose Matters</li>
+            <li><strong>Everyone Matters</strong></li>
+          </ul>
+          <p>This foundation shapes everything we do.</p>
+          <h3 style="color: #C9A441;">When Everyone Wins:</h3>
+          <ul>
+            <li>Families become Stronger</li>
+            <li>Communities become Stronger</li>
+            <li>Organizations become Stronger</li>
+            <li>Visions become Stronger</li>
+            <li>Missions become Stronger</li>
+            <li><strong>IMPACT becomes Stronger</strong></li>
+          </ul>
+          <p><strong>Sustainable IMPACT Requires Sustainable Resources.</strong></p>
+          <p>That's why we build systems that support Purpose — not replace it.</p>
+          <p><strong>Your Action:</strong> Reflect on what "Everyone Must Win" means for your vision. Share it in the SKOOL community.</p>
+          <p><a href="https://www.skool.com/network-leveraging-cash-flow-4401" style="color: #1E8E5A; font-weight: 600;">Join the Conversation →</a></p>
         `),
         textContent: '',
       },
       {
-        subject: 'Success Story: $28K/Month in 8 Months',
+        subject: 'How One Becomes Many',
         delayDays: 4,
-        htmlContent: makeEmail('Social Proof', `
-          <h2 style="color: #1E8E5A;">Meet Sarah</h2>
-          <p>8 months ago, Sarah was a struggling coach making $3,500/month. Today: $28,400/month in recurring cash flow.</p>
-          <h3 style="color: #C9A441;">Her Journey:</h3>
+        htmlContent: makeEmail('Community Compounding', `
+          <h2 style="color: #1E8E5A;">Community Compounding Explained</h2>
+          <p><strong>Community Compounding</strong> is simple but powerful:</p>
+          <p style="font-size: 16px; line-height: 1.8;">
+            <strong>One</strong> Cash Flow Visionary helps <strong>Three</strong>.<br>
+            Those <strong>Three</strong> each help <strong>Three</strong> more = <strong>Nine</strong>.<br>
+            Those <strong>Nine</strong> each help <strong>Three</strong> = <strong>Twenty-Seven</strong>.<br>
+            <strong>Twenty-Seven</strong> → <strong>Eighty-One</strong>.<br>
+            <strong>Eighty-One</strong> → <strong>Two Hundred Forty-Three</strong>.
+          </p>
+          <p><strong>That's the math of IMPACT.</strong></p>
+          <p>You don't have to do it all. You just have to <strong>Connect, Activate, and Duplicate</strong>.</p>
           <ul>
-            <li>Month 1: 5 connections, $1,200 recurring</li>
-            <li>Month 3: 14 connections, $4,800/month</li>
-            <li>Month 6: 23 connections, $12,600/month</li>
-            <li>Today: 38 connections, $28,400/month</li>
+            <li><strong>Connect</strong> with people who share your values</li>
+            <li><strong>Activate</strong> them around their vision</li>
+            <li><strong>Duplicate</strong> the process through community</li>
           </ul>
-          <p>"I didn't have to choose between my passion and income. Cash Flow Visionaries gave me both."</p>
+          <h3 style="color: #C9A441;">Real Example:</h3>
+          <p>Sarah connected with 3 purpose-driven entrepreneurs. Each activated their own communities. Within 6 months, Sarah's initial 3 connections had grown into a network of 81 people creating sustainable IMPACT.</p>
+          <p><strong>Her secret?</strong> She focused on Connection, not Conversion.</p>
+          <p><strong>Your Turn:</strong> Who are 3 people you could connect with this week?</p>
+          <p><a href="https://www.skool.com/network-leveraging-cash-flow-4401" style="color: #1E8E5A; font-weight: 600;">Share Your Strategy in SKOOL →</a></p>
         `),
         textContent: '',
       },
       {
-        subject: 'Your Getting Started Roadmap',
+        subject: 'You Already Have the Influence',
+        delayDays: 5,
+        htmlContent: makeEmail('Influence', `
+          <h2 style="color: #1E8E5A;">Turn Influence Into IMPACT</h2>
+          <p style="font-size: 18px; font-weight: 600; color: #C9A441;">"You already have the Influence. Now Activate the Community."</p>
+          <p>Most people underestimate their sphere of influence:</p>
+          <ul>
+            <li>Your network (friends, colleagues, connections)</li>
+            <li>Your platform (social media, email list, audience)</li>
+            <li>Your experience (knowledge, skills, credibility)</li>
+            <li>Your story (journey, lessons, transformation)</li>
+          </ul>
+          <p><strong>The question isn't:</strong> "Do I have influence?"<br>
+          <strong>The question is:</strong> "Am I activating it for IMPACT?"</p>
+          <h3 style="color: #C9A441;">Activation Looks Like:</h3>
+          <ul>
+            <li>Sharing your vision with 3 people this week</li>
+            <li>Inviting collaborators into your community</li>
+            <li>Creating resources that help others succeed</li>
+            <li>Building systems that multiply your IMPACT</li>
+          </ul>
+          <p><strong>Inside the SKOOL Community:</strong> We provide the tools, templates, and systems to turn your Influence into sustainable IMPACT.</p>
+          <p><a href="https://www.skool.com/network-leveraging-cash-flow-4401" style="display: inline-block; background: #1E8E5A; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">Access Resources Now →</a></p>
+        `),
+        textContent: '',
+      },
+      {
+        subject: 'One Cash Flow Visionary At A Time',
         delayDays: 7,
-        htmlContent: makeEmail('Roadmap', `
-          <h2 style="color: #1E8E5A;">Your First 30 Days</h2>
-          <h3 style="color: #C9A441;">Week 1: Foundation</h3>
-          <p>✓ Complete profile<br>✓ Watch platform training<br>✓ Identify 10 potential connections<br>✓ Schedule onboarding call</p>
-          <h3 style="color: #C9A441;">Week 2-3: First Connections</h3>
-          <p>✓ Share vision with network<br>✓ Host 1-2 conversations daily<br>✓ Activate 3-5 enterprise partners<br>✓ Join weekly community calls</p>
-          <h3 style="color: #C9A441;">Week 4: Scale</h3>
-          <p>✓ Set up automated follow-ups<br>✓ Launch personal landing page<br>✓ Connect with 5 more partners<br>✓ Receive first residual payments</p>
-        `),
-        textContent: '',
-      },
-      {
-        subject: 'Join Our Private Community',
-        delayDays: 10,
-        htmlContent: makeEmail('Community', `
-          <h2 style="color: #1E8E5A;">You're Not Building Alone</h2>
-          <p>The most successful visionaries are plugged into our community - where partnerships form and ideas are born.</p>
-          <h3 style="color: #C9A441;">Inside the Community:</h3>
+        htmlContent: makeEmail('Next Steps', `
+          <h2 style="color: #1E8E5A;">Your Next Move</h2>
+          <p>We grow <strong>One Cash Flow Visionary At A Time</strong>.</p>
+          <p>Not through mass recruitment. Not through hype. Through <strong>genuine Connection, intentional Activation, and purposeful Duplication</strong>.</p>
+          <h3 style="color: #C9A441;">Where You Are Now:</h3>
+          <p>✅ You've joined the community<br>
+          ✅ You understand our values<br>
+          ✅ You see how Community Compounding works<br>
+          ✅ You recognize your Influence</p>
+          <h3 style="color: #C9A441;">Your Next Move:</h3>
+          <p><strong>This Week:</strong></p>
+          <ol>
+            <li>Engage actively in the SKOOL community</li>
+            <li>Connect with 3 potential visionaries</li>
+            <li>Attend the weekly strategy session</li>
+            <li>Share one piece of value (insight, resource, story)</li>
+          </ol>
+          <p><strong>This Month:</strong></p>
           <ul>
-            <li>Weekly strategy calls with top earners</li>
-            <li>Success stories and real wins</li>
-            <li>Partnership opportunities</li>
-            <li>Resource library (scripts, templates, training)</li>
-            <li>Accountability partners</li>
+            <li>Activate your first 3 community members</li>
+            <li>Build your personal system for IMPACT</li>
+            <li>Start documenting what's working</li>
+            <li>Help others get their first wins</li>
           </ul>
-          <p><strong>No gatekeeping. No upsells. Just value.</strong></p>
-          <p><a href="#" style="color: #1E8E5A; font-weight: 600;">Join the community now →</a></p>
+          <p><strong>This Quarter:</strong></p>
+          <ul>
+            <li>See Community Compounding in action</li>
+            <li>Build sustainable resources that support your Purpose</li>
+            <li>Create IMPACT that extends beyond your direct effort</li>
+          </ul>
+          <p><strong>Remember:</strong> Sustainable IMPACT requires Sustainable Resources. We're here to help you build both.</p>
+          <p><a href="https://www.skool.com/network-leveraging-cash-flow-4401" style="display: inline-block; background: #1E8E5A; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 20px;">Let's Build Together →</a></p>
+          <p style="font-weight: 600; margin-top: 30px;">Connect. Activate. Duplicate.<br>One Cash Flow Visionary At A Time.</p>
         `),
         textContent: '',
       },
