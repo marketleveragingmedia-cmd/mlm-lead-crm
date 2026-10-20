@@ -7,7 +7,7 @@ export const WEBINAR_EVENTS = {
     webinarId: 'CFI-2026-10-08',
     name: 'Cash Flow Injection Strategy Masterclass',
     description: 'Discover How Connections, Community And Duplication Can Create Sustainable Residual Cash Flow.',
-    startDateTime: new Date('2026-10-08T15:00:00.000Z'), // 11 AM ET
+    startDateTime: new Date('2026-11-12T16:00:00.000Z'), // 11 AM EST (UTC-5)
     timezone: 'America/New_York',
     durationMinutes: 90,
     webinarJamWebinarId: 32,
