@@ -1,4 +1,4 @@
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('masterclass-registration-form');
   if (!form) return;
 
@@ -143,4 +143,4 @@
       }
     }
   });
-})();
+});
