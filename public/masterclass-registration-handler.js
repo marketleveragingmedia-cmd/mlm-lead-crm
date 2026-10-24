@@ -8,7 +8,7 @@
   let submitting = false;
 
   function showState(state, data) {
-    const cardInner = registrationCard.querySelector('.card-inner');
+    const cardInner = registrationCard;
     if (!cardInner) return;
 
     let html = '';
