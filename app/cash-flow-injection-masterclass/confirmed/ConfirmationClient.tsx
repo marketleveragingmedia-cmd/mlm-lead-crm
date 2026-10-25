@@ -145,17 +145,22 @@ END:VCALENDAR`;
                 
                 <div className="steps-grid">
                   <div className="step">
-                    <div className="step-number">1</div>
-                    <div className="step-content">
+                    <div className="step-header">
+                      <div className="step-number">1</div>
                       <h4>Check Your Email</h4>
-                      <p>We've sent your confirmation and webinar access details to <strong>{data.email}</strong></p>
+                    </div>
+                    <div className="step-content">
+                      <p>We've sent your confirmation and webinar access details to:</p>
+                      <p className="email-display">{data.email}</p>
                     </div>
                   </div>
 
                   <div className="step">
-                    <div className="step-number">2</div>
-                    <div className="step-content">
+                    <div className="step-header">
+                      <div className="step-number">2</div>
                       <h4>Join The Community</h4>
+                    </div>
+                    <div className="step-content">
                       <p>Connect with fellow Cash Flow Visionaries in our Premium SKOOL community</p>
                       <a href="https://www.skool.com/network-leveraging-cash-flow-4401" className="step-link" target="_blank" rel="noopener noreferrer">
                         Join SKOOL Community →
@@ -164,17 +169,21 @@ END:VCALENDAR`;
                   </div>
 
                   <div className="step">
-                    <div className="step-number">3</div>
-                    <div className="step-content">
+                    <div className="step-header">
+                      <div className="step-number">3</div>
                       <h4>Mark Your Calendar</h4>
+                    </div>
+                    <div className="step-content">
                       <p>Add this event to your calendar so you don't miss this live training</p>
                     </div>
                   </div>
 
                   <div className="step">
-                    <div className="step-number">4</div>
-                    <div className="step-content">
+                    <div className="step-header">
+                      <div className="step-number">4</div>
                       <h4>Prepare Your Questions</h4>
+                    </div>
+                    <div className="step-content">
                       <p>Think about your cash flow goals. We'll have live Q&A during the masterclass</p>
                     </div>
                   </div>
@@ -186,19 +195,19 @@ END:VCALENDAR`;
                 <h3 className="expect-title">What You'll Discover</h3>
                 <div className="expect-grid">
                   <div className="expect-item">
-                    <div className="expect-icon">🎯</div>
+                    <div className="expect-icon-pro">✓</div>
                     <div className="expect-text">The exact strategy for creating sustainable residual cash flow through community participation</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon">🤝</div>
+                    <div className="expect-icon-pro">✓</div>
                     <div className="expect-text">How to leverage connections and duplication to multiply your results</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon">🚀</div>
+                    <div className="expect-icon-pro">✓</div>
                     <div className="expect-text">Live demonstration of the Cash Flow Injection Simulator in action</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon">💡</div>
+                    <div className="expect-icon-pro">✓</div>
                     <div className="expect-text">Real-world examples and case studies from successful Cash Flow Visionaries</div>
                   </div>
                 </div>
@@ -210,18 +219,10 @@ END:VCALENDAR`;
                 <div className="important-content">
                   <div className="important-title">Important</div>
                   <div className="important-text">
-                    This is a <strong>live event</strong>. The replay will be available for 48 hours only. 
+                    This is a <strong>live event</strong>. The replay will be available within 24-48 hours after the live session. 
                     Make sure to attend live for the full interactive experience and Q&A.
                   </div>
                 </div>
-              </div>
-
-              {/* Social Share */}
-              <div className="share-section">
-                <div className="share-text">Know someone who would benefit from this training?</div>
-                <a href="/cash-flow-injection-masterclass" className="btn secondary">
-                  Share This Masterclass
-                </a>
               </div>
             </div>
           </div>
@@ -344,7 +345,7 @@ body {
 }
 
 .confirm-title {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   line-height: 1.1;
   margin: 0 0 10px;
   text-align: center;
@@ -352,7 +353,7 @@ body {
 }
 
 .confirm-subtitle {
-  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   line-height: 1.2;
   margin: 0 0 40px;
   text-align: center;
@@ -505,9 +506,16 @@ body {
   padding: 24px;
 }
 
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
 .step-number {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: linear-gradient(135deg, var(--green), var(--green2));
   color: white;
   border-radius: 50%;
@@ -515,21 +523,35 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 1.2rem;
-  margin-bottom: 16px;
+  font-size: 1.1rem;
+  flex-shrink: 0;
 }
 
-.step-content h4 {
-  margin: 0 0 8px;
+.step-header h4 {
+  margin: 0;
   color: var(--green-deep);
   font-size: 1.1rem;
 }
 
 .step-content p {
-  margin: 0;
+  margin: 0 0 8px;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.step-content p:last-child {
+  margin-bottom: 0;
+}
+
+.email-display {
+  font-weight: 600;
+  color: var(--green-deep);
+  word-break: break-all;
+  padding: 8px 12px;
+  background: var(--green-soft);
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
 
 .step-link {
@@ -570,9 +592,19 @@ body {
   text-align: center;
 }
 
-.expect-icon {
-  font-size: 2.5rem;
-  margin-bottom: 12px;
+.expect-icon-pro {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 12px rgba(15,107,72,.15);
 }
 
 .expect-text {
@@ -607,18 +639,6 @@ body {
   color: var(--ink);
   line-height: 1.6;
   font-size: 0.95rem;
-}
-
-.share-section {
-  text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid var(--line);
-}
-
-.share-text {
-  margin-bottom: 16px;
-  color: var(--muted);
-  font-size: 1rem;
 }
 
 .footer {
