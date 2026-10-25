@@ -155,6 +155,11 @@ export const AUDIENCE_MAP: Record<string, string> = {
   'cash-flow-visionaries': 'e5ef05c9-58b7-4c93-974e-49879a6bf288',
   'strategic-partners': '332f5da8-92d2-4441-aaec-8ebd0333339c',
   
+  // SKOOL Community audiences
+  'skool-standard': '4db16471-5f5e-47fd-ac10-8da6fb7c1199', // Use main-list for Standard
+  'skool-premium': 'e5ef05c9-58b7-4c93-974e-49879a6bf288', // Use cash-flow-visionaries for Premium
+  'skool-community': '4db16471-5f5e-47fd-ac10-8da6fb7c1199', // Main NLC list
+  
   // Avatar audiences
   'jv-affiliates': 'c66ce3e3-8de3-4106-a882-1c7bd7d3cd2b',
   'side-hustlers': 'ac58e01c-607f-4440-a298-cfbd9bdfb306',

@@ -3,6 +3,8 @@ import prisma from '@/lib/db';
 import crypto from 'crypto';
 import { getSkoolySecret } from '@/lib/skooly-secrets';
 import { qualifyPendingWebinarRegistrations } from '@/lib/webinar-qualification';
+import { sendEmail, addContactToAudience, AUDIENCE_MAP } from '@/lib/resend-crm';
+import { getSkoolWelcomeEmail } from '@/lib/skool-welcome-templates';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -282,9 +284,55 @@ async function storeSkoolEvent(
  * Send welcome email to direct Skool signups
  */
 async function sendWelcomeEmail(lead: any, pricingTier: string) {
-  // TODO: Implement welcome email sending via Resend
-  // Different email for Premium vs Standard
-  console.log(`📧 TODO: Send welcome email to ${lead.email} (${pricingTier})`);
+  try {
+    // Check if welcome email already sent (idempotency)
+    if (lead.skoolWelcomeEmailSent) {
+      console.log(`⏭️  Welcome email already sent to ${lead.email} - skipping`);
+      return;
+    }
+    
+    const tier = pricingTier.toLowerCase().includes('premium') ? 'Premium' : 'Standard';
+    const { subject, html } = getSkoolWelcomeEmail({
+      tier,
+      firstName: lead.firstName,
+      email: lead.email,
+      fromDomain: 'm.networkleveragingcashflow.com'
+    });
+    
+    console.log(`📧 Sending ${tier} welcome email to ${lead.email}...`);
+    
+    // Send via Resend
+    const result = await sendEmail({
+      from: 'Samantha Hill | MzSamantha <notifications@m.networkleveragingcashflow.com>',
+      to: lead.email,
+      subject,
+      html,
+      replyTo: 'samantha@networkleveragingcashflow.com',
+      tags: [
+        { name: 'type', value: 'skool-welcome' },
+        { name: 'tier', value: tier.toLowerCase() },
+        { name: 'source', value: 'skool-webhook' }
+      ]
+    });
+    
+    console.log(`✅ Welcome email sent successfully:`, result.id);
+    
+    // Mark as sent in database (idempotency control)
+    await prisma.lead.update({
+      where: { id: lead.id },
+      data: {
+        skoolWelcomeEmailSent: true,
+        skoolWelcomeEmailSentAt: new Date()
+      }
+    });
+    
+    console.log(`✅ Welcome email flag set for lead ${lead.id}`);
+    
+  } catch (error: any) {
+    console.error(`❌ Error sending welcome email to ${lead.email}:`, error.message);
+    // Don't throw - log error but don't fail webhook
+    // Store error for manual review if needed
+  }
 }
 
 /**
@@ -306,10 +354,80 @@ async function syncToResend(
   lastName: string, 
   pricingTier: string
 ) {
-  // TODO: Implement Resend sync
-  // Add to "Network Leveraging Cash Flow" audience
-  // Add to "SKOOL Premium Members" or "SKOOL Standard Members" audience
-  console.log(`📮 TODO: Sync lead ${leadId} to Resend (${pricingTier})`);
+  try {
+    const isPremium = pricingTier.toLowerCase().includes('premium');
+    const tier = isPremium ? 'Premium' : 'Standard';
+    
+    console.log(`📮 Syncing ${tier} member ${email} to Resend audiences...`);
+    
+    // Get appropriate audience IDs
+    const mainAudienceId = AUDIENCE_MAP['skool-community']; // Main NLC list
+    const tierAudienceId = isPremium ? AUDIENCE_MAP['skool-premium'] : AUDIENCE_MAP['skool-standard'];
+    
+    const results = [];
+    
+    // Add to main NLC community audience
+    try {
+      const contactId = await addContactToAudience(
+        email,
+        firstName,
+        lastName,
+        mainAudienceId,
+        false // not unsubscribed
+      );
+      results.push({ audience: 'main-nlc', success: true, contactId });
+      console.log(`✅ Added to main NLC audience: ${contactId}`);
+    } catch (error: any) {
+      // If contact already exists in audience, that's okay
+      if (error.message?.includes('already exists') || error.message?.includes('duplicate')) {
+        results.push({ audience: 'main-nlc', success: true, note: 'already-exists' });
+        console.log(`✅ Already in main NLC audience (duplicate ignored)`);
+      } else {
+        results.push({ audience: 'main-nlc', success: false, error: error.message });
+        console.error(`❌ Failed to add to main NLC audience:`, error.message);
+      }
+    }
+    
+    // Add to tier-specific audience
+    try {
+      const contactId = await addContactToAudience(
+        email,
+        firstName,
+        lastName,
+        tierAudienceId,
+        false
+      );
+      results.push({ audience: tier.toLowerCase(), success: true, contactId });
+      console.log(`✅ Added to ${tier} audience: ${contactId}`);
+    } catch (error: any) {
+      if (error.message?.includes('already exists') || error.message?.includes('duplicate')) {
+        results.push({ audience: tier.toLowerCase(), success: true, note: 'already-exists' });
+        console.log(`✅ Already in ${tier} audience (duplicate ignored)`);
+      } else {
+        results.push({ audience: tier.toLowerCase(), success: false, error: error.message });
+        console.error(`❌ Failed to add to ${tier} audience:`, error.message);
+      }
+    }
+    
+    // Update lead with Resend contact info (if we got a new contact ID)
+    const successfulContact = results.find(r => r.contactId);
+    if (successfulContact?.contactId) {
+      await prisma.lead.update({
+        where: { id: leadId },
+        data: {
+          resendContactId: successfulContact.contactId,
+          resendAudienceId: tierAudienceId
+        }
+      });
+      console.log(`✅ Updated lead ${leadId} with Resend contact ID`);
+    }
+    
+    console.log(`✅ Resend sync complete for ${email}:`, results);
+    
+  } catch (error: any) {
+    console.error(`❌ Error syncing ${email} to Resend:`, error.message);
+    // Don't throw - log error but don't fail webhook
+  }
 }
 
 // Allow GET for testing
@@ -326,9 +444,10 @@ export async function GET(request: NextRequest) {
       'Name parsing (firstName/lastName)',
       'Source tracking (Direct Skool Signup)',
       'Premium vs Standard differentiation',
-      'Global Control sync (TODO)',
-      'Resend sync (TODO)',
-      'Welcome emails (TODO)'
+      'Welcome emails (ACTIVE - Standard/Premium variants)',
+      'Resend audience sync (ACTIVE)',
+      'Idempotency controls (prevents duplicate emails)',
+      'Global Control sync (DEFERRED)'
     ]
   });
 }

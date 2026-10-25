@@ -31,6 +31,8 @@ model Lead {
   skoolMemberId                String?               @unique
   skoolPlan                    String?
   skoolMembershipStartedAt     DateTime?
+  skoolWelcomeEmailSent        Boolean               @default(false)
+  skoolWelcomeEmailSentAt      DateTime?
   fullSimulatorResultsUnlocked Boolean               @default(false)
   officialCashFlowVisionary    Boolean               @default(false)
   createdAt                    DateTime              @default(now())
