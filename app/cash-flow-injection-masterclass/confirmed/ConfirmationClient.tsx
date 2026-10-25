@@ -595,8 +595,10 @@ body {
 
 .expect-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .expect-item {
@@ -680,8 +682,7 @@ body {
     padding: 40px 30px;
   }
   
-  .steps-grid,
-  .expect-grid {
+  .steps-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -692,13 +693,6 @@ body {
   
   .calendar-btn {
     width: 100%;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .steps-grid,
-  .expect-grid {
-    gap: 20px;
   }
 }
 `;
