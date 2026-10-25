@@ -217,7 +217,7 @@ END:VCALENDAR`;
                   <div className="expect-item">
                     <div className="expect-number">5</div>
                     <h4 className="expect-heading">Connect • Activate • Duplicate: The Cash Flow Injection Framework</h4>
-                    <div className="expect-text">Discover how a simple, duplicatable process of Connecting individuals to the Solution, Activating participation and Duplicating the process creates the potential for Immediate Cash Flow and ongoing Residual Cash Flow. One Connection. Three Connections. Community Compounding. A Framework Designed to Create Cash Flow While Creating IMPACT.</div>
+                    <div className="expect-text">Discover how the power of meaningful Connections, Activation with Intention and Duplication with Purpose creates the potential for Immediate Cash Flow, ongoing Residual Cash Flow and Community Compounding. Connect With Meaning. Activate With Intention. Duplicate With Purpose. A Simple, Duplicatable Framework for Creating Cash Flow While Creating IMPACT.</div>
                   </div>
                   <div className="expect-item">
                     <div className="expect-number">6</div>
