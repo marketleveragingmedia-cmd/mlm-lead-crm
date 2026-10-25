@@ -402,7 +402,8 @@ body {
 .event-when {
   text-align: center;
   padding: 20px;
-  background: var(--green-soft);
+  background: rgba(248,240,223,0.6);
+  border: 1px solid rgba(201,155,55,.18);
   border-radius: 12px;
   margin-bottom: 24px;
 }
@@ -565,7 +566,8 @@ body {
   color: var(--green-deep);
   word-break: break-all;
   padding: 8px 12px;
-  background: var(--green-soft);
+  background: rgba(248,240,223,0.6);
+  border: 1px solid rgba(201,155,55,.18);
   border-radius: 8px;
   font-size: 0.9rem;
 }
