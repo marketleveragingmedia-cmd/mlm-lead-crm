@@ -244,6 +244,7 @@ END:VCALENDAR`;
 
         <footer className="footer">
           <div className="shell">
+            <p className="disclaimer">This masterclass is for educational purposes only and not financial advice.</p>
             <p>© 2026 Cash Flow Visionaries | Network Leveraging Cash Flow. All Rights Reserved.</p>
           </div>
         </footer>
@@ -605,8 +606,7 @@ body {
   background: rgba(255,255,255,.72);
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 20px;
-  text-align: center;
+  padding: 24px;
 }
 
 .expect-number {
@@ -638,6 +638,7 @@ body {
   color: var(--muted);
   line-height: 1.6;
   margin: 0;
+  text-align: left;
 }
 
 .important-box {
@@ -675,6 +676,13 @@ body {
   color: #6e7b76;
   font-size: 0.85rem;
   margin-top: auto;
+}
+
+.footer .disclaimer {
+  font-size: 0.8rem;
+  color: #8a9691;
+  margin-bottom: 12px;
+  font-style: italic;
 }
 
 @media (max-width: 768px) {
