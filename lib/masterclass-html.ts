@@ -1345,7 +1345,5 @@ export const masterclassBody = `
   </div>
 </footer>
 
-<script src="/masterclass-registration-handler.js"></script>
-
 
 `;

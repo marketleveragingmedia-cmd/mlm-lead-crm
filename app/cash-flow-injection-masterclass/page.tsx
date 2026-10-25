@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { masterclassStyles, masterclassBody } from '@/lib/masterclass-html';
 
 export const metadata = {
@@ -9,6 +10,7 @@ export default function MasterclassPage() {
     <>
       <style dangerouslySetInnerHTML={{ __html: masterclassStyles }} />
       <div dangerouslySetInnerHTML={{ __html: masterclassBody }} />
+      <Script src="/masterclass-registration-handler.js" strategy="afterInteractive" />
     </>
   );
 }
