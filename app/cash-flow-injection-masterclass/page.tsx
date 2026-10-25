@@ -1,5 +1,5 @@
-import Script from 'next/script';
 import { masterclassStyles, masterclassBody } from '@/lib/masterclass-html';
+import MasterclassClient from './MasterclassClient';
 
 export const metadata = {
   title: 'Cash Flow Injection Strategy Masterclass | Official Draft V15',
@@ -9,8 +9,7 @@ export default function MasterclassPage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: masterclassStyles }} />
-      <div dangerouslySetInnerHTML={{ __html: masterclassBody }} />
-      <Script src="/masterclass-registration-handler.js" strategy="afterInteractive" />
+      <MasterclassClient html={masterclassBody} />
     </>
   );
 }
