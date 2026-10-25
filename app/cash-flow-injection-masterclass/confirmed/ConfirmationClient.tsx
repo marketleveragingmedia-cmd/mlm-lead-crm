@@ -195,20 +195,34 @@ END:VCALENDAR`;
                 <h3 className="expect-title">What You'll Discover</h3>
                 <div className="expect-grid">
                   <div className="expect-item">
-                    <div className="expect-icon-pro">✓</div>
-                    <div className="expect-text">The exact strategy for creating sustainable residual cash flow through community participation</div>
+                    <div className="expect-number">1</div>
+                    <h4 className="expect-heading">Why Cash Flow Matters More Than Ever in Today's Economy</h4>
+                    <div className="expect-text">Discover why understanding how Cash Flow is generated, created and circulated can change your perspective on money, financial freedom and the greater possibilities available to you.</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon-pro">✓</div>
-                    <div className="expect-text">How to leverage connections and duplication to multiply your results</div>
+                    <div className="expect-number">2</div>
+                    <h4 className="expect-heading">What's Possible TODAY That Wasn't Possible Just Two Years Ago</h4>
+                    <div className="expect-text">Discover how advancements in Technology, the Platform Economy and connected Networks have created Cash Flow possibilities that were not available or accessible in the same way just two years ago.</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon-pro">✓</div>
-                    <div className="expect-text">Live demonstration of the Cash Flow Injection Simulator in action</div>
+                    <div className="expect-number">3</div>
+                    <h4 className="expect-heading">We the People Have the Power!</h4>
+                    <div className="expect-text">Discover why the Network Is the Asset, Leverage Is the Strategy and how Communities Within Communities, Networks Within Networks and Organizations Within Organizations can create the potential for Community Compounding and Residual Cash Flow.</div>
                   </div>
                   <div className="expect-item">
-                    <div className="expect-icon-pro">✓</div>
-                    <div className="expect-text">Real-world examples and case studies from successful Cash Flow Visionaries</div>
+                    <div className="expect-number">4</div>
+                    <h4 className="expect-heading">Cash Flow Is Not the Purpose. Cash Flow Supports the Purpose.</h4>
+                    <div className="expect-text">Discover how an additional source of Residual Cash Flow could support YOUR Vision, YOUR Mission and YOUR Purpose. Whether it's expanding the IMPACT of a Ministry, advancing an Organization's Mission, strengthening a Business, supporting a Network Marketing Team or creating greater financial freedom, imagine what becomes possible when Cash Flow supports what already matters to YOU.</div>
+                  </div>
+                  <div className="expect-item">
+                    <div className="expect-number">5</div>
+                    <h4 className="expect-heading">Connect • Activate • Duplicate: The Cash Flow Injection Framework</h4>
+                    <div className="expect-text">Discover how a simple, duplicatable process of Connecting individuals to the Solution, Activating participation and Duplicating the process creates the potential for Immediate Cash Flow and ongoing Residual Cash Flow. One Connection. Three Connections. Community Compounding. A Framework Designed to Create Cash Flow While Creating IMPACT.</div>
+                  </div>
+                  <div className="expect-item">
+                    <div className="expect-number">6</div>
+                    <h4 className="expect-heading">See the Potential of a Cash Flow Injection Come to Life!</h4>
+                    <div className="expect-text">Experience Live Cash Flow Scenario Modeling and discover how Connections, Activation and Duplication can create the potential for Immediate Cash Flow, ongoing Residual Cash Flow and greater financial possibilities to support YOUR Vision, YOUR Mission and YOUR Purpose.</div>
                   </div>
                 </div>
               </div>
@@ -495,7 +509,7 @@ body {
 
 .steps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
@@ -530,14 +544,15 @@ body {
 .step-header h4 {
   margin: 0;
   color: var(--green-deep);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 
 .step-content p {
   margin: 0 0 8px;
   color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .step-content p:last-child {
@@ -580,8 +595,8 @@ body {
 
 .expect-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
 
 .expect-item {
@@ -592,25 +607,35 @@ body {
   text-align: center;
 }
 
-.expect-icon-pro {
-  width: 48px;
-  height: 48px;
+.expect-number {
+  width: 40px;
+  height: 40px;
   background: linear-gradient(135deg, var(--green), var(--green2));
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 900;
-  margin: 0 auto 16px;
+  margin-bottom: 16px;
   box-shadow: 0 4px 12px rgba(15,107,72,.15);
+  flex-shrink: 0;
+}
+
+.expect-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin: 0 0 12px;
+  line-height: 1.3;
 }
 
 .expect-text {
   font-size: 0.95rem;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .important-box {
@@ -658,6 +683,7 @@ body {
   .steps-grid,
   .expect-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .calendar-actions {
@@ -666,6 +692,13 @@ body {
   
   .calendar-btn {
     width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .steps-grid,
+  .expect-grid {
+    gap: 20px;
   }
 }
 `;
