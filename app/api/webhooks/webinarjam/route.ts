@@ -151,7 +151,7 @@ export async function POST(req: NextRequest) {
 
 // Handle registration webhook
 async function handleRegistration(lead: any, payload: any, eventId: string) {
-  const webinarId = 'CFI-2026-10-08'; // TODO: Derive from payload when multiple webinars exist
+  const webinarId = 'CFI-2026-11-12'; // TODO: Derive from payload when multiple webinars exist
   
   // Find or create webinar event
   const webinarEvent = await prisma.webinarEvent.findUnique({

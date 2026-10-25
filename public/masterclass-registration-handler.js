@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     try {
-      const response = await fetch('/api/webinar/register/CFI-2026-10-08', {
+      const response = await fetch('/api/webinar/register/CFI-2026-11-12', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

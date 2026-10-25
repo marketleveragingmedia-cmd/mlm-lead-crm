@@ -3,8 +3,8 @@
 // DO NOT hard-code webinar IDs across the codebase
 
 export const WEBINAR_EVENTS = {
-  'CFI-2026-10-08': {
-    webinarId: 'CFI-2026-10-08',
+  'CFI-2026-11-12': {
+    webinarId: 'CFI-2026-11-12',
     name: 'Cash Flow Injection Strategy Masterclass',
     description: 'Discover How Connections, Community And Duplication Can Create Sustainable Residual Cash Flow.',
     startDateTime: new Date('2026-11-12T16:00:00.000Z'), // 11 AM EST (UTC-5)
@@ -43,7 +43,7 @@ export const WEBINAR_TAGS = {
 
 // Webinar slug helper
 export function getWebinarSlug(webinarId: string): string {
-  // Convert "CFI-2026-10-08" to "cfi-oct-2026"
+  // Convert "CFI-2026-11-12" to "cfi-nov-2026"
   const parts = webinarId.split('-');
   if (parts.length === 3) {
     const [prefix, year, month, day] = [...parts[0].split(''), parts[1], parts[2]];
