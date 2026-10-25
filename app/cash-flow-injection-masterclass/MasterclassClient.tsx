@@ -115,10 +115,14 @@ export default function MasterclassClient({ html }: { html: string }) {
         }
 
         if (data.success) {
-          if (data.alreadyPremium && data.alreadyRegistered) {
-            showState('already_registered', data);
-          } else if (data.alreadyPremium) {
-            showState('registered', data);
+          if (data.alreadyPremium) {
+            // Premium members: redirect to custom confirmation page
+            const params = new URLSearchParams({
+              firstName: formData.firstName,
+              email: formData.email,
+              url: data.liveRoomUrl || ''
+            });
+            window.location.href = `/cash-flow-injection-masterclass/confirmed?${params.toString()}`;
           } else if (data.requiresPremium && data.skoolPlansUrl) {
             showState('premium_pending', data);
           } else {
