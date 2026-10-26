@@ -119,7 +119,7 @@ Home Of The Cash Flow Visionaries`
       subject: 'What Could a Cash Flow Injection Make Possible?',
       previewText: 'Explore the Potential of Meaningful Connections and Community Compounding.',
       ctaText: 'Explore the Cash Flow Injection Simulator',
-      ctaUrl: 'https://cash-flow-injection-simulator.vercel.app',
+      ctaUrl: 'https://simulator.cashflowvisionaries.com',
       htmlContent: createEmail(`
         <p style="font-size: 16px; line-height: 1.6; color: #333;">Great Day, {{firstName}}!</p>
         
@@ -145,7 +145,7 @@ Home Of The Cash Flow Visionaries`
         <p style="font-size: 16px; line-height: 1.6; color: #333;">Because Once Your Perspective Changes, Opportunities That Were Already Present Can Become <strong>Visible and Executable</strong>.</p>
         
         <p style="text-align: center; margin: 32px 0;">
-          <a href="https://cash-flow-injection-simulator.vercel.app" style="display: inline-block; background: #1E8E5A; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">Explore the Cash Flow Injection Simulator →</a>
+          <a href="https://simulator.cashflowvisionaries.com" style="display: inline-block; background: #1E8E5A; color: white; padding: 14px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px;">Explore the Cash Flow Injection Simulator →</a>
         </p>
         
         <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 32px;"><strong>A Different Perspective Can Open the Door to a Different Financial Future.</strong></p>
@@ -181,7 +181,7 @@ The Objective isn\'t to Promise an Outcome. It's to Help You See Possibilities, 
 Because Once Your Perspective Changes, Opportunities That Were Already Present Can Become Visible and Executable.
 
 Explore the Cash Flow Injection Simulator:
-https://cash-flow-injection-simulator.vercel.app
+https://simulator.cashflowvisionaries.com
 
 A Different Perspective Can Open the Door to a Different Financial Future.
 
