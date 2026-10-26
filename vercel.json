@@ -1,9 +1,8 @@
 {
-  "buildCommand": "next build",
-  "framework": "nextjs",
-  "github": {
-    "enabled": true,
-    "autoAlias": true,
-    "silent": false
-  }
+  "crons": [
+    {
+      "path": "/api/cron/process-scheduled-emails",
+      "schedule": "0 */1 * * *"
+    }
+  ]
 }
