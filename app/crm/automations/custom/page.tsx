@@ -9,6 +9,8 @@ interface EmailStep {
   subject: string;
   htmlContent: string;
   delayDays: number;
+  delayHours?: number;
+  delayUnit?: 'hours' | 'days';
 }
 
 export default function CustomAutomationPage() {
@@ -28,6 +30,8 @@ export default function CustomAutomationPage() {
       subject: '',
       htmlContent: '',
       delayDays: 0,
+      delayHours: 0,
+      delayUnit: 'days',
     }
   ]);
   const [loading, setLoading] = useState(false);
@@ -58,6 +62,8 @@ export default function CustomAutomationPage() {
         subject: '',
         htmlContent: '',
         delayDays: newDelay,
+        delayHours: 0,
+        delayUnit: 'days',
       }
     ]);
   };
@@ -332,23 +338,70 @@ export default function CustomAutomationPage() {
 
               <div style={{ marginBottom: '12px' }}>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px', color: '#333' }}>
-                  Delay (days) *
+                  Send Delay *
                 </label>
-                <input
-                  type="number"
-                  min="0"
-                  value={email.delayDays}
-                  onChange={(e) => updateEmail(email.id, 'delayDays', parseInt(e.target.value) || 0)}
-                  style={{
-                    width: '120px',
-                    padding: '8px 12px',
-                    fontSize: '13px',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                  }}
-                />
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <input
+                    type="number"
+                    min="0"
+                    value={email.delayUnit === 'hours' ? (email.delayHours || 0) : email.delayDays}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 0;
+                      if (email.delayUnit === 'hours') {
+                        updateEmail(email.id, 'delayHours', value);
+                        updateEmail(email.id, 'delayDays', Math.floor(value / 24));
+                      } else {
+                        updateEmail(email.id, 'delayDays', value);
+                      }
+                    }}
+                    style={{
+                      width: '100px',
+                      padding: '8px 12px',
+                      fontSize: '13px',
+                      border: '1px solid #ddd',
+                      borderRadius: '6px',
+                    }}
+                  />
+                  <select
+                    value={email.delayUnit || 'days'}
+                    onChange={(e) => {
+                      const unit = e.target.value as 'hours' | 'days';
+                      updateEmail(email.id, 'delayUnit', unit);
+                      if (unit === 'hours') {
+                        const currentDays = email.delayDays || 0;
+                        updateEmail(email.id, 'delayHours', currentDays * 24);
+                      }
+                    }}
+                    style={{
+                      padding: '8px 12px',
+                      fontSize: '13px',
+                      border: '1px solid #ddd',
+                      borderRadius: '6px',
+                      background: 'white',
+                    }}
+                  >
+                    <option value="hours">Hours</option>
+                    <option value="days">Days</option>
+                  </select>
+                </div>
                 <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-                  {email.delayDays === 0 ? 'Sends immediately when contact is added' : `Sends ${email.delayDays} day${email.delayDays > 1 ? 's' : ''} after enrollment`}
+                  {(() => {
+                    const unit = email.delayUnit || 'days';
+                    const value = unit === 'hours' ? (email.delayHours || 0) : email.delayDays;
+                    const currentDate = new Date();
+                    
+                    if (value === 0) {
+                      return 'Sends immediately when contact is added';
+                    }
+                    
+                    if (unit === 'hours') {
+                      const futureDate = new Date(currentDate.getTime() + value * 60 * 60 * 1000);
+                      return `Sends ${value} hour${value > 1 ? 's' : ''} after enrollment (≈ ${futureDate.toLocaleDateString()})`;
+                    } else {
+                      const futureDate = new Date(currentDate.getTime() + value * 24 * 60 * 60 * 1000);
+                      return `Sends ${value} day${value > 1 ? 's' : ''} after enrollment (≈ ${futureDate.toLocaleDateString()})`;
+                    }
+                  })()}
                 </div>
               </div>
 

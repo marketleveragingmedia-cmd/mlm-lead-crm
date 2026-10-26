@@ -9,6 +9,8 @@ export interface AutomationEmail {
   htmlContent: string;
   textContent: string;
   delayDays: number;
+  delayHours?: number; // Optional: for hourly delays (e.g., 2 hours, 6 hours)
+  delayUnit?: 'hours' | 'days'; // Optional: specify unit (defaults to 'days')
 }
 
 export interface AutomationTemplate {
