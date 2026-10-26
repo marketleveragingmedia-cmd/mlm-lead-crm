@@ -14,7 +14,7 @@ You can now build **completely custom email automations** without using the pre-
 
 ## 📍 HOW TO ACCESS:
 
-1. **Login:** https://mlm-lead-crm.vercel.app/login (Password: `MLM2026Secure!`)
+1. **Login:** https://mlm-lead-crm.vercel.app/login (Password: See secure credentials file)
 2. **Go to Automations:** Click "Automations" card (⚡ icon)
 3. **Two Options Available:**
    - **✏️ From Scratch** → Build your own custom sequence

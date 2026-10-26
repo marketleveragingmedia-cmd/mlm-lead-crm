@@ -15,7 +15,7 @@
 ### 1. Authentication (CRITICAL)
 - [x] Login page exists at /login
 - [ ] Middleware needs to REQUIRE auth for /crm routes
-- [ ] Password: MLM2026Secure!
+- [ ] Password: (Stored securely - not in git)
 
 ### 2. Broadcasts Page (/crm/broadcasts)
 - [ ] List all broadcasts (from database)
