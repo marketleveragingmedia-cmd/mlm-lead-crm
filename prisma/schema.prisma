@@ -44,6 +44,8 @@ model Lead {
   skoolEvents                  SkoolEvent[]
   webinarJamEvents             WebinarJamEvent[]
   webinarRegistrations         WebinarRegistration[]
+  automationEnrollments        AutomationEnrollment[]
+  scheduledEmails              ScheduledEmail[]
 
   @@index([email])
   @@index([createdAt])
@@ -281,4 +283,57 @@ model GlobalControlOutbox {
   @@index([status])
   @@index([createdAt])
   @@index([email, tagName])
+}
+
+// Automation Enrollment Tracking
+model AutomationEnrollment {
+  id               String    @id @default(cuid())
+  leadId           String
+  automationId     String
+  enrolledAt       DateTime  @default(now())
+  completedAt      DateTime?
+  cancelledAt      DateTime?
+  cancellationReason String?
+  currentEmailIndex Int      @default(0)
+  status           String    @default("active") // active, completed, cancelled
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  lead             Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@unique([leadId, automationId])
+  @@index([leadId])
+  @@index([automationId])
+  @@index([status])
+  @@index([enrolledAt])
+}
+
+// Scheduled Email Queue
+model ScheduledEmail {
+  id               String    @id @default(cuid())
+  leadId           String
+  automationId     String
+  enrollmentId     String
+  emailIndex       Int
+  subject          String
+  htmlContent      String
+  textContent      String?
+  fromDomain       String
+  fromName         String
+  fromEmail        String
+  scheduledFor     DateTime
+  sentAt           DateTime?
+  resendId         String?
+  status           String    @default("pending") // pending, sent, failed, cancelled
+  errorMessage     String?
+  retryCount       Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  lead             Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId])
+  @@index([automationId])
+  @@index([enrollmentId])
+  @@index([status])
+  @@index([scheduledFor])
+  @@index([sentAt])
 }
