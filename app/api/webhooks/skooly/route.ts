@@ -6,6 +6,7 @@ import { qualifyPendingWebinarRegistrations } from '@/lib/webinar-qualification'
 import { sendEmail, addContactToAudience, AUDIENCE_MAP } from '@/lib/resend-crm';
 import { getSkoolWelcomeEmail } from '@/lib/skool-welcome-templates';
 import { enrollStandardMember, cancelStandardEmailsOnUpgrade } from '@/lib/standard-member-automation';
+import { enrollPremiumMember } from '@/lib/premium-member-automation';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -106,16 +107,36 @@ export async function POST(request: NextRequest) {
       
       console.log('✅ Updated existing lead');
       
-      // Check if upgraded to Premium - cancel Standard automation
+      // Check membership tier and handle enrollment
       const isPremium = pricingTier.toLowerCase().includes('premium');
       const wasStandard = lead.skoolPlan === 'Standard';
+      
       if (isPremium && wasStandard) {
-        console.log('⬆️  Member upgraded from Standard to Premium - cancelling Standard emails...');
-        await cancelStandardEmailsOnUpgrade(leadId);
-        console.log('✅ Standard follow-up emails cancelled');
+        // Standard-to-Premium upgrade: enroll in Premium, cancel Standard
+        console.log('⬆️  Member upgraded from Standard to Premium');
+        const premiumEnrollmentResult = await enrollPremiumMember(leadId, new Date(), true);
+        if (premiumEnrollmentResult.success && !premiumEnrollmentResult.alreadyEnrolled) {
+          console.log(`✅ Enrolled in Premium automation: ${premiumEnrollmentResult.emailsScheduled} emails scheduled`);
+          console.log(`✅ Standard follow-up emails cancelled: ${premiumEnrollmentResult.standardEmailsCancelled}`);
+        } else if (premiumEnrollmentResult.alreadyEnrolled) {
+          console.log('✅ Already enrolled in Premium automation (duplicate prevented)');
+        } else {
+          console.error(`⚠️  Premium enrollment failed: ${premiumEnrollmentResult.error}`);
+        }
+      } else if (isPremium && !wasStandard) {
+        // New Premium member (wasn't Standard before)
+        console.log('📧 Enrolling existing lead (now Premium) in Premium automation...');
+        const premiumEnrollmentResult = await enrollPremiumMember(leadId, new Date(), false);
+        if (premiumEnrollmentResult.success && !premiumEnrollmentResult.alreadyEnrolled) {
+          console.log(`✅ Enrolled in Premium automation: ${premiumEnrollmentResult.emailsScheduled} emails scheduled`);
+        } else if (premiumEnrollmentResult.alreadyEnrolled) {
+          console.log('✅ Already enrolled in Premium automation (duplicate prevented)');
+        } else {
+          console.error(`⚠️  Premium enrollment failed: ${premiumEnrollmentResult.error}`);
+        }
       } else if (!isPremium && !lead.skoolPlan) {
         // New Standard member who was previously not a Skool member
-        console.log('📧 Enrolling existing lead (now Standard) in follow-up automation...');
+        console.log('📧 Enrolling existing lead (now Standard) in Standard automation...');
         const enrollmentResult = await enrollStandardMember(leadId, new Date());
         if (enrollmentResult.success && !enrollmentResult.alreadyEnrolled) {
           console.log(`✅ Enrolled in Standard automation: ${enrollmentResult.emailsScheduled} emails scheduled`);
@@ -151,10 +172,18 @@ export async function POST(request: NextRequest) {
       // Send welcome email to direct Skool signups
       await sendWelcomeEmail(newLead, pricingTier);
       
-      // Enroll Standard members in follow-up automation
+      // Enroll new members in appropriate follow-up automation
       const isPremium = pricingTier.toLowerCase().includes('premium');
-      if (!isPremium) {
-        console.log('📧 Enrolling Standard member in follow-up automation...');
+      if (isPremium) {
+        console.log('📧 Enrolling Premium member in Premium automation...');
+        const premiumEnrollmentResult = await enrollPremiumMember(leadId, new Date(), false);
+        if (premiumEnrollmentResult.success) {
+          console.log(`✅ Enrolled in Premium automation: ${premiumEnrollmentResult.emailsScheduled} emails scheduled`);
+        } else {
+          console.error(`⚠️  Premium enrollment failed: ${premiumEnrollmentResult.error}`);
+        }
+      } else {
+        console.log('📧 Enrolling Standard member in Standard automation...');
         const enrollmentResult = await enrollStandardMember(leadId, new Date());
         if (enrollmentResult.success) {
           console.log(`✅ Enrolled in Standard automation: ${enrollmentResult.emailsScheduled} emails scheduled`);
