@@ -26,8 +26,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'high-risk-trader': {
     subject: 'Welcome to the High Risk Trading Exit Strategy',
@@ -48,8 +49,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'no-more-clients': {
     subject: 'Welcome to the No More Clients Cash Flow Challenge',
@@ -70,8 +72,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'side-hustlers': {
     subject: 'Welcome to the Side Hustlers Cash Flow Challenge',
@@ -92,8 +95,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'builder-class': {
     subject: 'Welcome to the Builder Class',
@@ -114,8 +118,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'artists-musicians': {
     subject: 'Welcome to the Artists & Musicians Cash Flow Challenge',
@@ -136,8 +141,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'social-security-trap': {
     subject: 'Welcome - Your Financial Freedom Path',
@@ -158,8 +164,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'ubi-cbdc-warning': {
     subject: 'Welcome - Build Financial Independence Now',
@@ -180,8 +187,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'why-mosca': {
     subject: 'Welcome to MOSCA Community',
@@ -240,9 +248,9 @@ One Cash Flow Visionary At A Time.
 
 See you inside!
 
-MzSamantha
-Founder, Network Leveraging Cash Flow
-Cash Flow Visionary`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   },
   'default': {
     subject: 'Welcome to Network Leveraging Cash Flow',
@@ -263,8 +271,9 @@ https://skoo.ly/s/cashflow
 
 Looking forward to seeing you inside!
 
-MzSamantha
-Network Leveraging Cash Flow`
+Samantha Hill | MzSamantha
+Founding Visionary - Network Leveraging Cash Flow
+Home Of The Cash Flow Visionaries`
   }
 };
 
