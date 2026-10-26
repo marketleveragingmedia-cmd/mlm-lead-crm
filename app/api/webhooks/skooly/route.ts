@@ -5,6 +5,7 @@ import { getSkoolySecret } from '@/lib/skooly-secrets';
 import { qualifyPendingWebinarRegistrations } from '@/lib/webinar-qualification';
 import { sendEmail, addContactToAudience, AUDIENCE_MAP } from '@/lib/resend-crm';
 import { getSkoolWelcomeEmail } from '@/lib/skool-welcome-templates';
+import { enrollStandardMember, cancelStandardEmailsOnUpgrade } from '@/lib/standard-member-automation';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -105,8 +106,27 @@ export async function POST(request: NextRequest) {
       
       console.log('✅ Updated existing lead');
       
-      // Check if Premium qualification enables pending webinar registrations
+      // Check if upgraded to Premium - cancel Standard automation
       const isPremium = pricingTier.toLowerCase().includes('premium');
+      const wasStandard = lead.skoolPlan === 'Standard';
+      if (isPremium && wasStandard) {
+        console.log('⬆️  Member upgraded from Standard to Premium - cancelling Standard emails...');
+        await cancelStandardEmailsOnUpgrade(leadId);
+        console.log('✅ Standard follow-up emails cancelled');
+      } else if (!isPremium && !lead.skoolPlan) {
+        // New Standard member who was previously not a Skool member
+        console.log('📧 Enrolling existing lead (now Standard) in follow-up automation...');
+        const enrollmentResult = await enrollStandardMember(leadId, new Date());
+        if (enrollmentResult.success && !enrollmentResult.alreadyEnrolled) {
+          console.log(`✅ Enrolled in Standard automation: ${enrollmentResult.emailsScheduled} emails scheduled`);
+        } else if (enrollmentResult.alreadyEnrolled) {
+          console.log('✅ Already enrolled in Standard automation (duplicate prevented)');
+        } else {
+          console.error(`⚠️  Standard enrollment failed: ${enrollmentResult.error}`);
+        }
+      }
+      
+      // Check if Premium qualification enables pending webinar registrations
       await qualifyPendingWebinarRegistrations(leadId, isPremium);
       
     } else {
@@ -131,8 +151,19 @@ export async function POST(request: NextRequest) {
       // Send welcome email to direct Skool signups
       await sendWelcomeEmail(newLead, pricingTier);
       
-      // Check if Premium qualification enables pending webinar registrations
+      // Enroll Standard members in follow-up automation
       const isPremium = pricingTier.toLowerCase().includes('premium');
+      if (!isPremium) {
+        console.log('📧 Enrolling Standard member in follow-up automation...');
+        const enrollmentResult = await enrollStandardMember(leadId, new Date());
+        if (enrollmentResult.success) {
+          console.log(`✅ Enrolled in Standard automation: ${enrollmentResult.emailsScheduled} emails scheduled`);
+        } else {
+          console.error(`⚠️  Standard enrollment failed: ${enrollmentResult.error}`);
+        }
+      }
+      
+      // Check if Premium qualification enables pending webinar registrations
       await qualifyPendingWebinarRegistrations(leadId, isPremium);
     }
     
