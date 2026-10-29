@@ -198,12 +198,30 @@ export interface SkoolWelcomeEmailConfig {
   firstName: string;
   email: string;
   fromDomain?: string;
+  personalizedResultsUrl?: string | null;
 }
 
 export function getSkoolWelcomeEmail(config: SkoolWelcomeEmailConfig): { subject: string; html: string } {
-  const { tier, firstName } = config;
+  const { tier, firstName, personalizedResultsUrl } = config;
   
-  const template = tier === 'Premium' ? skoolPremiumWelcomeTemplate : skoolStandardWelcomeTemplate;
+  let template = tier === 'Premium' ? skoolPremiumWelcomeTemplate : skoolStandardWelcomeTemplate;
+  
+  // Add personalized results section if available
+  if (personalizedResultsUrl) {
+    const resultsSection = `
+      <div class="highlight-box" style="background: #fff9e6; border-left: 4px solid #C99B37;">
+        <h3 style="margin-top: 0; color: #C99B37;">🎯 Your Personalized Cash Flow Injection Results</h3>
+        <p>We saved your personalized Simulator results! Access your complete Enterprise vs Citizen comparison and all your historical simulations anytime:</p>
+        <p style="text-align: center;">
+          <a href="${personalizedResultsUrl}" class="button" style="background: #C99B37;">📊 View My Personalized Results</a>
+        </p>
+        <p style="font-size: 13px; color: #666; margin-top: 12px;"><em>This secure link is personalized for you and expires in 90 days. Bookmark it for easy access!</em></p>
+      </div>
+    `;
+    // Insert before the "What You'll Discover Here" section
+    template = template.replace('</div>\n      \n      <h2>What You\'ll Discover Here:</h2>', `</div>\n      ${resultsSection}\n      <h2>What You\'ll Discover Here:</h2>`);
+  }
+  
   const html = template.replace(/\{\{firstName\}\}/g, firstName);
   
   const subject = tier === 'Premium' 

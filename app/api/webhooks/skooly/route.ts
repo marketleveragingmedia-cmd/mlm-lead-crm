@@ -351,12 +351,37 @@ async function sendWelcomeEmail(lead: any, pricingTier: string) {
       return;
     }
     
+    // Check if user has completed the simulator
+    const mostRecentResult = await prisma.simulatorResult.findFirst({
+      where: {
+        leadId: lead.id,
+        simulatorCompleted: true
+      },
+      orderBy: { completedAt: 'desc' }
+    });
+    
+    let personalizedResultsUrl: string | null = null;
+    
+    if (mostRecentResult) {
+      // Generate secure token for results access
+      const crypto = require('crypto');
+      const TOKEN_SECRET = process.env.RESULTS_TOKEN_SECRET || process.env.RESEND_API_KEY || 'fallback-dev-secret';
+      const expiresAt = Date.now() + (90 * 24 * 60 * 60 * 1000); // 90 days
+      const payload = `${mostRecentResult.id}:${lead.email.toLowerCase()}:${expiresAt}`;
+      const signature = crypto.createHmac('sha256', TOKEN_SECRET).update(payload).digest('hex');
+      const token = Buffer.from(`${payload}:${signature}`).toString('base64url');
+      
+      personalizedResultsUrl = `https://simulator.cashflowvisionaries.com/results.html?token=${token}`;
+      console.log(`🎯 Generated personalized results link for ${lead.email}`);
+    }
+    
     const tier = pricingTier.toLowerCase().includes('premium') ? 'Premium' : 'Standard';
     const { subject, html } = getSkoolWelcomeEmail({
       tier,
       firstName: lead.firstName,
       email: lead.email,
-      fromDomain: 'm.networkleveragingcashflow.com'
+      fromDomain: 'm.networkleveragingcashflow.com',
+      personalizedResultsUrl
     });
     
     console.log(`📧 Sending ${tier} welcome email to ${lead.email}...`);
