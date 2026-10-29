@@ -4,6 +4,7 @@
 
 import { PrismaClient } from '@prisma/client';
 import { PREMIUM_MEMBER_SEQUENCE } from './premium-member-sequence';
+import { getPersonalizedSimulatorResults } from './personalize-simulator-results';
 
 const prisma = new PrismaClient();
 
@@ -98,9 +99,9 @@ export async function enrollPremiumMember(
 
       if (!lead) continue;
 
-      // Personalize content
-      const personalizedHtml = email.htmlContent.replace(/{{firstName}}/g, lead.firstName || 'Member');
-      const personalizedText = email.textContent.replace(/{{firstName}}/g, lead.firstName || 'Member');
+      // Personalize content (including Simulator results if applicable)
+      const personalizedHtml = await personalizeEmailContent(email.htmlContent, lead);
+      const personalizedText = await personalizeEmailContent(email.textContent, lead);
 
       await prisma.scheduledEmail.create({
         data: {
@@ -212,4 +213,30 @@ export async function isPremiumMemberEligible(leadId: string): Promise<boolean> 
     console.error('Error checking Premium eligibility:', error);
     return false;
   }
+}
+
+/**
+ * Helper: Personalize email content with lead data and Simulator results
+ */
+async function personalizeEmailContent(content: string, lead: any): Promise<string> {
+  let personalized = content;
+
+  // Replace {{firstName}}
+  personalized = personalized.replace(/\{\{firstName\}\}/g, lead.firstName || 'Member');
+
+  // Replace {{lastName}} if used
+  personalized = personalized.replace(/\{\{lastName\}\}/g, lead.lastName || '');
+
+  // Replace {{email}} if used
+  personalized = personalized.replace(/\{\{email\}\}/g, lead.email || '');
+
+  // Replace {{personalizedSimulatorResults}} with actual results or empty
+  if (content.includes('{{personalizedSimulatorResults}}')) {
+    const simulatorResults = await getPersonalizedSimulatorResults(lead.email);
+    const isHtml = content.includes('<');
+    const replacementContent = isHtml ? simulatorResults.html : simulatorResults.text;
+    personalized = personalized.replace(/\{\{personalizedSimulatorResults\}\}/g, replacementContent);
+  }
+
+  return personalized;
 }

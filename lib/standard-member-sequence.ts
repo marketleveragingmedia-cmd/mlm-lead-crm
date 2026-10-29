@@ -431,6 +431,8 @@ Home Of The Cash Flow Visionaries`
         
         <p style="font-size: 16px; line-height: 1.6; color: #333;"><strong>The Difference is How Deeply You Choose to Participate.</strong></p>
         
+        {{personalizedSimulatorResults}}
+        
         <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 24px;">If you\'re Ready to Explore Premium, you can View Both Membership Options Here:</p>
         
         <p style="text-align: center; margin: 32px 0;">
@@ -474,6 +476,8 @@ The Free Community Introduces the Movement. The Premium Membership Introduces Th
 Both Experiences Have Value.
 
 The Difference is How Deeply You Choose to Participate.
+
+{{personalizedSimulatorResults}}
 
 If you\'re Ready to Explore Premium, you can View Both Membership Options Here:
 

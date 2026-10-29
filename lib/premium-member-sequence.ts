@@ -391,6 +391,8 @@ Home Of The Cash Flow Visionaries`
         
         <p style="font-size: 16px; line-height: 1.6; color: #333;">Use These Educational Experiences to Expand Your Understanding of How Networks, Technology and Participation Can Create Different Possibilities.</p>
         
+        {{personalizedSimulatorResults}}
+        
         <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 24px;">If You Haven\'t Already Explored the Cash Flow Injection Simulator, This Is a Great Time to Revisit It with Your Vision in Mind.</p>
         
         <p style="text-align: center; margin: 32px 0;">
@@ -427,6 +429,8 @@ Cash Flow Supports the Purpose.
 As an Official Cash Flow Visionary, You Have Access to the Cash Flow Injection Simulator, the Premium Masterclass Experience and the Resources Within Your Premium Community.
 
 Use These Educational Experiences to Expand Your Understanding of How Networks, Technology and Participation Can Create Different Possibilities.
+
+{{personalizedSimulatorResults}}
 
 If You Haven't Already Explored the Cash Flow Injection Simulator, This Is a Great Time to Revisit It with Your Vision in Mind.
 

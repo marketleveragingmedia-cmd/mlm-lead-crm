@@ -4,6 +4,7 @@
 
 import { PrismaClient } from '@prisma/client';
 import { STANDARD_MEMBER_SEQUENCE } from './standard-member-sequence';
+import { getPersonalizedSimulatorResults } from './personalize-simulator-results';
 
 const prisma = new PrismaClient();
 
@@ -176,9 +177,9 @@ export async function processScheduledEmails(): Promise<ProcessResult> {
         }
 
         // PERSONALIZE CONTENT
-        const personalizedSubject = personalizeContent(scheduledEmail.subject, scheduledEmail.lead);
-        const personalizedHtml = personalizeContent(scheduledEmail.htmlContent, scheduledEmail.lead);
-        const personalizedText = personalizeContent(scheduledEmail.textContent, scheduledEmail.lead);
+        const personalizedSubject = personalizeBasic(scheduledEmail.subject, scheduledEmail.lead);
+        const personalizedHtml = await personalizeContent(scheduledEmail.htmlContent, scheduledEmail.lead);
+        const personalizedText = await personalizeContent(scheduledEmail.textContent, scheduledEmail.lead);
 
         // SEND VIA RESEND API
         const sendResult = await sendEmailViaResend({
@@ -299,9 +300,20 @@ export async function cancelStandardEmailsOnUpgrade(leadId: string): Promise<voi
 }
 
 /**
- * Helper: Personalize email content with lead data
+ * Helper: Basic personalization (sync) for subjects
  */
-function personalizeContent(content: string, lead: any): string {
+function personalizeBasic(content: string, lead: any): string {
+  let personalized = content;
+  personalized = personalized.replace(/\{\{firstName\}\}/g, lead.firstName || 'Member');
+  personalized = personalized.replace(/\{\{lastName\}\}/g, lead.lastName || '');
+  personalized = personalized.replace(/\{\{email\}\}/g, lead.email || '');
+  return personalized;
+}
+
+/**
+ * Helper: Full personalization (async) for content with Simulator results
+ */
+async function personalizeContent(content: string, lead: any): Promise<string> {
   let personalized = content;
 
   // Replace {{firstName}}
@@ -312,6 +324,14 @@ function personalizeContent(content: string, lead: any): string {
 
   // Replace {{email}} if used
   personalized = personalized.replace(/\{\{email\}\}/g, lead.email || '');
+
+  // Replace {{personalizedSimulatorResults}} with actual results or empty
+  if (content.includes('{{personalizedSimulatorResults}}')) {
+    const simulatorResults = await getPersonalizedSimulatorResults(lead.email);
+    const isHtml = content.includes('<');
+    const replacementContent = isHtml ? simulatorResults.html : simulatorResults.text;
+    personalized = personalized.replace(/\{\{personalizedSimulatorResults\}\}/g, replacementContent);
+  }
 
   return personalized;
 }
