@@ -146,7 +146,7 @@ export const skoolPremiumWelcomeTemplate = `<!DOCTYPE html>
       
       <div class="highlight-box">
         <h3 style="margin-top: 0; color: #C99B37;">Cash Flow Injection Strategy Masterclass</h3>
-        <p style="margin-bottom: 0;"><strong>Date:</strong> Thursday, November 12, 2026 at 11:00 AM Eastern<br>
+        <p style="margin-bottom: 0;"><strong>Date:</strong> Thursday, November 19, 2026 at 11:00 AM Eastern<br>
         <strong>Register:</strong> <a href="https://mlm-lead-crm.vercel.app/cash-flow-injection-masterclass">Secure Your Spot</a></p>
       </div>
       

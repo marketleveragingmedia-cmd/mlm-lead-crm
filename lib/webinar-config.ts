@@ -3,11 +3,11 @@
 // DO NOT hard-code webinar IDs across the codebase
 
 export const WEBINAR_EVENTS = {
-  'CFI-2026-11-12': {
-    webinarId: 'CFI-2026-11-12',
+  'CFI-2026-11-19': {
+    webinarId: 'CFI-2026-11-19',
     name: 'Cash Flow Injection Strategy Masterclass',
     description: 'Discover How Connections, Community And Duplication Can Create Sustainable Residual Cash Flow.',
-    startDateTime: new Date('2026-11-12T16:00:00.000Z'), // 11 AM EST (UTC-5)
+    startDateTime: new Date('2026-11-19T16:00:00.000Z'), // 11 AM EST (UTC-5)
     timezone: 'America/New_York',
     durationMinutes: 90,
     webinarJamWebinarId: 32,

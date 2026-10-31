@@ -20,7 +20,7 @@ export default function MasterclassClient({ html }: { html: string }) {
 
       if (state === 'registered') {
         const webinarDate = data.webinarDate ? new Date(data.webinarDate) : null;
-        const dateStr = webinarDate ? webinarDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) : "Thursday, November 12, 2026";
+        const dateStr = webinarDate ? webinarDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) : "Thursday, November 19, 2026";
         const timeStr = webinarDate ? webinarDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " Eastern Time" : "11:00 AM Eastern Time";
 
         html = '<div style="text-align:center; padding:60px 40px;">' +
@@ -34,7 +34,7 @@ export default function MasterclassClient({ html }: { html: string }) {
           '</div>';
       } else if (state === 'already_registered') {
         const webinarDate = data.webinarDate ? new Date(data.webinarDate) : null;
-        const dateStr = webinarDate ? webinarDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) : "Thursday, November 12, 2026";
+        const dateStr = webinarDate ? webinarDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) : "Thursday, November 19, 2026";
         const timeStr = webinarDate ? webinarDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " Eastern Time" : "11:00 AM Eastern Time";
 
         html = '<div style="text-align:center; padding:60px 40px;">' +
@@ -102,7 +102,7 @@ export default function MasterclassClient({ html }: { html: string }) {
       };
 
       try {
-        const response = await fetch('/api/webinar/register/CFI-2026-11-12', {
+        const response = await fetch('/api/webinar/register/CFI-2026-11-19', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)

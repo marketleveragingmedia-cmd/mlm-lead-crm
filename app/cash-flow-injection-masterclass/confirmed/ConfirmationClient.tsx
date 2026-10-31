@@ -20,7 +20,7 @@ export default function ConfirmationClient() {
       firstName: searchParams.get('firstName') || undefined,
       email: searchParams.get('email') || undefined,
       webinarJamUrl: searchParams.get('url') || undefined,
-      eventDate: 'Thursday, November 12, 2026',
+      eventDate: 'Thursday, November 19, 2026',
       eventTime: '11:00 AM Eastern Time'
     });
   }, [searchParams]);
