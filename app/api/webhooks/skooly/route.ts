@@ -109,7 +109,9 @@ export async function POST(request: NextRequest) {
       
       // Check membership tier and handle enrollment
       const isPremium = pricingTier.toLowerCase().includes('premium');
+      const isVIP = pricingTier.toLowerCase().includes('vip');
       const wasStandard = lead.skoolPlan === 'Standard';
+      const wasNotVIP = lead.skoolPlan !== 'VIP';
       
       if (isPremium && wasStandard) {
         // Standard-to-Premium upgrade: enroll in Premium, cancel Standard
@@ -147,8 +149,30 @@ export async function POST(request: NextRequest) {
         }
       }
       
-      // Check if Premium qualification enables pending webinar registrations
-      await qualifyPendingWebinarRegistrations(leadId, isPremium);
+      // Handle VIP tier assignment (Foundation for Success Experience purchasers)
+      if (isVIP && wasNotVIP) {
+        console.log('🎓 VIP tier assigned - Foundation for Success Experience purchaser');
+        
+        // Update lead with Foundation Experience purchase status
+        await prisma.lead.update({
+          where: { id: leadId },
+          data: {
+            foundationExperiencePurchased: true,
+            foundationExperiencePurchasedAt: new Date(),
+            foundationExperienceSource: 'manual_vip_assignment'
+          }
+        });
+        
+        console.log('✅ Foundation Experience purchase status confirmed');
+        
+        // Qualify for Masterclass
+        await qualifyPendingWebinarRegistrations(leadId, false);
+      }
+      
+      // Check if Premium qualification enables pending webinar registrations (if not VIP)
+      if (!isVIP) {
+        await qualifyPendingWebinarRegistrations(leadId, isPremium);
+      }
       
     } else {
       console.log('🆕 Creating new lead (Direct Skool Signup)');
@@ -192,8 +216,27 @@ export async function POST(request: NextRequest) {
         }
       }
       
-      // Check if Premium qualification enables pending webinar registrations
-      await qualifyPendingWebinarRegistrations(leadId, isPremium);
+      // Handle VIP tier assignment (Foundation for Success Experience purchasers - new members)
+      const isVIPNewMember = pricingTier.toLowerCase().includes('vip');
+      if (isVIPNewMember) {
+        console.log('🎓 New VIP member - Foundation for Success Experience purchaser');
+        
+        // Already set in createLeadFromSkoolMember, but ensure it's recorded
+        await prisma.lead.update({
+          where: { id: leadId },
+          data: {
+            foundationExperiencePurchased: true,
+            foundationExperiencePurchasedAt: new Date(),
+            foundationExperienceSource: 'manual_vip_assignment'
+          }
+        });
+        
+        console.log('✅ Foundation Experience purchase status confirmed');
+      }
+      
+      // Check if Premium or VIP qualification enables pending webinar registrations
+      const qualifiesForMasterclass = isPremium || isVIPNewMember;
+      await qualifyPendingWebinarRegistrations(leadId, qualifiesForMasterclass);
     }
     
     // Sync to Global Control (async, don't block webhook response)
@@ -252,6 +295,15 @@ async function createLeadFromSkoolMember(
   pricingTier: string
 ): Promise<any> {
   const isPremium = pricingTier.toLowerCase().includes('premium');
+  const isVIP = pricingTier.toLowerCase().includes('vip');
+  
+  // Determine skoolPlan based on tier
+  let skoolPlan = 'Standard';
+  if (isVIP) {
+    skoolPlan = 'VIP';
+  } else if (isPremium) {
+    skoolPlan = 'Premium';
+  }
   
   return await prisma.lead.create({
     data: {
@@ -261,10 +313,11 @@ async function createLeadFromSkoolMember(
       source: 'Direct Skool Signup',
       sourcePage: 'https://www.skool.com/network-leveraging-cash-flow-4401',
       skoolMemberId: skoolMemberId ? String(skoolMemberId) : null,
-      skoolPlan: isPremium ? 'Premium' : 'Standard',
+      skoolPlan,
       skoolMembershipStartedAt: new Date(),
       fullSimulatorResultsUnlocked: true,
-      officialCashFlowVisionary: isPremium, // Only Premium = official CFV
+      // VIP does NOT automatically grant Official CFV status (only Premium does)
+      officialCashFlowVisionary: isPremium,
     }
   });
 }
@@ -280,14 +333,25 @@ async function updateLeadWithSkoolData(
   lastName: string
 ): Promise<any> {
   const isPremium = pricingTier.toLowerCase().includes('premium');
+  const isVIP = pricingTier.toLowerCase().includes('vip');
   
   // Get current lead to check if name should be updated
   const currentLead = await prisma.lead.findUnique({ where: { id: leadId } });
   
+  // Determine skoolPlan based on tier
+  let skoolPlan = 'Standard';
+  if (isVIP) {
+    skoolPlan = 'VIP';
+  } else if (isPremium) {
+    skoolPlan = 'Premium';
+  }
+  
   const updateData: any = {
-    skoolPlan: isPremium ? 'Premium' : 'Standard',
+    skoolPlan,
     fullSimulatorResultsUnlocked: true,
-    officialCashFlowVisionary: isPremium,
+    // Official CFV is independent - preserve existing status unless Premium
+    // VIP does NOT automatically grant Official CFV status
+    officialCashFlowVisionary: isPremium ? true : (currentLead?.officialCashFlowVisionary || false),
   };
   
   // Set Skool member ID if provided

@@ -85,6 +85,10 @@ model Lead {
   skoolMembershipStartedAt     DateTime?
   fullSimulatorResultsUnlocked Boolean                @default(false)
   officialCashFlowVisionary    Boolean                @default(false)
+  foundationExperiencePurchased Boolean               @default(false)
+  foundationExperiencePurchasedAt DateTime?
+  foundationExperienceTransactionId String?
+  foundationExperienceSource   String?
   createdAt                    DateTime               @default(now())
   updatedAt                    DateTime               @default(now())
   syncedToGlobalControl        Boolean                @default(false)
