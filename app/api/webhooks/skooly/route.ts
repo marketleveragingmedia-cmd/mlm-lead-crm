@@ -153,17 +153,19 @@ export async function POST(request: NextRequest) {
       if (isVIP && wasNotVIP) {
         console.log('🎓 VIP tier assigned - Foundation for Success Experience purchaser');
         
-        // Update lead with Foundation Experience purchase status
+        // Update lead with Foundation Experience purchase status AND Official CFV status
         await prisma.lead.update({
           where: { id: leadId },
           data: {
             foundationExperiencePurchased: true,
             foundationExperiencePurchasedAt: new Date(),
-            foundationExperienceSource: 'manual_vip_assignment'
+            foundationExperienceSource: 'manual_vip_assignment',
+            officialCashFlowVisionary: true // All Foundation Experience purchasers are Official CFV
           }
         });
         
         console.log('✅ Foundation Experience purchase status confirmed');
+        console.log('🏆 Official Cash Flow Visionary status granted');
         
         // Qualify for Masterclass
         await qualifyPendingWebinarRegistrations(leadId, false);
@@ -221,17 +223,19 @@ export async function POST(request: NextRequest) {
       if (isVIPNewMember) {
         console.log('🎓 New VIP member - Foundation for Success Experience purchaser');
         
-        // Already set in createLeadFromSkoolMember, but ensure it's recorded
+        // Update with Foundation Experience status AND Official CFV status
         await prisma.lead.update({
           where: { id: leadId },
           data: {
             foundationExperiencePurchased: true,
             foundationExperiencePurchasedAt: new Date(),
-            foundationExperienceSource: 'manual_vip_assignment'
+            foundationExperienceSource: 'manual_vip_assignment',
+            officialCashFlowVisionary: true // All Foundation Experience purchasers are Official CFV
           }
         });
         
         console.log('✅ Foundation Experience purchase status confirmed');
+        console.log('🏆 Official Cash Flow Visionary status granted');
       }
       
       // Check if Premium or VIP qualification enables pending webinar registrations
@@ -316,8 +320,9 @@ async function createLeadFromSkoolMember(
       skoolPlan,
       skoolMembershipStartedAt: new Date(),
       fullSimulatorResultsUnlocked: true,
-      // VIP does NOT automatically grant Official CFV status (only Premium does)
-      officialCashFlowVisionary: isPremium,
+      // Premium OR VIP automatically grant Official CFV status
+      // Foundation Experience purchasers (VIP) are Official Cash Flow Visionaries
+      officialCashFlowVisionary: isPremium || isVIP,
     }
   });
 }
@@ -349,9 +354,9 @@ async function updateLeadWithSkoolData(
   const updateData: any = {
     skoolPlan,
     fullSimulatorResultsUnlocked: true,
-    // Official CFV is independent - preserve existing status unless Premium
-    // VIP does NOT automatically grant Official CFV status
-    officialCashFlowVisionary: isPremium ? true : (currentLead?.officialCashFlowVisionary || false),
+    // Premium OR VIP automatically grant Official CFV status
+    // Foundation Experience purchasers (VIP) are Official Cash Flow Visionaries
+    officialCashFlowVisionary: (isPremium || isVIP) ? true : (currentLead?.officialCashFlowVisionary || false),
   };
   
   // Set Skool member ID if provided
