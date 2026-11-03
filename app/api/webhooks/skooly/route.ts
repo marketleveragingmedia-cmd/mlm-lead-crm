@@ -167,13 +167,13 @@ export async function POST(request: NextRequest) {
         console.log('✅ Foundation Experience purchase status confirmed');
         console.log('🏆 Official Cash Flow Visionary status granted');
         
-        // Qualify for Masterclass
-        await qualifyPendingWebinarRegistrations(leadId, false);
+        // Qualify for Masterclass (Foundation Experience purchasers are eligible)
+        await qualifyPendingWebinarRegistrations(leadId, false, true);
       }
       
       // Check if Premium qualification enables pending webinar registrations (if not VIP)
       if (!isVIP) {
-        await qualifyPendingWebinarRegistrations(leadId, isPremium);
+        await qualifyPendingWebinarRegistrations(leadId, isPremium, false);
       }
       
     } else {
@@ -238,9 +238,9 @@ export async function POST(request: NextRequest) {
         console.log('🏆 Official Cash Flow Visionary status granted');
       }
       
-      // Check if Premium or VIP qualification enables pending webinar registrations
+      // Check if Premium or VIP (Foundation) qualification enables pending webinar registrations
       const qualifiesForMasterclass = isPremium || isVIPNewMember;
-      await qualifyPendingWebinarRegistrations(leadId, qualifiesForMasterclass);
+      await qualifyPendingWebinarRegistrations(leadId, isPremium, isVIPNewMember);
     }
     
     // Sync to Global Control (async, don't block webhook response)

@@ -6,21 +6,26 @@ import { registerWithWebinarJam } from './webinarjam-registration';
 
 export async function qualifyPendingWebinarRegistrations(
   leadId: string,
-  isPremium: boolean
+  isPremium: boolean,
+  isFoundationPurchaser: boolean = false
 ): Promise<void> {
-  if (!isPremium) {
-    console.log('  ⏭️  Not Premium, skipping webinar qualification');
+  // Check if lead qualifies via Premium OR Foundation Experience
+  const isQualified = isPremium || isFoundationPurchaser;
+  
+  if (!isQualified) {
+    console.log('  ⏭️  Not qualified (Premium or Foundation required), skipping webinar qualification');
     return;
   }
 
-  console.log('  🎯 Premium confirmed - checking pending webinar registrations');
+  const qualificationReason = isPremium ? 'Premium Member' : 'Foundation Experience Purchaser';
+  console.log(`  🎯 Qualified (${qualificationReason}) - checking pending webinar registrations`);
 
   // Find all pending webinar registrations for this lead
-  // that require Premium qualification
+  // that require Premium OR Foundation qualification
   const pendingRegistrations = await prisma.webinarRegistration.findMany({
     where: {
       leadId,
-      qualificationMethod: 'skool_premium',
+      qualificationMethod: 'skool_premium', // Both Premium and Foundation qualify for this
       webinarEligible: false,
       registrationStatus: 'pending'
     },
