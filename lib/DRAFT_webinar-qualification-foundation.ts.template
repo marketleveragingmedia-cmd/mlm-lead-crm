@@ -1,0 +1,160 @@
+/**
+ * DRAFT: Extended WebinarJam Qualification Logic
+ * Includes Foundation for Success Experience purchasers
+ * 
+ * This file shows the proposed changes to lib/webinar-qualification.ts
+ * DO NOT DEPLOY until:
+ * 1. Schema migration is applied
+ * 2. SKOOL purchase verification is confirmed working
+ * 
+ * Version: 1.0
+ * Date: November 2, 2026
+ */
+
+import { prisma } from './prisma';
+import { registerWithWebinarJam } from './webinarjam-registration';
+import { getWebinarConfig } from './webinar-config';
+
+/**
+ * Check if a lead qualifies for the Cash Flow Injection Strategy Masterclass
+ * 
+ * Qualification criteria:
+ * 1. SKOOL Premium member (original qualification)
+ * 2. Verified Foundation for Success Experience purchaser (NEW)
+ * 
+ * @param leadId - Lead ID to check
+ * @param isPremium - Whether lead is a Premium SKOOL member (legacy param, kept for backwards compatibility)
+ * @returns Promise<void>
+ */
+export async function qualifyPendingWebinarRegistrations(
+  leadId: string,
+  isPremium?: boolean
+): Promise<void> {
+  try {
+    // Fetch lead with all relevant qualification data
+    const lead = await prisma.lead.findUnique({
+      where: { id: leadId },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        phone: true,
+        skoolPlan: true,
+        foundationExperiencePurchased: true, // NEW FIELD
+        foundationExperiencePurchasedAt: true, // NEW FIELD
+        WebinarRegistration: {
+          where: {
+            webinarId: 'CFI-2026-11-19',
+            status: 'pending_premium'
+          }
+        }
+      }
+    });
+
+    if (!lead) {
+      console.log(`  ⚠️  Lead ${leadId} not found`);
+      return;
+    }
+
+    // Check qualification criteria
+    const isSkoolPremium = lead.skoolPlan === 'Premium';
+    const isFoundationPurchaser = lead.foundationExperiencePurchased === true;
+    const isQualified = isSkoolPremium || isFoundationPurchaser;
+
+    // Log qualification status
+    const qualificationReason = isSkoolPremium 
+      ? 'SKOOL Premium member' 
+      : isFoundationPurchaser 
+        ? 'Foundation Experience purchaser'
+        : 'Not qualified';
+
+    console.log(`  📋 Qualification check for ${lead.email}:`);
+    console.log(`     - SKOOL Premium: ${isSkoolPremium}`);
+    console.log(`     - Foundation Purchased: ${isFoundationPurchaser}`);
+    console.log(`     - Qualification: ${isQualified ? '✅ QUALIFIED' : '❌ NOT QUALIFIED'} (${qualificationReason})`);
+
+    // Find pending registrations
+    if (lead.WebinarRegistration.length === 0) {
+      console.log(`  ℹ️  No pending webinar registrations for ${lead.email}`);
+      return;
+    }
+
+    if (!isQualified) {
+      console.log(`  ⏸️  Lead ${lead.email} not yet qualified (pending Premium upgrade or Foundation purchase)`);
+      return;
+    }
+
+    // Qualify pending registrations
+    for (const registration of lead.WebinarRegistration) {
+      console.log(`  🎯 Qualifying pending registration ${registration.id} for ${lead.email}...`);
+
+      // Get webinar configuration
+      const webinarConfig = getWebinarConfig(registration.webinarId);
+      if (!webinarConfig) {
+        console.error(`  ❌ Webinar config not found for ${registration.webinarId}`);
+        continue;
+      }
+
+      try {
+        // Register with WebinarJam
+        const wjResult = await registerWithWebinarJam({
+          webinarId: webinarConfig.webinarJamWebinarId,
+          scheduleId: webinarConfig.webinarJamScheduleId,
+          firstName: lead.firstName,
+          lastName: lead.lastName,
+          email: lead.email,
+          phone: lead.phone || undefined
+        });
+
+        if (wjResult.success) {
+          // Update registration status to qualified
+          await prisma.webinarRegistration.update({
+            where: { id: registration.id },
+            data: {
+              status: 'qualified',
+              qualifiedAt: new Date(),
+              webinarJamRegistrationId: wjResult.registrationId,
+              // Track which qualification method was used
+              qualificationSource: isSkoolPremium ? 'skool_premium' : 'foundation_experience'
+            }
+          });
+
+          console.log(`  ✅ Qualified and registered ${lead.email} with WebinarJam`);
+          console.log(`     - WebinarJam Registration ID: ${wjResult.registrationId}`);
+          console.log(`     - Qualification Source: ${isSkoolPremium ? 'SKOOL Premium' : 'Foundation Experience'}`);
+        } else {
+          console.error(`  ❌ WebinarJam registration failed for ${lead.email}:`, wjResult.error);
+        }
+      } catch (error: any) {
+        console.error(`  ❌ Error qualifying registration:`, error.message);
+      }
+    }
+  } catch (error: any) {
+    console.error(`❌ Error in qualifyPendingWebinarRegistrations:`, error.message);
+  }
+}
+
+/**
+ * ALTERNATIVE: Standalone function to check Foundation Experience qualification
+ * Can be called directly when a Foundation purchase is confirmed
+ */
+export async function qualifyFoundationExperiencePurchaser(leadId: string): Promise<void> {
+  console.log(`🎓 Checking Foundation Experience qualification for lead ${leadId}...`);
+  
+  // Delegate to unified qualification function
+  // The function will detect foundationExperiencePurchased = true and qualify accordingly
+  await qualifyPendingWebinarRegistrations(leadId);
+}
+
+/**
+ * SCHEMA UPDATE REQUIRED:
+ * 
+ * Add to WebinarRegistration model:
+ * ```prisma
+ * model WebinarRegistration {
+ *   // ... existing fields ...
+ *   qualificationSource String? // "skool_premium" | "foundation_experience"
+ * }
+ * ```
+ */

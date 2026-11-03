@@ -8,86 +8,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AutomationEnrollment {
+  id             String           @id
+  leadId         String
+  automationId   String
+  status         String           @default("active")
+  enrolledAt     DateTime         @default(now())
+  completedAt    DateTime?
+  metadata       Json?
+  Lead           Lead             @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  ScheduledEmail ScheduledEmail[]
+
+  @@unique([leadId, automationId])
+  @@index([automationId])
+  @@index([leadId])
+  @@index([status])
+}
+
+model EmailEvent {
+  id           String   @id
+  leadId       String
+  eventType    String
+  emailId      String?
+  broadcastId  String?
+  automationId String?
+  metadata     Json?
+  occurredAt   DateTime @default(now())
+  Lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([eventType])
+  @@index([leadId])
+  @@index([occurredAt])
+}
+
+model GlobalControlOutbox {
+  id            String    @id
+  tagName       String
+  email         String
+  firstName     String?
+  lastName      String?
+  phone         String?
+  status        String    @default("pending")
+  attempts      Int       @default(0)
+  lastAttemptAt DateTime?
+  lastError     String?
+  deliveredAt   DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([createdAt])
+  @@index([email, tagName])
+  @@index([status])
+}
+
 model Lead {
-  id                           String                @id @default(cuid())
+  id                           String                 @id
   firstName                    String
   lastName                     String
-  email                        String                @unique
+  email                        String                 @unique
   phone                        String?
-  source                       String                @default("Unknown")
+  source                       String                 @default("Unknown")
   sourcePage                   String?
-  resendContactId              String?               @unique
+  resendContactId              String?                @unique
   resendAudienceId             String?
-  resendTags                   String[]              @default([])
-  automationEnrolled           Boolean               @default(false)
+  resendTags                   String[]               @default([])
+  automationEnrolled           Boolean                @default(false)
   automationName               String?
   automationStartedAt          DateTime?
   automationCompletedAt        DateTime?
-  emailsReceived               Int                   @default(0)
-  emailsOpened                 Int                   @default(0)
-  emailsClicked                Int                   @default(0)
+  emailsReceived               Int                    @default(0)
+  emailsOpened                 Int                    @default(0)
+  emailsClicked                Int                    @default(0)
   lastEmailOpenedAt            DateTime?
   lastEmailClickedAt           DateTime?
-  skoolMemberId                String?               @unique
+  skoolMemberId                String?                @unique
   skoolPlan                    String?
   skoolMembershipStartedAt     DateTime?
-  skoolWelcomeEmailSent        Boolean               @default(false)
-  skoolWelcomeEmailSentAt      DateTime?
-  fullSimulatorResultsUnlocked Boolean               @default(false)
-  officialCashFlowVisionary    Boolean               @default(false)
-  createdAt                    DateTime              @default(now())
-  updatedAt                    DateTime              @default(now()) @updatedAt
-  syncedToGlobalControl        Boolean               @default(false)
+  fullSimulatorResultsUnlocked Boolean                @default(false)
+  officialCashFlowVisionary    Boolean                @default(false)
+  createdAt                    DateTime               @default(now())
+  updatedAt                    DateTime               @default(now())
+  syncedToGlobalControl        Boolean                @default(false)
   globalControlContactId       String?
-  emailEvents                  EmailEvent[]
-  simulatorResults             SimulatorResult[]
-  skoolEvents                  SkoolEvent[]
-  webinarJamEvents             WebinarJamEvent[]
-  webinarRegistrations         WebinarRegistration[]
-  automationEnrollments        AutomationEnrollment[]
-  scheduledEmails              ScheduledEmail[]
+  skoolWelcomeEmailSent        Boolean                @default(false)
+  skoolWelcomeEmailSentAt      DateTime?
+  AutomationEnrollment         AutomationEnrollment[]
+  EmailEvent                   EmailEvent[]
+  ScheduledEmail               ScheduledEmail[]
+  SimulatorResult              SimulatorResult[]
+  SkoolEvent                   SkoolEvent[]
+  WebinarJamEvent              WebinarJamEvent[]
+  WebinarRegistration          WebinarRegistration[]
 
+  @@index([createdAt])
   @@index([email])
-  @@index([createdAt])
-  @@index([sourcePage])
-  @@index([resendContactId])
   @@index([resendAudienceId])
-}
-
-model SimulatorResult {
-  id                         String    @id @default(cuid())
-  leadId                     String
-  selectedPurposes           String[]
-  monthlyGoal                Float
-  enterpriseConnections      Int
-  enterpriseResidualCashFlow Float
-  communityCompoundingWeek   Float
-  simulatorStarted           Boolean   @default(true)
-  simulatorCompleted         Boolean   @default(false)
-  completedAt                DateTime?
-  createdAt                  DateTime  @default(now())
-  updatedAt                  DateTime  @updatedAt
-  lead                       Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
-
-  @@index([leadId])
-  @@index([simulatorCompleted])
-  @@index([createdAt])
+  @@index([resendContactId])
+  @@index([sourcePage])
 }
 
 model ResendAudience {
-  id           String   @id @default(cuid())
+  id           String   @id
   resendId     String   @unique
   name         String
   description  String?
   contactCount Int      @default(0)
   createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  updatedAt    DateTime
 
   @@index([resendId])
 }
 
 model ResendAutomation {
-  id             String   @id @default(cuid())
+  id             String   @id
   name           String   @unique
   description    String?
   triggerType    String
@@ -101,14 +133,14 @@ model ResendAutomation {
   enrolledCount  Int      @default(0)
   completedCount Int      @default(0)
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  updatedAt      DateTime
 
-  @@index([name])
   @@index([active])
+  @@index([name])
 }
 
 model ResendBroadcast {
-  id             String    @id @default(cuid())
+  id             String    @id
   name           String
   subject        String
   htmlContent    String
@@ -126,31 +158,67 @@ model ResendBroadcast {
   clickedCount   Int       @default(0)
   createdBy      String?
   createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  updatedAt      DateTime
 
-  @@index([status])
   @@index([scheduledFor])
   @@index([sentAt])
+  @@index([status])
 }
 
-model EmailEvent {
-  id           String   @id @default(cuid())
-  leadId       String
-  eventType    String
-  emailId      String?
-  broadcastId  String?
-  automationId String?
-  metadata     Json?
-  occurredAt   DateTime @default(now())
-  lead         Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+model ScheduledEmail {
+  id                   String               @id
+  enrollmentId         String
+  leadId               String
+  automationId         String
+  emailIndex           Int
+  subject              String
+  htmlContent          String
+  textContent          String
+  scheduledFor         DateTime
+  status               String               @default("pending")
+  sentAt               DateTime?
+  cancelledAt          DateTime?
+  cancellationReason   String?
+  fromDomain           String
+  fromName             String
+  replyTo              String
+  resendMessageId      String?
+  retryCount           Int                  @default(0)
+  lastError            String?
+  createdAt            DateTime             @default(now())
+  AutomationEnrollment AutomationEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  Lead                 Lead                 @relation(fields: [leadId], references: [id], onDelete: Cascade)
 
+  @@index([automationId])
+  @@index([enrollmentId])
   @@index([leadId])
-  @@index([eventType])
-  @@index([occurredAt])
+  @@index([scheduledFor])
+  @@index([status])
+}
+
+model SimulatorResult {
+  id                         String    @id
+  leadId                     String
+  selectedPurposes           String[]
+  monthlyGoal                Float
+  enterpriseConnections      Int
+  enterpriseResidualCashFlow Float
+  communityCompoundingWeek   Float
+  simulatorStarted           Boolean   @default(true)
+  simulatorCompleted         Boolean   @default(false)
+  completedAt                DateTime?
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime
+  matchedTierGoal            Float?
+  Lead                       Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([leadId])
+  @@index([simulatorCompleted])
 }
 
 model SkoolEvent {
-  id               String    @id @default(cuid())
+  id               String    @id
   leadId           String?
   eventType        String
   skoolMemberId    String?
@@ -162,17 +230,17 @@ model SkoolEvent {
   processedAt      DateTime?
   errorMessage     String?
   createdAt        DateTime  @default(now())
-  lead             Lead?     @relation(fields: [leadId], references: [id])
+  Lead             Lead?     @relation(fields: [leadId], references: [id])
 
-  @@index([leadId])
-  @@index([eventType])
-  @@index([skoolMemberId])
-  @@index([skoolEmail])
   @@index([createdAt])
+  @@index([eventType])
+  @@index([leadId])
+  @@index([skoolEmail])
+  @@index([skoolMemberId])
 }
 
 model WebinarEvent {
-  id                   String                @id @default(cuid())
+  id                   String                @id
   webinarId            String                @unique
   name                 String
   description          String?
@@ -188,16 +256,47 @@ model WebinarEvent {
   registrationPageUrl  String?
   active               Boolean               @default(true)
   createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
-  registrations        WebinarRegistration[]
+  updatedAt            DateTime
+  WebinarRegistration  WebinarRegistration[]
 
-  @@index([webinarId])
   @@index([active])
   @@index([startDateTime])
+  @@index([webinarId])
+}
+
+model WebinarJamEvent {
+  id                    String    @id
+  leadId                String?
+  compositeKey          String?   @unique
+  trigger               String
+  webinarJamWebinarId   Int?
+  webinarJamWebinarName String?
+  email                 String
+  firstName             String?
+  lastName              String?
+  phoneCountryCode      String?
+  phoneNumber           String?
+  liveRoomUrl           String?
+  replayRoomUrl         String?
+  unsubscribeUrl        String?
+  attendanceDuration    Int?
+  rawPayload            Json
+  processed             Boolean   @default(false)
+  processedAt           DateTime?
+  errorMessage          String?
+  receivedAt            DateTime  @default(now())
+  createdAt             DateTime  @default(now())
+  Lead                  Lead?     @relation(fields: [leadId], references: [id])
+
+  @@index([email])
+  @@index([leadId])
+  @@index([processed])
+  @@index([receivedAt])
+  @@index([trigger])
 }
 
 model WebinarRegistration {
-  id                      String       @id @default(cuid())
+  id                      String       @id
   leadId                  String
   webinarEventId          String
   source                  String
@@ -223,112 +322,14 @@ model WebinarRegistration {
   replayViewedAt          DateTime?
   status                  String       @default("lead_captured")
   createdAt               DateTime     @default(now())
-  updatedAt               DateTime     @updatedAt
-  lead                    Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  webinarEvent            WebinarEvent @relation(fields: [webinarEventId], references: [id], onDelete: Cascade)
+  updatedAt               DateTime
+  Lead                    Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  WebinarEvent            WebinarEvent @relation(fields: [webinarEventId], references: [id], onDelete: Cascade)
 
   @@unique([leadId, webinarEventId])
+  @@index([attended])
   @@index([leadId])
-  @@index([webinarEventId])
   @@index([status])
   @@index([webinarEligible])
-  @@index([attended])
-}
-
-model WebinarJamEvent {
-  id                    String    @id @default(cuid())
-  leadId                String?
-  compositeKey          String?   @unique
-  trigger               String
-  webinarJamWebinarId   Int?
-  webinarJamWebinarName String?
-  email                 String
-  firstName             String?
-  lastName              String?
-  phoneCountryCode      String?
-  phoneNumber           String?
-  liveRoomUrl           String?
-  replayRoomUrl         String?
-  unsubscribeUrl        String?
-  attendanceDuration    Int?
-  rawPayload            Json
-  processed             Boolean   @default(false)
-  processedAt           DateTime?
-  errorMessage          String?
-  receivedAt            DateTime  @default(now())
-  createdAt             DateTime  @default(now())
-  lead                  Lead?     @relation(fields: [leadId], references: [id])
-
-  @@index([leadId])
-  @@index([trigger])
-  @@index([email])
-  @@index([processed])
-  @@index([receivedAt])
-}
-
-model GlobalControlOutbox {
-  id            String    @id @default(cuid())
-  tagName       String
-  email         String
-  firstName     String?
-  lastName      String?
-  phone         String?
-  status        String    @default("pending")
-  attempts      Int       @default(0)
-  lastAttemptAt DateTime?
-  lastError     String?
-  deliveredAt   DateTime?
-  createdAt     DateTime  @default(now())
-
-  @@index([status])
-  @@index([createdAt])
-  @@index([email, tagName])
-}
-
-model AutomationEnrollment {
-  id              String           @id @default(cuid())
-  leadId          String
-  lead            Lead             @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  automationId    String
-  status          String           @default("active")
-  enrolledAt      DateTime         @default(now())
-  completedAt     DateTime?
-  metadata        Json?
-  scheduledEmails ScheduledEmail[]
-
-  @@unique([leadId, automationId])
-  @@index([leadId])
-  @@index([automationId])
-  @@index([status])
-}
-
-model ScheduledEmail {
-  id                  String               @id @default(cuid())
-  enrollmentId        String
-  enrollment          AutomationEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
-  leadId              String
-  lead                Lead                 @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  automationId        String
-  emailIndex          Int
-  subject             String
-  htmlContent         String               @db.Text
-  textContent         String               @db.Text
-  scheduledFor        DateTime
-  status              String               @default("pending")
-  sentAt              DateTime?
-  cancelledAt         DateTime?
-  cancellationReason  String?
-  fromDomain          String
-  fromName            String
-  replyTo             String
-  resendMessageId     String?
-  retryCount          Int                  @default(0)
-  lastError           String?
-  createdAt           DateTime             @default(now())
-
-  @@index([enrollmentId])
-  @@index([leadId])
-  @@index([status])
-  @@index([scheduledFor])
-  @@index([automationId])
+  @@index([webinarEventId])
 }

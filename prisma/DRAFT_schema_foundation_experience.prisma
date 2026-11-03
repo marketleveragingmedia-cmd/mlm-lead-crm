@@ -1,0 +1,44 @@
+// DRAFT Prisma Schema Addition
+// Foundation for Success Experience Tracking Fields
+// 
+// Add these fields to the Lead model in schema.prisma
+// DO NOT APPLY until SKOOL purchase verification method is confirmed
+
+model Lead {
+  // ... existing fields ...
+  
+  // Foundation for Success Experience fields
+  foundationExperiencePurchased   Boolean   @default(false)
+  foundationExperiencePurchasedAt DateTime?
+  foundationExperienceTransactionId String?
+  foundationExperienceSource      String?
+  
+  // Relationships
+  FoundationExperienceEvent FoundationExperienceEvent[]
+  
+  // Add indexes
+  @@index([foundationExperiencePurchased])
+  @@index([foundationExperienceTransactionId])
+}
+
+// New table: Foundation Experience event audit trail
+model FoundationExperienceEvent {
+  id            String    @id
+  leadId        String
+  eventType     String
+  transactionId String?
+  amount        Int?      // in cents (9700 = $97.00)
+  currency      String?   @default("USD")
+  skoolMemberId String?
+  skoolEmail    String?
+  rawPayload    Json?
+  processed     Boolean   @default(false)
+  processedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  Lead          Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId])
+  @@index([eventType])
+  @@index([transactionId])
+  @@index([createdAt])
+}
