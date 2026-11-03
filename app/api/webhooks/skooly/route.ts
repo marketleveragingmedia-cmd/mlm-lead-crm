@@ -309,8 +309,11 @@ async function createLeadFromSkoolMember(
     skoolPlan = 'Premium';
   }
   
+  const { randomUUID } = await import('crypto');
+  
   return await prisma.lead.create({
     data: {
+      id: randomUUID(),
       firstName,
       lastName,
       email,
