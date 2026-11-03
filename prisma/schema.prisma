@@ -9,7 +9,7 @@ datasource db {
 }
 
 model AutomationEnrollment {
-  id             String           @id
+  id             String           @id @default(uuid())
   leadId         String
   automationId   String
   status         String           @default("active")
@@ -26,7 +26,7 @@ model AutomationEnrollment {
 }
 
 model EmailEvent {
-  id           String   @id
+  id           String   @id @default(uuid())
   leadId       String
   eventType    String
   emailId      String?
@@ -42,7 +42,7 @@ model EmailEvent {
 }
 
 model GlobalControlOutbox {
-  id            String    @id
+  id            String    @id @default(uuid())
   tagName       String
   email         String
   firstName     String?
@@ -61,7 +61,7 @@ model GlobalControlOutbox {
 }
 
 model Lead {
-  id                           String                 @id
+  id                           String                 @id @default(uuid())
   firstName                    String
   lastName                     String
   email                        String                 @unique
@@ -111,7 +111,7 @@ model Lead {
 }
 
 model ResendAudience {
-  id           String   @id
+  id           String   @id @default(uuid())
   resendId     String   @unique
   name         String
   description  String?
@@ -123,7 +123,7 @@ model ResendAudience {
 }
 
 model ResendAutomation {
-  id             String   @id
+  id             String   @id @default(uuid())
   name           String   @unique
   description    String?
   triggerType    String
@@ -144,7 +144,7 @@ model ResendAutomation {
 }
 
 model ResendBroadcast {
-  id             String    @id
+  id             String    @id @default(uuid())
   name           String
   subject        String
   htmlContent    String
@@ -170,7 +170,7 @@ model ResendBroadcast {
 }
 
 model ScheduledEmail {
-  id                   String               @id
+  id                   String               @id @default(uuid())
   enrollmentId         String
   leadId               String
   automationId         String
@@ -201,7 +201,7 @@ model ScheduledEmail {
 }
 
 model SimulatorResult {
-  id                         String    @id
+  id                         String    @id @default(uuid())
   leadId                     String
   selectedPurposes           String[]
   monthlyGoal                Float
@@ -222,7 +222,7 @@ model SimulatorResult {
 }
 
 model SkoolEvent {
-  id               String    @id
+  id               String    @id @default(uuid())
   leadId           String?
   eventType        String
   skoolMemberId    String?
@@ -244,7 +244,7 @@ model SkoolEvent {
 }
 
 model WebinarEvent {
-  id                   String                @id
+  id                   String                @id @default(uuid())
   webinarId            String                @unique
   name                 String
   description          String?
@@ -269,7 +269,7 @@ model WebinarEvent {
 }
 
 model WebinarJamEvent {
-  id                    String    @id
+  id                    String    @id @default(uuid())
   leadId                String?
   compositeKey          String?   @unique
   trigger               String
@@ -300,7 +300,7 @@ model WebinarJamEvent {
 }
 
 model WebinarRegistration {
-  id                      String       @id
+  id                      String       @id @default(uuid())
   leadId                  String
   webinarEventId          String
   source                  String
