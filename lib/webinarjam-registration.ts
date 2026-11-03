@@ -56,8 +56,8 @@ export async function registerWithWebinarJam(
       },
       body: JSON.stringify({
         api_key: WEBINARJAM_API_KEY,
-        webinar_id: String(registration.webinarEvent.webinarJamWebinarId),
-        schedule: String(registration.webinarEvent.webinarJamScheduleId),
+        webinar_id: String(registration.WebinarEvent.webinarJamWebinarId),
+        schedule: String(registration.WebinarEvent.webinarJamScheduleId),
         first_name: lead.firstName,
         last_name: lead.lastName,
         email: lead.email,
@@ -84,7 +84,7 @@ export async function registerWithWebinarJam(
       });
 
       // Enqueue Global Control tag (durable delivery)
-      const webinarSlug = getWebinarSlug(registration.webinarEvent.webinarId);
+      const webinarSlug = getWebinarSlug(registration.WebinarEvent.webinarId);
       await enqueueTag(
         `webinar-${webinarSlug}-registered`,
         lead.email,

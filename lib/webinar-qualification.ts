@@ -30,8 +30,8 @@ export async function qualifyPendingWebinarRegistrations(
       registrationStatus: 'pending'
     },
     include: {
-      lead: true,
-      webinarEvent: true
+      Lead: true,
+      WebinarEvent: true
     }
   });
 
@@ -45,7 +45,7 @@ export async function qualifyPendingWebinarRegistrations(
   // Qualify and register each one
   for (const registration of pendingRegistrations) {
     try {
-      console.log(`  🎫 Processing: ${registration.webinarEvent.name}`);
+      console.log(`  🎫 Processing: ${registration.WebinarEvent.name}`);
 
       // Mark as eligible
       await prisma.webinarRegistration.update({
@@ -61,7 +61,7 @@ export async function qualifyPendingWebinarRegistrations(
       console.log('  ✅ Marked as eligible');
 
       // Trigger WebinarJam registration
-      await registerWithWebinarJam(registration.lead, registration);
+      await registerWithWebinarJam(registration.Lead, registration);
 
       console.log('  ✅ WebinarJam registration triggered');
 
