@@ -13,7 +13,7 @@
       firstName: payload.firstName,
       lastName: payload.lastName,
       email: payload.email,
-      mobile: payload.mobile || '',
+      phone: payload.mobile || '',
       sourcePage: payload.source || 'laying_the_foundation_for_success_experience'
     };
     
@@ -31,7 +31,7 @@
       // Existing contact - allow continuation to SKOOL without creating duplicate
       return {
         success: true,
-        redirectUrl: 'https://www.skool.com/network-leveraging-cash-flow',
+        redirectUrl: 'https://www.skool.com/network-leveraging-cash-flow-4401',
         existingContact: true
       };
     }
@@ -53,7 +53,7 @@
       // Fallback to default SKOOL URL if not provided
       return {
         success: true,
-        redirectUrl: 'https://www.skool.com/network-leveraging-cash-flow'
+        redirectUrl: 'https://www.skool.com/network-leveraging-cash-flow-4401'
       };
     } else {
       throw new Error('Registration was not successful');
