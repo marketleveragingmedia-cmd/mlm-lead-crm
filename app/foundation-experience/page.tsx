@@ -1,4 +1,4 @@
-import FoundationExperienceV17 from './FoundationExperienceV17';
+import FoundationExperienceV18_2 from './FoundationExperienceV18_2';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <FoundationExperienceV17 />;
+  return <FoundationExperienceV18_2 />;
 }
