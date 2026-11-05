@@ -133,7 +133,7 @@ strong{color:var(--green-dark)}
 @media(max-width:1050px){.container{width:min(100% - 54px,1150px)}.nav-links{gap:11px}.hero-grid{gap:28px;grid-template-columns:minmax(0,1fr) minmax(340px,.9fr)}.text-photo,.future-wrap,.close-grid{gap:37px}.journey-grid,.features{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
  body{font-size:17px}
- .container{width:min(100% - 38px,620px)}.nav{min-height:74px}.nav-links>a:not(.btn){display:none}.nav-links .btn{font-size:5px}
+ .container{width:min(100% - 38px,620px)}.nav{min-height:74px}.nav-links>a:not(.btn){display:none}.nav-links .btn{font-size:5px;padding:10px 12px;min-height:40px}
  .hero{padding:47px 0 58px}.hero-grid,.text-photo,.text-photo.reverse,.statement-inner,.future-wrap,.close-grid,.master{grid-template-columns:minmax(0,1fr);gap:26px}
  .hero h1{font-size:clamp(35px,6.4vw,46px)}.hero .statement{font-size:20px}
  .hero-photo{height:300px}.formcard{padding:26px}.section{padding:66px 0}.section-title{font-size:clamp(31px,5vw,39px)}
@@ -143,7 +143,7 @@ strong{color:var(--green-dark)}
  .network-graphic{padding:19px}.mastertime{max-width:100%;width:fit-content}.simulator-feature-footer{display:block}.simulator-cta{display:flex;width:100%;margin-top:17px}
  }
 @media(max-width:520px){
- .container{width:calc(100% - 32px)}.nav{min-height:72px;gap:10px}.brand-icon{width:43px;min-width:43px;height:43px;font-size:16px}.brand-copy strong{font-size:11px}.brand-copy span{font-size:10px}.nav-links .btn{font-size:4px}
+ .container{width:calc(100% - 32px)}.nav{min-height:72px;gap:10px}.brand-icon{width:43px;min-width:43px;height:43px;font-size:16px}.brand-copy strong{font-size:11px}.brand-copy span{font-size:10px}.nav-links .btn{font-size:4px;padding:9px 10px;min-height:38px;max-width:120px}
  .hero{padding:39px 0 50px}.hero h1{font-size:37px}.hero .statement{font-size:19px}.hero .description,.hero .bottom-line{font-size:17px}.hero .phrase{font-size:17px}.hero-photo{height:235px}
  .formcard{padding:24px 20px}.formcard h2{font-size:28px}.formcard .price{font-size:34px}.fields{grid-template-columns:1fr}.field.wide{grid-column:auto}
  .section{padding:58px 0}.section-title{font-size:32px}.journey-grid,.features,.steps{grid-template-columns:minmax(0,1fr);gap:14px}.journey-card,.feature,.step{padding:23px 21px}.journey-emphasis{padding:21px 18px;font-size:17px}
