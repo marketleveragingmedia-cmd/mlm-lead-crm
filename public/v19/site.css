@@ -110,7 +110,7 @@ strong{color:var(--green-dark)}
 .mastertime small{display:block;font-size:13px;font-weight:700;color:var(--gold-dark)}
 .simulator-feature{max-width:900px;margin:33px auto 0;background:#fffdf9;border:1px solid #d7d9ce;border-top:3px solid var(--gold);border-radius:16px;padding:19px;box-shadow:var(--shadow)}
 .simulator-art-link{display:block;max-width:820px;margin:0 auto;border-radius:10px;overflow:hidden;line-height:0;box-shadow:0 6px 20px rgba(32,70,46,.08)}
-.simulator-art-link img,.simulator-art-link picture{display:block;width:100%;height:auto;object-fit:contain}
+.simulator-art-link img,.simulator-art-link picture{display:block;width:100%;height:auto}
 .simulator-feature-footer{display:flex;gap:22px;justify-content:space-between;align-items:center;padding:19px 8px 5px}
 .simulator-info{min-width:0}
 .simulator-eyebrow{font:800 12px/1.4 Arial,sans-serif;color:var(--gold-dark);letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px}
