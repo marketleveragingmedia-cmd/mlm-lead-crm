@@ -28,7 +28,11 @@
       if(!result || result.success!==true || typeof result.redirectUrl!=='string' || !result.redirectUrl.startsWith('https://')){
         throw new Error('Registration was not confirmed by the CRM handler.');
       }
-      status.textContent='Registration received. Continuing to the NLC Community...';
+      if(result.existingContact){
+        status.textContent='Welcome back! Continuing to the NLC Community...';
+      } else {
+        status.textContent='Registration received. Continuing to the NLC Community...';
+      }
       window.location.assign(result.redirectUrl);
     }catch(err){
       status.textContent='Registration could not be completed. Please try again.';

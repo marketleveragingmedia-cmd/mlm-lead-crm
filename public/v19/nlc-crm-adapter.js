@@ -26,6 +26,16 @@
       body: JSON.stringify(requestData)
     });
     
+    // Handle existing contact gracefully (V19-specific)
+    if (response.status === 409) {
+      // Existing contact - allow continuation to SKOOL without creating duplicate
+      return {
+        success: true,
+        redirectUrl: 'https://www.skool.com/network-leveraging-cash-flow',
+        existingContact: true
+      };
+    }
+    
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || 'Registration failed');
