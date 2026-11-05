@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    // Skip TypeScript checks during build (pre-existing schema errors)
-    ignoreBuildErrors: true,
+  async rewrites() {
+    return [
+      {
+        source: '/v19',
+        destination: '/v19/index.html',
+      },
+    ];
   },
-  eslint: {
-    // Skip ESLint checks during build
-    ignoreDuringBuilds: true,
-  },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
