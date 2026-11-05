@@ -1,5 +1,6 @@
 /* Foundation Experience Styles - Version 16 */
-:root{--forest:#245c3d;--forest2:#2c6f49;--green:#337b4c;--lightgreen:#edf6e9;--gold:#b38b3f;--gold2:#8f6a2b;--ivory:#fffdfa;--cream:#f7f3e9;--line:#e8dcc4;--ink:#173126;--muted:#66756d;--shadow:0 24px 56px rgba(29,77,56,.10)}
+.draft{display:none!important}
+:root{--forest:#245c3d;--forest2:#2c6f49;--green:#337b4c;--lightgreen:#edf6e9;--gold:#9a7530;--gold2:#7a5d24;--ivory:#fffdfa;--cream:#f7f3e9;--line:#e8dcc4;--ink:#0f2419;--muted:#3d4d45;--shadow:0 24px 56px rgba(29,77,56,.10)}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--ivory);font-size:17px;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}h1,h2,h3,p,figure{margin:0}h1,h2,h3{text-wrap:balance;hyphens:none}p{text-wrap:pretty}button,input{font:inherit}button,a,input{touch-action:manipulation}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
