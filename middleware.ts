@@ -2,19 +2,34 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  // Check if the request is for /crm routes (but not API routes)
-  if (request.nextUrl.pathname.startsWith('/crm') && !request.nextUrl.pathname.startsWith('/crm/api')) {
-    const authCookie = request.cookies.get('mlm-crm-auth');
+  const hostname = request.headers.get('host') || '';
+  
+  // Handle foundation-for-success subdomain
+  if (hostname === 'foundation-for-success.cashflowvisionaries.com') {
+    const url = request.nextUrl.clone();
     
-    if (!authCookie || authCookie.value !== 'true') {
-      // Redirect to login page
-      return NextResponse.redirect(new URL('/login', request.url));
+    // If requesting root, rewrite to /v19
+    if (url.pathname === '/') {
+      url.pathname = '/v19';
+      return NextResponse.rewrite(url);
     }
+    
+    // If requesting any other path, preserve it (allows /v19/assets, etc.)
+    return NextResponse.next();
   }
-
+  
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/crm/:path*',
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 };

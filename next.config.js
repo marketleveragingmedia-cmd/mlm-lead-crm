@@ -11,6 +11,25 @@ const nextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'foundation-for-success.cashflowvisionaries.com',
+          },
+        ],
+        headers: [
+          {
+            key: 'x-custom-domain',
+            value: 'foundation-for-success',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
