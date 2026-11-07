@@ -5,7 +5,7 @@
       "schedule": "0 */1 * * *"
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
       "source": "/",
       "destination": "/cash-flow-injection-masterclass",
@@ -14,7 +14,8 @@
           "type": "host",
           "value": "masterclass.cashflowvisionaries.com"
         }
-      ]
+      ],
+      "permanent": false
     }
   ]
 }
