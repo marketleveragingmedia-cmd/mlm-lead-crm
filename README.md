@@ -158,4 +158,3 @@ All emails:
 - why-mosca.html
 # Force rebuild Mon Sep 21 14:03:44 UTC 2026
 
-# Trigger deployment - Sat Nov  7 13:37:33 UTC 2026
