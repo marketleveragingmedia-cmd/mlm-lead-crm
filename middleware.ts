@@ -17,8 +17,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Handle foundation-for-success subdomain
-  if (hostname === 'foundation-for-success.cashflowvisionaries.com') {
+  // Handle foundation subdomains (with and without hyphens)
+  if (hostname === 'foundation-for-success.cashflowvisionaries.com' || 
+      hostname === 'foundationforsuccess.cashflowvisionaries.com') {
     const url = request.nextUrl.clone();
     
     // If requesting root, rewrite to /v19
