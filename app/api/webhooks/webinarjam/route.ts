@@ -151,7 +151,7 @@ export async function POST(req: NextRequest) {
 
 // Handle registration webhook
 async function handleRegistration(lead: any, payload: any, eventId: string) {
-  const webinarId = 'CFI-2026-11-12'; // TODO: Derive from payload when multiple webinars exist
+  const webinarId = 'CFI-2026-12-03'; // TODO: Derive from payload when multiple webinars exist
   
   // Find or create webinar event
   const webinarEvent = await prisma.webinarEvent.findUnique({
@@ -195,7 +195,7 @@ async function handleRegistration(lead: any, payload: any, eventId: string) {
   console.log(`✅ Registration processed for ${lead.email}`);
 
   // Enqueue Global Control tag (durable delivery)
-  const webinarSlug = 'cfi-oct-2026'; // TODO: Derive from webinarId
+  const webinarSlug = 'cfi-dec-2026'; // TODO: Derive from webinarId
   await enqueueTag(
     `webinar-${webinarSlug}-registered`,
     lead.email,
@@ -207,7 +207,7 @@ async function handleRegistration(lead: any, payload: any, eventId: string) {
 
 // Handle attendance webhook
 async function handleAttendance(lead: any, payload: any, eventId: string) {
-  const webinarId = 'CFI-2026-10-08';
+  const webinarId = 'CFI-2026-12-03';
   
   const webinarEvent = await prisma.webinarEvent.findUnique({
     where: { webinarId }
@@ -233,7 +233,7 @@ async function handleAttendance(lead: any, payload: any, eventId: string) {
   console.log(`✅ Attendance recorded for ${lead.email}`);
 
   // Enqueue Global Control tag (durable delivery)
-  const webinarSlug = 'cfi-oct-2026';
+  const webinarSlug = 'cfi-dec-2026';
   await enqueueTag(
     `webinar-${webinarSlug}-attended`,
     lead.email,
@@ -245,7 +245,7 @@ async function handleAttendance(lead: any, payload: any, eventId: string) {
 
 // Handle no-show webhook
 async function handleNoShow(lead: any, payload: any, eventId: string) {
-  const webinarId = 'CFI-2026-10-08';
+  const webinarId = 'CFI-2026-12-03';
   
   const webinarEvent = await prisma.webinarEvent.findUnique({
     where: { webinarId }
@@ -270,7 +270,7 @@ async function handleNoShow(lead: any, payload: any, eventId: string) {
   console.log(`✅ No-show recorded for ${lead.email}`);
 
   // Enqueue Global Control tag (durable delivery)
-  const webinarSlug = 'cfi-oct-2026';
+  const webinarSlug = 'cfi-dec-2026';
   await enqueueTag(
     `webinar-${webinarSlug}-no-show`,
     lead.email,
@@ -282,7 +282,7 @@ async function handleNoShow(lead: any, payload: any, eventId: string) {
 
 // Handle left early webhook
 async function handleLeftEarly(lead: any, payload: any, eventId: string) {
-  const webinarId = 'CFI-2026-10-08';
+  const webinarId = 'CFI-2026-12-03';
   
   const webinarEvent = await prisma.webinarEvent.findUnique({
     where: { webinarId }

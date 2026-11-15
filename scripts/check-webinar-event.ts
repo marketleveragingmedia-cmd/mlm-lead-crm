@@ -8,7 +8,7 @@ async function checkWebinarEvent() {
   const events = await prisma.webinarEvent.findMany({
     where: {
       OR: [
-        { webinarId: 'CFI-2026-11-19' },
+        { webinarId: 'CFI-2026-12-03' },
         { name: { contains: 'Cash Flow Injection' } }
       ]
     }

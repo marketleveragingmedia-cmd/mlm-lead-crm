@@ -9,7 +9,7 @@ async function create() {
   });
 
   const event = await prisma.webinarEvent.findFirst({
-    where: { webinarId: 'CFI-2026-11-19' }
+    where: { webinarId: 'CFI-2026-12-03' }
   });
 
   if (!lead || !event) {

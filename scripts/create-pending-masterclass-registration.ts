@@ -17,13 +17,13 @@ async function createPendingRegistration() {
     return;
   }
 
-  // Get November 19 Masterclass event
+  // Get December 3 Masterclass event
   const event = await prisma.webinarEvent.findFirst({
-    where: { webinarId: 'CFI-2026-11-19' }
+    where: { webinarId: 'CFI-2026-12-03' }
   });
 
   if (!event) {
-    console.log('❌ November 19 Masterclass event not found');
+    console.log('❌ December 3 Masterclass event not found');
     await prisma.$disconnect();
     return;
   }
