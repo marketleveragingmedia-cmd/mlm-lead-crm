@@ -326,7 +326,7 @@ model WebinarRegistration {
   replayViewedAt          DateTime?
   status                  String       @default("lead_captured")
   createdAt               DateTime     @default(now())
-  updatedAt               DateTime
+  updatedAt               DateTime     @updatedAt
   Lead                    Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
   WebinarEvent            WebinarEvent @relation(fields: [webinarEventId], references: [id], onDelete: Cascade)
 
